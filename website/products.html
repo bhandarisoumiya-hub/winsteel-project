@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products & Equipment Showcase | Winsteel Engineering Works Pvt. Ltd.</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="products">
+
+  <!-- Top Info Bar -->
+  <div class="topbar">
+    <div class="container topbar-flex">
+      <div class="topbar-info">
+        <span><i class="fa-solid fa-phone"></i> +91 98765 43210</span>
+        <span><i class="fa-solid fa-envelope"></i> info@winsteel.co.in</span>
+        <span><i class="fa-solid fa-location-dot"></i> New Delhi, India</span>
+      </div>
+      <div class="topbar-badge">
+        <i class="fa-solid fa-certificate"></i> ISO 9001:2015 Certified Heavy Infrastructure Equipment Manufacturer
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">W</div>
+        <div class="brand-text">
+          <h1>Winsteel</h1>
+          <span>Engineering Works Pvt. Ltd.</span>
+        </div>
+      </a>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="index.html#about" class="nav-link">Winsteel</a></li>
+          <li><a href="products.html" class="nav-link active">Products</a></li>
+          <li><a href="projects.html" class="nav-link">Projects</a></li>
+          <li><a href="index.html#facilities" class="nav-link">Facilities</a></li>
+          <li><a href="products.html" class="btn-inquiry"><i class="fa-solid fa-bolt"></i> Equipment Catalog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Banner -->
+  <section class="section-pad" style="background: radial-gradient(circle at 80% 20%, rgba(243, 173, 27, 0.25) 0%, transparent 50%), linear-gradient(135deg, #040c17 0%, #07192d 100%); color: #fff; padding: 70px 0;">
+    <div class="container" style="text-align: center;">
+      <span class="subheading" style="color: var(--accent-gold); background: rgba(243, 173, 27, 0.15);">EQUIPMENT SHOWCASE</span>
+      <h1 style="color: #fff; font-size: 48px; margin-top: 12px; font-weight: 900;">Specialized Bridge & Heavy Equipment</h1>
+      <p style="color: rgba(255,255,255,0.85); max-width: 650px; margin: 14px auto 0; font-size: 18px;">Explore our complete range of bridge launching gantries, custom pier formwork systems, and automatic H-Beam steel fabrication lines.</p>
+    </div>
+  </section>
+
+  <!-- Filters & Dynamic Grid -->
+  <section class="section-pad">
+    <div class="container">
+      <!-- Search Input -->
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="product-search" placeholder="Search equipment by name, load capacity, or specifications...">
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div id="product-filters" class="filter-tabs"></div>
+
+      <!-- Dynamic Products Grid -->
+      <div id="products-grid" class="dynamic-grid"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2>Winsteel Engineering Works</h2>
+          <p>Pioneer & leading Formwork, Falsework, and Bridge Construction Equipment manufacturer in India since 1972.</p>
+          <div class="social-links">
+            <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home Overview</a></li>
+            <li><a href="products.html">Equipment Products</a></li>
+            <li><a href="projects.html">Infrastructure Projects</a></li>
+            <li><a href="http://localhost:4000/admin" target="_blank" style="color: var(--accent-gold);"><i class="fa-solid fa-lock"></i> CMS Admin Portal</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Key Equipment</h4>
+          <ul class="footer-links">
+            <li><a href="products.html"><i class="fa-solid fa-gear"></i> Launching Gantries</a></li>
+            <li><a href="products.html"><i class="fa-solid fa-gear"></i> Form Travellers</a></li>
+            <li><a href="products.html"><i class="fa-solid fa-gear"></i> Pier Mould Formworks</a></li>
+            <li><a href="products.html"><i class="fa-solid fa-gear"></i> Automatic H-Beam Lines</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Recent News</h4>
+          <ul id="footer-news-list" class="news-widget"></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 WinSteel Engineering Works Pvt. Ltd. All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Container -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-box">
+      <button id="modal-close" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

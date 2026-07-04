@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Winsteel CMS - Static Site Admin Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon"><i class="fa-solid fa-industry"></i></div>
+        <div>
+          <h2>WinSteel</h2>
+          <span>Static CMS Portal</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li class="active" data-tab="dashboard"><i class="fa-solid fa-chart-pie"></i> Dashboard</li>
+        <li data-tab="projects"><i class="fa-solid fa-bridge"></i> Projects Management</li>
+        <li data-tab="products"><i class="fa-solid fa-gear"></i> Products & Equipment</li>
+        <li data-tab="stats"><i class="fa-solid fa-chart-line"></i> Company Statistics</li>
+      </ul>
+      <div class="sidebar-footer">
+        <a href="/" target="_blank" class="btn-preview"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Website Preview</a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1 id="page-heading">Dashboard Overview</h1>
+          <p>Manage your dynamic content and generate offline static database bundles.</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="btn-generate" class="btn-primary pulse">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Generate & Publish Static Site
+          </button>
+        </div>
+      </header>
+
+      <!-- Toast Notification -->
+      <div id="toast" class="toast hidden"></div>
+
+      <!-- Tab 1: Dashboard -->
+      <section id="tab-dashboard" class="tab-pane active">
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-icon"><i class="fa-solid fa-folder-tree"></i></div>
+            <div class="stat-info">
+              <h3>Total Projects</h3>
+              <p id="count-projects">0</p>
+            </div>
+          </div>
+          <div class="stat-card yellow">
+            <div class="stat-icon"><i class="fa-solid fa-cubes"></i></div>
+            <div class="stat-info">
+              <h3>Total Products</h3>
+              <p id="count-products">0</p>
+            </div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon"><i class="fa-solid fa-check-double"></i></div>
+            <div class="stat-info">
+              <h3>Static Site Status</h3>
+              <p id="static-status" class="status-ready">Sync Ready</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="architecture-banner">
+          <div class="arch-text">
+            <h2><i class="fa-solid fa-bolt"></i> Zero-API Static Site Generation</h2>
+            <p>Unlike traditional websites that rely on slow API calls or active database connections during page views, your website operates as a <strong>100% pure static architecture</strong>. Whenever you add or edit projects here, click the <strong>Generate & Publish</strong> button above. The system compiles your master database into a lightning-fast static file (`website/js/data.js`) ready to host anywhere!</p>
+          </div>
+        </div>
+
+        <div class="recent-grid">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Recent Projects</h3>
+              <button class="btn-small switch-tab" data-target="projects">View All</button>
+            </div>
+            <div id="recent-projects-list" class="item-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Recent Products</h3>
+              <button class="btn-small switch-tab" data-target="products">View All</button>
+            </div>
+            <div id="recent-products-list" class="item-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 2: Projects Management -->
+      <section id="tab-projects" class="tab-pane hidden">
+        <div class="panel">
+          <div class="panel-header">
+            <h3>Manage Projects</h3>
+            <button class="btn-primary btn-add" onclick="openProjectModal()"><i class="fa-solid fa-plus"></i> Add New Project</button>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Project Title</th>
+                  <th>Category</th>
+                  <th>Client & Location</th>
+                  <th>Year</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="projects-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 3: Products Management -->
+      <section id="tab-products" class="tab-pane hidden">
+        <div class="panel">
+          <div class="panel-header">
+            <h3>Manage Products & Equipment</h3>
+            <button class="btn-primary btn-add" onclick="openProductModal()"><i class="fa-solid fa-plus"></i> Add New Product</button>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Equipment Name</th>
+                  <th>Category</th>
+                  <th>Tagline</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="products-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 4: Company Statistics -->
+      <section id="tab-stats" class="tab-pane hidden">
+        <div class="panel form-panel">
+          <div class="panel-header">
+            <h3>Company Highlights & Statistics</h3>
+          </div>
+          <form id="stats-form" onsubmit="saveStats(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Years of Experience</label>
+                <input type="number" id="stat-years" required>
+              </div>
+              <div class="form-group">
+                <label>Skilled Workers</label>
+                <input type="text" id="stat-workers" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Plot Area (Sq Ft)</label>
+                <input type="text" id="stat-plot" required>
+              </div>
+              <div class="form-group">
+                <label>Covered Area (Sq Ft)</label>
+                <input type="text" id="stat-covered" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Overhead Cranes Capacity</label>
+                <input type="text" id="stat-cranes" required>
+              </div>
+              <div class="form-group">
+                <label>Annual Production Capacity (MT)</label>
+                <input type="text" id="stat-capacity" required>
+              </div>
+            </div>
+            <button type="submit" class="btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Company Statistics</button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal: Add / Edit Project -->
+  <div id="modal-project" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-project-title">Add New Project</h3>
+        <button class="btn-close" onclick="closeModal('modal-project')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-project" onsubmit="saveProject(event)">
+        <input type="hidden" id="project-id">
+        <div class="form-group">
+          <label>Project Title *</label>
+          <input type="text" id="project-title" required placeholder="e.g. Elevated Metro Viaduct">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category *</label>
+            <select id="project-category">
+              <option value="Highway Bridges">Highway Bridges</option>
+              <option value="Metro Rail">Metro Rail</option>
+              <option value="Special Structures">Special Structures</option>
+              <option value="Marine & Ports">Marine & Ports</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Completion Year *</label>
+            <input type="text" id="project-year" required placeholder="2024">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Client Organization</label>
+            <input type="text" id="project-client" placeholder="e.g. National Metro Rail">
+          </div>
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="project-location" placeholder="e.g. Mumbai, India">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Image URL *</label>
+          <input type="url" id="project-image" required placeholder="https://images.unsplash.com/...">
+        </div>
+        <div class="form-group">
+          <label>Technical Specifications</label>
+          <input type="text" id="project-specs" placeholder="e.g. Span: 35m | Girder Weight: 450 MT">
+        </div>
+        <div class="form-group">
+          <label>Detailed Description *</label>
+          <textarea id="project-description" rows="4" required placeholder="Provide project highlights and equipment deployed..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('modal-project')">Cancel</button>
+          <button type="submit" class="btn-primary">Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Add / Edit Product -->
+  <div id="modal-product" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-product-title">Add New Product</h3>
+        <button class="btn-close" onclick="closeModal('modal-product')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-product" onsubmit="saveProduct(event)">
+        <input type="hidden" id="product-id">
+        <div class="form-group">
+          <label>Equipment / Product Name *</label>
+          <input type="text" id="product-name" required placeholder="e.g. Launching Gantries">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category *</label>
+            <select id="product-category">
+              <option value="Bridge Equipment">Bridge Equipment</option>
+              <option value="Formwork Systems">Formwork Systems</option>
+              <option value="Gantry & Launchers">Gantry & Launchers</option>
+              <option value="Precast Moulds">Precast Moulds</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tagline</label>
+            <input type="text" id="product-tagline" placeholder="e.g. Heavy-Duty Erection Systems">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Image URL *</label>
+          <input type="url" id="product-image" required placeholder="https://images.unsplash.com/...">
+        </div>
+        <div class="form-group">
+          <label>Detailed Description *</label>
+          <textarea id="product-description" rows="3" required placeholder="Describe product engineering capabilities..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Key Features (One per line)</label>
+          <textarea id="product-features" rows="4" placeholder="Capacity ranging from 250 MT to 1200 MT&#10;Hydraulic self-launching mechanism&#10;PLC control monitoring"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('modal-product')">Cancel</button>
+          <button type="submit" class="btn-primary">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

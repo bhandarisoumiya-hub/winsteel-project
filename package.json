@@ -1,0 +1,24 @@
+{
+  "name": "winsteel-website-system",
+  "version": "1.0.0",
+  "description": "Winsteel Engineering Works Pvt. Ltd. - Premium Static Website & Local Decoupled Admin Generator",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "admin": "node server.js",
+    "generate": "node scripts/generate.js"
+  },
+  "keywords": [
+    "winsteel",
+    "static-generator",
+    "bridge-equipment",
+    "formwork",
+    "admin"
+  ],
+  "author": "Winsteel Engineering Works Pvt. Ltd.",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
