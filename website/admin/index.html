@@ -544,12 +544,12 @@
             <input type="text" id="product-tagline" required>
           </div>
           <div class="form-group">
-            <label>Image URL / Database Path</label>
+            <label>Cover Image URL / Path (First item in gallery)</label>
             <input type="text" id="product-image" required>
           </div>
         </div>
         <div class="form-group">
-          <label>Upload Equipment Image File to Database</label>
+          <label>Upload Cover Image File to Database</label>
           <div class="upload-dropzone" onclick="document.getElementById('product-file').click()">
             <i class="fa-solid fa-cloud-arrow-up"></i>
             <p>Click to select image file from computer</p>
@@ -557,6 +557,18 @@
           </div>
           <div class="img-preview-box">
             <img id="product-preview" src="" alt="Product Preview" style="max-height: 100px; display: none; margin-top: 10px; border-radius: 6px;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Product Gallery Images List (One path / URL per line. The first line acts as the main cover.)</label>
+          <textarea id="product-images" rows="3" placeholder="uploads/image1.png&#10;uploads/image2.png" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Upload & Add Image(s) to Gallery</label>
+          <div class="upload-dropzone" onclick="document.getElementById('product-gallery-file').click()">
+            <i class="fa-solid fa-images"></i>
+            <p>Click to select one or more images from computer (appended to gallery text above)</p>
+            <input type="file" id="product-gallery-file" accept="image/*" multiple style="display:none" onchange="handleGalleryUpload(this)">
           </div>
         </div>
         <div class="form-group">

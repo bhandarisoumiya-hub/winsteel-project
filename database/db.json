@@ -280,6 +280,11 @@
         "Integrated safety locks and load monitoring sensors"
       ],
       "image": "uploads/hero-gantry.png",
+      "images": [
+        "uploads/hero-gantry.png",
+        "uploads/river-bridge.png",
+        "uploads/metro-viaduct.png"
+      ],
       "featured": true
     },
     {
@@ -295,6 +300,11 @@
         "Interchangeable panels for varying pier heights"
       ],
       "image": "uploads/river-bridge.png",
+      "images": [
+        "uploads/river-bridge.png",
+        "uploads/hydraulic-forming.png",
+        "uploads/metro-viaduct.png"
+      ],
       "featured": true
     },
     {
@@ -310,6 +320,11 @@
         "All-weather overhead protection enclosure options"
       ],
       "image": "uploads/hydraulic-forming.png",
+      "images": [
+        "uploads/hydraulic-forming.png",
+        "uploads/crane-handling.png",
+        "uploads/robotic-welding.png"
+      ],
       "featured": true
     },
     {

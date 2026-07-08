@@ -170,6 +170,18 @@ async function handleImageUpload(inputElem, targetInputId, previewImgId) {
       const data = await res.json();
       if (res.ok && data.url) {
         document.getElementById(targetInputId).value = data.url;
+        if (targetInputId === 'product-image') {
+          const textarea = document.getElementById('product-images');
+          if (textarea) {
+            const currentLines = textarea.value.trim().split('\n').filter(l => l.trim().length > 0);
+            if (currentLines.length > 0) {
+              currentLines[0] = data.url;
+            } else {
+              currentLines.push(data.url);
+            }
+            textarea.value = currentLines.join('\n');
+          }
+        }
         const preview = document.getElementById(previewImgId);
         if (preview) {
           preview.src = data.url;
@@ -530,12 +542,14 @@ function openProductModal(id = null) {
     document.getElementById('product-category').value = p.category;
     document.getElementById('product-tagline').value = p.tagline || '';
     document.getElementById('product-image').value = p.image || '';
+    document.getElementById('product-images').value = (p.images || [p.image || '']).join('\n');
     document.getElementById('product-features').value = (p.features || []).join('\n');
     document.getElementById('product-description').value = p.description || '';
     if (preview && p.image) { preview.src = p.image; preview.style.display = 'block'; }
   } else {
     document.getElementById('modal-product-title').textContent = 'Add New Product';
     document.getElementById('product-id').value = '';
+    document.getElementById('product-images').value = '';
   }
   document.getElementById('modal-product').classList.remove('hidden');
 }
@@ -555,12 +569,17 @@ function saveProduct(e) {
   const featuresRaw = document.getElementById('product-features').value;
   const features = featuresRaw.split('\n').map(f => f.trim()).filter(f => f.length > 0);
 
+  const imagesRaw = document.getElementById('product-images').value;
+  const images = imagesRaw.split('\n').map(img => img.trim()).filter(img => img.length > 0);
+  const coverImage = images[0] || document.getElementById('product-image').value || '';
+
   const item = {
     id: id || 'prod_' + Date.now(),
     name: document.getElementById('product-name').value,
     category: document.getElementById('product-category').value,
     tagline: document.getElementById('product-tagline').value,
-    image: document.getElementById('product-image').value,
+    image: coverImage,
+    images: images.length > 0 ? images : [coverImage],
     features: features,
     description: document.getElementById('product-description').value,
     featured: true
@@ -843,5 +862,59 @@ async function triggerStaticGeneration() {
   } finally {
     btn.innerHTML = origText;
     btn.disabled = false;
+  }
+}
+
+// Handle multiple gallery uploads and append their URLs to the textarea
+async function handleGalleryUpload(inputElem) {
+  const files = inputElem.files;
+  if (!files || files.length === 0) return;
+
+  showToast(`⏳ Uploading ${files.length} gallery image(s) to server database...`);
+
+  const urls = [];
+  for (const file of files) {
+    try {
+      const dataUrl = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.readAsDataURL(file);
+      });
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: file.name, dataUrl })
+      });
+      const data = await res.json();
+      if (res.ok && data.url) {
+        urls.push(data.url);
+      }
+    } catch (err) {
+      console.error('Gallery file upload failed:', err);
+    }
+  }
+
+  if (urls.length > 0) {
+    const textarea = document.getElementById('product-images');
+    if (textarea) {
+      const currentVal = textarea.value.trim();
+      textarea.value = (currentVal ? currentVal + '\n' : '') + urls.join('\n');
+      
+      // Also sync first line to cover image input if it was empty
+      const coverInput = document.getElementById('product-image');
+      if (coverInput && !coverInput.value.trim()) {
+        coverInput.value = urls[0];
+        const preview = document.getElementById('product-preview');
+        if (preview) {
+          preview.src = urls[0];
+          preview.style.display = 'block';
+        }
+      }
+      
+      showToast(`✅ Uploaded ${urls.length} gallery image(s) and added to gallery list!`);
+    }
+  } else {
+    showToast('❌ Gallery upload failed or no images uploaded.', true);
   }
 }

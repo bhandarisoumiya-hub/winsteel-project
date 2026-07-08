@@ -1,6 +1,6 @@
 /**
  * AUTO-GENERATED STATIC DATA BUNDLE FOR WINSTEEL WEBSITE
- * Generated on: 2026-07-08T05:04:16.239Z
+ * Generated on: 2026-07-08T05:52:03.691Z
  * This file allows the HTML/CSS/JS frontend to run 100% offline without live API servers.
  */
 window.WINSTEEL_DATA = {
@@ -285,6 +285,11 @@ window.WINSTEEL_DATA = {
         "Integrated safety locks and load monitoring sensors"
       ],
       "image": "uploads/hero-gantry.png",
+      "images": [
+        "uploads/hero-gantry.png",
+        "uploads/river-bridge.png",
+        "uploads/metro-viaduct.png"
+      ],
       "featured": true
     },
     {
@@ -300,6 +305,11 @@ window.WINSTEEL_DATA = {
         "Interchangeable panels for varying pier heights"
       ],
       "image": "uploads/river-bridge.png",
+      "images": [
+        "uploads/river-bridge.png",
+        "uploads/hydraulic-forming.png",
+        "uploads/metro-viaduct.png"
+      ],
       "featured": true
     },
     {
@@ -315,6 +325,11 @@ window.WINSTEEL_DATA = {
         "All-weather overhead protection enclosure options"
       ],
       "image": "uploads/hydraulic-forming.png",
+      "images": [
+        "uploads/hydraulic-forming.png",
+        "uploads/crane-handling.png",
+        "uploads/robotic-welding.png"
+      ],
       "featured": true
     },
     {

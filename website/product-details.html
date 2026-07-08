@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipment Details | Winsteel Engineering Works Pvt. Ltd.</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="product-details">
+
+  <!-- Top Info Bar -->
+  <div class="topbar">
+    <div class="container topbar-flex">
+      <div class="topbar-info">
+        <span><i class="fa-solid fa-phone"></i> +91 98765 43210</span>
+        <span><i class="fa-solid fa-envelope"></i> info@winsteel.co.in</span>
+        <span><i class="fa-solid fa-location-dot"></i> New Delhi, India</span>
+      </div>
+      <div class="topbar-badge">
+        <i class="fa-solid fa-certificate"></i> ISO 9001:2015 Certified Heavy Infrastructure Equipment Manufacturer
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">W</div>
+        <div class="brand-text">
+          <h1>Winsteel</h1>
+          <span>Engineering Works Pvt. Ltd.</span>
+        </div>
+      </a>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="index.html#about" class="nav-link">Winsteel</a></li>
+          <li><a href="products.html" class="nav-link active">Products</a></li>
+          <li><a href="projects.html" class="nav-link">Projects</a></li>
+          <li><a href="index.html#facilities" class="nav-link">Facilities</a></li>
+          <li><a href="products.html" class="btn-inquiry"><i class="fa-solid fa-bolt"></i> Equipment Catalog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Breadcrumbs Bar -->
+  <div class="breadcrumbs-section">
+    <div class="container">
+      <ul class="breadcrumbs">
+        <li><a href="index.html">Home</a></li>
+        <li><i class="fa-solid fa-chevron-right"></i></li>
+        <li><a href="products.html">Products</a></li>
+        <li><i class="fa-solid fa-chevron-right"></i></li>
+        <li id="breadcrumb-product-title" class="active">Loading Equipment...</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Product Details Section -->
+  <section class="section-pad product-details-section">
+    <div class="container product-details-container">
+      <div class="details-grid-wrapper">
+        <!-- Left Column: Image Panel -->
+        <div class="details-image-panel">
+          <div class="details-img-card">
+            <img id="details-img" src="uploads/hero-gantry.png" alt="Loading Equipment">
+            
+            <!-- Slider Navigation Arrows -->
+            <button id="details-prev-btn" class="details-slider-arrow prev" aria-label="Previous image" style="display: none;">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button id="details-next-btn" class="details-slider-arrow next" aria-label="Next image" style="display: none;">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            
+            <div class="details-img-overlay">
+              <span><i class="fa-solid fa-arrows-up-down-left-right"></i> Premium Infrastructure Grade</span>
+            </div>
+          </div>
+          
+          <!-- Product Gallery Thumbnails -->
+          <div id="details-gallery-thumbnails" class="details-gallery-thumbnails" style="display: none;"></div>
+          
+          <!-- Trust Indicators -->
+          <div class="details-trust-bar">
+            <div class="trust-pill"><i class="fa-solid fa-shield-halved" style="color: var(--accent-gold);"></i> 100% Load Tested</div>
+            <div class="trust-pill"><i class="fa-solid fa-certificate" style="color: var(--accent-gold);"></i> ISO 9001 Quality</div>
+            <div class="trust-pill"><i class="fa-solid fa-truck-fast" style="color: var(--accent-gold);"></i> Site Assembly</div>
+          </div>
+        </div>
+        
+        <!-- Right Column: Information Panel -->
+        <div class="details-info-panel">
+          <span id="details-category" class="details-badge">Category</span>
+          <h1 id="details-title">Loading Equipment...</h1>
+          <p id="details-tagline" class="details-tagline-text">Heavy Duty Engineering Falsework</p>
+          <div class="divider-gold"></div>
+          <p id="details-desc" class="details-description">Loading product description...</p>
+          
+          <div class="details-features-block">
+            <h3>Key Structural & Engineering Features</h3>
+            <ul id="details-features" class="details-features-list">
+              <!-- Populated Dynamically -->
+            </ul>
+          </div>
+          
+          <div class="details-actions">
+            <a href="#inquiry" class="btn-details-primary"><i class="fa-solid fa-file-invoice"></i> Request Technical Quote</a>
+            <a href="uploads/about-factory.png" target="_blank" class="btn-details-outline"><i class="fa-solid fa-download"></i> Catalog Sheet</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Specifications Section -->
+      <div class="details-specs-section">
+        <div class="specs-header">
+          <h2>Technical Parameters & Calibration</h2>
+          <p>Rigorous, site-tested engineering specifications ensuring structural safety and structural loading efficiency.</p>
+        </div>
+        <div class="specs-table-wrapper">
+          <table class="specs-table">
+            <thead>
+              <tr>
+                <th>Engineering Attribute</th>
+                <th>Calibrated Value & Compliance Standard</th>
+              </tr>
+            </thead>
+            <tbody id="details-specs-table">
+              <!-- Populated Dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Inquiry Form Section -->
+      <div id="inquiry" class="details-inquiry-section">
+        <div class="inquiry-grid">
+          <div class="inquiry-info">
+            <h2>Request Engineering Consultation</h2>
+            <p>Work directly with our senior infrastructure structural design engineers. We offer complete custom 3D CAD modeling, structural finite element analysis (FEA), and certified load limits calculations based on your project geometry.</p>
+            <div class="inquiry-contact-details">
+              <div class="contact-item">
+                <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                <div>
+                  <span>Submit Tender & Drawings</span>
+                  <strong>projects@winsteel.co.in</strong>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                <div>
+                  <span>Consultation Hotline</span>
+                  <strong>+91 98765 43210</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="inquiry-form-card">
+            <form id="details-inquiry-form" class="details-form">
+              <h3>Equipment Inquiry Form</h3>
+              
+              <div class="form-group">
+                <label for="inquiry-product">Equipment Selected</label>
+                <input type="text" id="inquiry-product" readonly disabled style="font-weight: 700; color: var(--primary-blue-dark);">
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="inquiry-name">Your Full Name <span style="color:#ef4444;">*</span></label>
+                  <input type="text" id="inquiry-name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                  <label for="inquiry-phone">Contact Number <span style="color:#ef4444;">*</span></label>
+                  <input type="tel" id="inquiry-phone" placeholder="+91 98765 43210" required>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="inquiry-email">Corporate Email Address <span style="color:#ef4444;">*</span></label>
+                <input type="email" id="inquiry-email" placeholder="engineer@infrastructure.com" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="inquiry-message">Project Specifications & Worksite Deflection Criteria <span style="color:#ef4444;">*</span></label>
+                <textarea id="inquiry-message" rows="4" placeholder="Detail your project requirements: required load capacity (MT), span length (m), horizontal alignment curvature, or special marine grade sealing requirements..." required></textarea>
+              </div>
+              
+              <button type="submit" class="btn-submit-inquiry">Send Technical Request <i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Related Equipment Section -->
+      <div class="details-related-section">
+        <div class="related-header">
+          <h2>Related Heavy Infrastructure Machinery</h2>
+          <p>Explore other specialized falseworks, launching gantries, and casting yard moulds engineered by Winsteel.</p>
+        </div>
+        <div id="related-products-grid" class="dynamic-grid">
+          <!-- Populated Dynamically -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Product Not Found State (Fallback) -->
+    <div id="details-error-state" class="container" style="display: none; text-align: center; padding: 100px 20px;">
+      <div class="error-box-card">
+        <i class="fa-solid fa-triangle-exclamation" style="font-size: 64px; color: #ef4444; margin-bottom: 24px;"></i>
+        <h2>Equipment Specsheet Not Found</h2>
+        <p style="color: #64748b; font-size: 17px; max-width: 500px; margin: 12px auto 28px;">The requested equipment has been decommissioned or the parameters link is invalid.</p>
+        <a href="products.html" class="btn-inquiry" style="display: inline-flex;"><i class="fa-solid fa-arrow-left"></i> Back to Products Listing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2>Winsteel Engineering Works</h2>
+          <p>Pioneer & leading Formwork, Falsework, and Bridge Construction Equipment manufacturer in India since 1972.</p>
+          <div class="social-links">
+            <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home Overview</a></li>
+            <li><a href="products.html">Equipment Products</a></li>
+            <li><a href="projects.html">Infrastructure Projects</a></li>
+            <li><a href="admin/index.html" target="_blank" style="color: var(--accent-gold);"><i class="fa-solid fa-lock"></i> CMS Admin Portal</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Key Equipment</h4>
+          <ul class="footer-links">
+            <li><a href="products.html"><i class="fa-solid fa-gear"></i> Launching Gantries</a></li>
+            <li><a href="products.html"><i class="fa-solid fa-gear"></i> Form Travellers</a></li>
+            <li><a href="products.html"><i class="fa-solid fa-gear"></i> Pier Mould Formworks</a></li>
+            <li><a href="products.html"><i class="fa-solid fa-gear"></i> Automatic H-Beam Lines</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Recent News</h4>
+          <ul id="footer-news-list" class="news-widget"></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 WinSteel Engineering Works Pvt. Ltd. All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

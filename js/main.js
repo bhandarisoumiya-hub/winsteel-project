@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     initProductsPage(data);
   } else if (page === 'projects') {
     initProjectsPage(data);
+  } else if (page === 'product-details') {
+    initProductDetailsPage(data);
   }
 
   // Setup modal close events
@@ -376,17 +378,17 @@ function renderProjectCard(p) {
 function renderProductCard(p) {
   return `
     <div class="card">
-      <div class="card-img-wrapper">
+      <a href="product-details.html?id=${p.id}" class="card-img-wrapper">
         <span class="card-badge">${p.category}</span>
         <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='uploads/hero-gantry.png'">
-      </div>
+      </a>
       <div class="card-content">
         <span class="card-subtitle"><i class="fa-solid fa-star" style="color: #f3ad1b;"></i> ${p.tagline || 'Engineered Equipment'}</span>
-        <h3>${p.name}</h3>
+        <h3><a href="product-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.name}</a></h3>
         <p>${p.description}</p>
         <div class="card-footer">
           <span style="font-size: 13px; font-weight: 700; color: #004680; background: #eff6ff; padding: 4px 12px; border-radius: 20px;">Heavy Duty Spec</span>
-          <button class="btn-card" onclick="openModal('product', '${p.id}')">View Specs <i class="fa-solid fa-arrow-right"></i></button>
+          <a href="product-details.html?id=${p.id}" class="btn-card">View Specs <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
@@ -469,3 +471,344 @@ window.openModal = function (type, id) {
 
   overlay.classList.add('active');
 };
+
+// ==========================================
+// PRODUCT DETAILS PAGE INITIALIZATION
+// ==========================================
+function initProductDetailsPage(data) {
+  const params = new URLSearchParams(window.location.search);
+  const productId = params.get('id');
+  
+  const container = document.querySelector('.product-details-container');
+  const errorContainer = document.getElementById('details-error-state');
+  
+  if (!productId || !data.products) {
+    showProductNotFound();
+    return;
+  }
+  
+  const product = data.products.find(p => p.id === productId);
+  if (!product) {
+    showProductNotFound();
+    return;
+  }
+  
+  // Dynamic Page Title
+  document.title = `${product.name} | Winsteel Engineering Works Pvt. Ltd.`;
+  
+  // Populate UI elements
+  const categoryElem = document.getElementById('details-category');
+  const titleElem = document.getElementById('details-title');
+  const taglineElem = document.getElementById('details-tagline');
+  const descElem = document.getElementById('details-desc');
+  const imgElem = document.getElementById('details-img');
+  const breadcrumbProduct = document.getElementById('breadcrumb-product-title');
+  
+  if (categoryElem) categoryElem.textContent = product.category;
+  if (titleElem) titleElem.textContent = product.name;
+  if (taglineElem) taglineElem.textContent = product.tagline || 'Heavy-Duty Engineering Equipment';
+  if (descElem) descElem.textContent = product.description;
+  // Handle gallery images
+  const galleryThumbs = document.getElementById('details-gallery-thumbnails');
+  const productImages = product.images || (product.image ? [product.image] : []);
+  let currentImgIndex = 0;
+  let autoSlideTimer = null;
+  
+  const prevBtn = document.getElementById('details-prev-btn');
+  const nextBtn = document.getElementById('details-next-btn');
+  
+  const updateSliderImage = (index) => {
+    currentImgIndex = index;
+    if (imgElem && productImages[currentImgIndex]) {
+      imgElem.classList.add('image-switching');
+      setTimeout(() => {
+        imgElem.src = productImages[currentImgIndex];
+        imgElem.classList.remove('image-switching');
+      }, 120);
+    }
+    
+    // Update active class on thumbnails
+    document.querySelectorAll('.thumbnail-item').forEach((thumb, idx) => {
+      if (idx === currentImgIndex) {
+        thumb.classList.add('active');
+        thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      } else {
+        thumb.classList.remove('active');
+      }
+    });
+  };
+
+  const startAutoSlide = () => {
+    stopAutoSlide();
+    if (productImages.length > 1) {
+      autoSlideTimer = setInterval(() => {
+        const nextIdx = (currentImgIndex + 1) % productImages.length;
+        updateSliderImage(nextIdx);
+      }, 5000);
+    }
+  };
+
+  const stopAutoSlide = () => {
+    if (autoSlideTimer) {
+      clearInterval(autoSlideTimer);
+      autoSlideTimer = null;
+    }
+  };
+  
+  if (imgElem) {
+    imgElem.src = productImages[0] || 'uploads/hero-gantry.png';
+    imgElem.alt = product.name;
+    imgElem.onerror = () => { imgElem.src = 'uploads/hero-gantry.png'; };
+  }
+  
+  if (productImages.length > 1) {
+    if (prevBtn) prevBtn.style.display = 'flex';
+    if (nextBtn) nextBtn.style.display = 'flex';
+    
+    if (prevBtn) {
+      prevBtn.onclick = (e) => {
+        e.stopPropagation();
+        const prevIdx = (currentImgIndex - 1 + productImages.length) % productImages.length;
+        updateSliderImage(prevIdx);
+        startAutoSlide();
+      };
+    }
+    if (nextBtn) {
+      nextBtn.onclick = (e) => {
+        e.stopPropagation();
+        const nextIdx = (currentImgIndex + 1) % productImages.length;
+        updateSliderImage(nextIdx);
+        startAutoSlide();
+      };
+    }
+    
+    // Keyboard navigation for image slider
+    document.onkeydown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        const prevIdx = (currentImgIndex - 1 + productImages.length) % productImages.length;
+        updateSliderImage(prevIdx);
+        startAutoSlide();
+      } else if (e.key === 'ArrowRight') {
+        const nextIdx = (currentImgIndex + 1) % productImages.length;
+        updateSliderImage(nextIdx);
+        startAutoSlide();
+      }
+    };
+
+    // Pause on hover over image card
+    const imgCard = document.querySelector('.details-img-card');
+    if (imgCard) {
+      imgCard.onmouseenter = stopAutoSlide;
+      imgCard.onmouseleave = startAutoSlide;
+    }
+
+    // Start auto slide
+    startAutoSlide();
+  } else {
+    if (prevBtn) prevBtn.style.display = 'none';
+    if (nextBtn) nextBtn.style.display = 'none';
+  }
+  
+  if (galleryThumbs) {
+    if (productImages.length > 1) {
+      galleryThumbs.innerHTML = productImages.map((img, idx) => `
+        <div class="thumbnail-item ${idx === 0 ? 'active' : ''}" onclick="switchDetailImage(this, ${idx})">
+          <img src="${img}" alt="${product.name} View ${idx + 1}" onerror="this.src='uploads/hero-gantry.png'">
+        </div>
+      `).join('');
+      galleryThumbs.style.display = 'flex';
+    } else {
+      galleryThumbs.innerHTML = '';
+      galleryThumbs.style.display = 'none';
+    }
+  }
+  
+  window.switchDetailImage = function (elem, idx) {
+    updateSliderImage(idx);
+    startAutoSlide();
+  };
+
+  if (breadcrumbProduct) breadcrumbProduct.textContent = product.name;
+  
+  // Features Checklist
+  const featuresList = document.getElementById('details-features');
+  if (featuresList && product.features) {
+    featuresList.innerHTML = product.features.map(f => `
+      <li>
+        <span class="feature-icon"><i class="fa-solid fa-check"></i></span>
+        <span class="feature-text">${f}</span>
+      </li>
+    `).join('');
+  }
+  
+  // Generate Dynamic Technical Specifications Table
+  const specsTable = document.getElementById('details-specs-table');
+  if (specsTable) {
+    const PRODUCT_SPECS = {
+      "prod-1": {
+        "Rated Lift Capacity": "250 MT - 1200 MT",
+        "Applicable Span Range": "25 m - 60 m",
+        "Min. Curve Radius": "150 m",
+        "Max. Longitudinal Gradient": "4.0%",
+        "Control System Type": "PLC Automated Synchronous Hydraulic Lift",
+        "Structural Material": "High-Grade Tensile Steel (IS 2062 Grade E250/E350)",
+        "Compliance Standard": "ISO 9001:2015, EN 13001 Structural Safety Code"
+      },
+      "prod-2": {
+        "Plate Thickness": "6 mm / 8 mm CNC Rolled Face Plates",
+        "Max. Concrete Pressure": "80 kN / m²",
+        "Stripping Mechanism": "Quick-release Hydraulic/Mechanical Stripping Jacks",
+        "Reusability Rating": "Exceeding 300 Casting Cycles",
+        "Safety System": "Integrated Safety Platforms, Handrails, and Ladders",
+        "Deflection Limit": "L/1000 (Maximum deviation < 2.0 mm)",
+        "Structural Alignment": "Machined Male-Female Joint System with Rubber Gaskets"
+      },
+      "prod-3": {
+        "Structural Weight Ratio": "Lightweight High-Strength Lattice Girder Design",
+        "Max Segment Length": "5.5 meters",
+        "Leveling Adjustment": "Hydraulic Automatic Leveling & Elevation Adjustment",
+        "Deflection Control": "Dynamic Deflection Compensation during Concrete Pouring",
+        "Working Enclosure": "Integrated All-Weather Overhead Protection Canopy",
+        "Load Safety Factor": "1.25x Overload Proof Tested prior to dispatch",
+        "Deployment System": "Tension bar anchoring with high reusability"
+      },
+      "prod-4": {
+        "Mould Volume Capacities": "2.0 m³ to 20.0 m³ standard sizes",
+        "Sealing Design": "Dual-groove Watertight EPDM Gaskets (zero grout leakage)",
+        "Locking Mechanism": "Heavy-duty Hinged Latching Bolts for rapid assembly",
+        "Casting Output Rate": "Double-stripping daily cycle capacity",
+        "Design Life Durability": "Exceeds 1,000 casting cycles with minimal maintenance",
+        "Material Standard": "IS 2062 Grade B Structural Steel",
+        "Geometric Tolerance": "± 2.0 mm on all spatial dimensions"
+      },
+      "prod-5": {
+        "Welding Technology": "Automated Submerged Arc Welding (SAW) continuous line",
+        "Quality Testing (NDT)": "100% Ultrasonic & Radiographic Tested Welds",
+        "Surface Protection": "Shot-blasted to SA 2.5 standard + Zinc Chromate Primer",
+        "Monthly Fabric Capacity": "Up to 750 Metric Tons",
+        "Structural Cambering": "Custom engineered pre-cambering profile",
+        "Max Single Span Length": "Up to 52 meters single-piece girder",
+        "Steel Quality Grade": "ASTM A572 Grade 50 / IS 2062 E350"
+      },
+      "prod-6": {
+        "Construction Method": "Movable scaffolding for in-situ deck casting",
+        "Average Cycle Speed": "7 to 10 Days per 35m Viaduct Span",
+        "Advancement Mechanism": "Hydraulic automatic self-advancing system",
+        "Operational Wind Limit": "Fully operational up to 72 km/h wind speeds",
+        "Falsework Design": "Underslung / Overhead support configurations",
+        "Codes Compliance": "Indian Road Congress (IRC) & Indian Railways Standard Code"
+      }
+    };
+    
+    const specs = PRODUCT_SPECS[productId] || {
+      "Engineering Grade": "Premium Industrial Structural Grade",
+      "Design Standard": "IS / BS / AISC Standards compliant",
+      "Testing Method": "100% Ultrasonic & Load Proof Tested",
+      "Manufacturing Process": "CNC Laser Profile Cutting & Submerged Arc Welding"
+    };
+    
+    specsTable.innerHTML = Object.entries(specs).map(([key, val]) => `
+      <tr>
+        <td class="spec-name">${key}</td>
+        <td class="spec-val">${val}</td>
+      </tr>
+    `).join('');
+  }
+  
+  // Set Product Name in Inquiry Form
+  const formProductInput = document.getElementById('inquiry-product');
+  if (formProductInput) {
+    formProductInput.value = product.name;
+  }
+  
+  // Inquiry Form Handler
+  const inquiryForm = document.getElementById('details-inquiry-form');
+  if (inquiryForm) {
+    inquiryForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const clientName = document.getElementById('inquiry-name').value;
+      const clientEmail = document.getElementById('inquiry-email').value;
+      const clientPhone = document.getElementById('inquiry-phone').value;
+      const clientMsg = document.getElementById('inquiry-message').value;
+      
+      // Save inquiry to localStorage for CMS feedback demonstration
+      const inquiries = JSON.parse(localStorage.getItem('winsteel_inquiries') || '[]');
+      inquiries.push({
+        id: `inq-${Date.now()}`,
+        productName: product.name,
+        productId: product.id,
+        clientName,
+        clientEmail,
+        clientPhone,
+        clientMsg,
+        date: new Date().toISOString()
+      });
+      localStorage.setItem('winsteel_inquiries', JSON.stringify(inquiries));
+      
+      // Show Success Modal / Toast
+      showSuccessToast(product.name, clientName);
+      
+      inquiryForm.reset();
+      if (formProductInput) formProductInput.value = product.name;
+    });
+  }
+  
+  // Related Products Grid
+  const relatedGrid = document.getElementById('related-products-grid');
+  if (relatedGrid && data.products) {
+    const related = data.products
+      .filter(p => p.id !== product.id)
+      .sort((a, b) => {
+        if (a.category === product.category && b.category !== product.category) return -1;
+        if (a.category !== product.category && b.category === product.category) return 1;
+        return 0;
+      })
+      .slice(0, 3);
+    
+    relatedGrid.innerHTML = related.map(p => renderProductCard(p)).join('');
+  }
+  
+  // Populate recent news in footer
+  populateFooterNews(data.news);
+}
+
+function showProductNotFound() {
+  const container = document.querySelector('.product-details-container');
+  const errorContainer = document.getElementById('details-error-state');
+  
+  if (container) container.style.display = 'none';
+  if (errorContainer) {
+    errorContainer.style.display = 'block';
+  }
+}
+
+function showSuccessToast(productName, clientName) {
+  // Create dynamic premium toast / alert popup
+  const toast = document.createElement('div');
+  toast.className = 'custom-success-toast';
+  toast.innerHTML = `
+    <div class="toast-content">
+      <div class="toast-icon"><i class="fa-solid fa-circle-check"></i></div>
+      <div class="toast-text">
+        <h4>Inquiry Submitted Successfully!</h4>
+        <p>Thank you <strong>${clientName}</strong>. Our bridge engineering team will contact you shortly regarding <strong>${productName}</strong>.</p>
+      </div>
+      <button class="toast-close-btn">&times;</button>
+    </div>
+  `;
+  document.body.appendChild(toast);
+  
+  // Add animation class
+  setTimeout(() => toast.classList.add('active'), 50);
+  
+  // Close triggers
+  const closeBtn = toast.querySelector('.toast-close-btn');
+  const dismiss = () => {
+    toast.classList.remove('active');
+    setTimeout(() => toast.remove(), 400);
+  };
+  
+  closeBtn.addEventListener('click', dismiss);
+  setTimeout(dismiss, 7000); // auto dismiss after 7s
+}
