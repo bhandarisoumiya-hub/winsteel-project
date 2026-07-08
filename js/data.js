@@ -1,9 +1,81 @@
 /**
  * AUTO-GENERATED STATIC DATA BUNDLE FOR WINSTEEL WEBSITE
- * Generated on: 2026-07-07T14:21:34.727Z
+ * Generated on: 2026-07-08T05:04:16.239Z
  * This file allows the HTML/CSS/JS frontend to run 100% offline without live API servers.
  */
 window.WINSTEEL_DATA = {
+  "hero": {
+    "title": "ENGINEERING EXCELLENCE SINCE FIVE DECADES",
+    "subtitle": "International quality heavy steel formworks, bridge launching equipment, and custom infrastructure fabrication engineered for precision and durability.",
+    "badgeText": "ENGINEERING EXCELLENCE SINCE FIVE DECADES",
+    "cta1Text": "Explore Products",
+    "cta1Link": "products.html",
+    "cta2Text": "Contact Engineering Team",
+    "cta2Link": "#contact",
+    "bgImage": "uploads/hero-gantry.png"
+  },
+  "about": {
+    "title": "Building India's Infrastructure Heritage",
+    "subtitle": "Pioneers in Customized Bridge Equipment & Formworks",
+    "description": "Winsteel Engineering Works Pvt. Ltd. has been at the forefront of India's infrastructure evolution since 1972. We specialize in designing, engineering, and manufacturing complex heavy steel structures, bridge launching gantries, and customized formwork systems. Operating from sprawling modernized manufacturing facilities in New Delhi, we combine traditional engineering craftsmanship with cutting-edge robotic automation.",
+    "partnerName": "Alpi Sea Ltd.",
+    "partnerWebsite": "http://www.alpisea.com",
+    "partnerDesc": "International Technical Collaboration for designing and manufacturing complex Formworks, Launching Gantries, Form Travellers, Beam Launchers, and Movable Scaffolding Systems.",
+    "image": "uploads/about-factory.png"
+  },
+  "process": [
+    {
+      "id": "proc-1",
+      "step": "01",
+      "title": "Requirement Analysis",
+      "description": "Thorough evaluation of project site geometry, load constraints, and structural specifications by our expert engineering team.",
+      "icon": "fa-clipboard-check"
+    },
+    {
+      "id": "proc-2",
+      "step": "02",
+      "title": "3D CAD/CAM Design",
+      "description": "In-house structural modeling and finite element analysis (FEA) in collaboration with Alpi Sea Ltd. to guarantee zero deflection.",
+      "icon": "fa-compass-drafting"
+    },
+    {
+      "id": "proc-3",
+      "step": "03",
+      "title": "Robotic Fabrication",
+      "description": "Precision manufacturing using automated CNC plasma cutting, automatic H-beam welding lines, and certified submerged arc welding.",
+      "icon": "fa-robot"
+    },
+    {
+      "id": "proc-4",
+      "step": "04",
+      "title": "On-Site Commissioning",
+      "description": "Comprehensive trial assembly, load testing, and expert on-site deployment assistance with trained technicians.",
+      "icon": "fa-helmet-safety"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "test-1",
+      "quote": "Winsteel's custom launching gantries and pier cap moulds were instrumental in delivering our 15 km elevated metro viaduct ahead of schedule. Their technical collaboration with Alpi Sea provides unmatched precision.",
+      "author": "Rajeshwar Rao",
+      "title": "Chief Project Director",
+      "company": "National Metro Rail Corporation"
+    },
+    {
+      "id": "test-2",
+      "quote": "The quality of H-beam welded steel girders and hydraulic form travellers supplied for our Ganges river bridge project exceeded rigorous international standards. Exceptional manufacturing capability and timely delivery.",
+      "author": "Alok Kumar Verma",
+      "title": "Executive Vice President",
+      "company": "Premier Infrastructure Ltd."
+    },
+    {
+      "id": "test-3",
+      "quote": "We have relied on Winsteel for heavy coastal defense Accropode moulds across three major port developments. Their 1,000+ cycle reusability and watertight rubber gasket sealing prevent grout leakage effortlessly.",
+      "author": "Capt. S. K. Nair",
+      "title": "Director of Marine Works",
+      "company": "Coastal Port Development Authority"
+    }
+  ],
   "stats": {
     "yearsExperience": 52,
     "establishedYear": 1972,
@@ -78,35 +150,35 @@ window.WINSTEEL_DATA = {
       "title": "CNC Profile & Plate Cutting",
       "subtitle": "High Precision CNC Cutting",
       "description": "Cutting is the primary requirement of the engineering industry. We have 5 nos. of CNC Profile Cutting Machines, CNC Shearing Machines, CNC Power Presses, and CNC Section Cutting Machines for rapid and precise output.",
-      "image": "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80"
+      "image": "uploads/cnc-cutting.png"
     },
     {
       "id": "fac-2",
       "title": "Heavy Hydraulic Forming",
       "subtitle": "3D Bending & Complex Pier Moulds",
       "description": "Forming is our major activity for custom formworks. Equipped with multiple Hydraulic Presses and Plate Bending machines with single-stroke bending capacity up to 5.0 M long pieces for complex Pier and Piercap Moulds.",
-      "image": "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80"
+      "image": "uploads/hydraulic-forming.png"
     },
     {
       "id": "fac-3",
       "title": "Heavy Handling Infrastructure",
       "subtitle": "45+ Heavy EOT Cranes",
       "description": "Handling is the heart of engineering logistics. Our 5 sprawling premises are equipped with 45+ EOT Cranes, each possessing up to 10 Ton lifting capacity to handle massive steel bridge structures effortlessly.",
-      "image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
+      "image": "uploads/crane-handling.png"
     },
     {
       "id": "fac-4",
       "title": "Robotic & Certified Welding",
       "subtitle": "Submerged Arc & FCAW Welding",
       "description": "Executed by qualified welders using Submerged Arc Welding (SAW) and MIG/Co2 Welding (FCAW). Our advanced welding stations deliver reliable, defect-free joints for mission-critical bridge infrastructure.",
-      "image": "https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=800&q=80"
+      "image": "uploads/robotic-welding.png"
     },
     {
       "id": "fac-5",
       "title": "Automatic Steel Girder Line",
       "subtitle": "Automatic H-Beam Welding Machine",
       "description": "Our dedicated Automatic Steel Girder Manufacturing Facility is fully automated with smart sensors for girder fitment and automated welding, achieving monthly production outputs of 750 MT of high-grade steel girders.",
-      "image": "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=800&q=80"
+      "image": "uploads/about-factory.png"
     }
   ],
   "categories": {
@@ -135,7 +207,7 @@ window.WINSTEEL_DATA = {
       "year": "2024",
       "description": "Design, manufacturing, and commissioning of customized Overhead Launching Gantries and Pier Cap Moulds for a 15 km elevated metro viaduct crossing dense urban intersections.",
       "specs": "Span length: 35m | Girder Weight: 450 MT | Equipment: 2 Launching Gantries",
-      "image": "https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=900&q=80",
+      "image": "uploads/metro-viaduct.png",
       "featured": true
     },
     {
@@ -147,7 +219,7 @@ window.WINSTEEL_DATA = {
       "year": "2023",
       "description": "Supplied heavy-duty custom steel formworks and hydraulic form travellers for deep-water river piers and extra-dosed deck launching in collaboration with Alpi Sea Ltd.",
       "specs": "Total Steel Supplied: 4,200 MT | Pier Height: up to 48m",
-      "image": "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=900&q=80",
+      "image": "uploads/river-bridge.png",
       "featured": true
     },
     {
@@ -159,7 +231,7 @@ window.WINSTEEL_DATA = {
       "year": "2024",
       "description": "Manufactured ultra-precision full-span box girder casting yard moulds and heavy hydraulic lifting spreaders for 40m full-span precast box girders.",
       "specs": "Precision tolerance: ±1.5mm | Cycle time reduction: 35%",
-      "image": "https://images.unsplash.com/photo-1590486803833-1c5dc8ddd4c8?auto=format&fit=crop&w=900&q=80",
+      "image": "uploads/crane-handling.png",
       "featured": true
     },
     {
@@ -171,7 +243,7 @@ window.WINSTEEL_DATA = {
       "year": "2022",
       "description": "Fabrication and rapid deployment of 4m³ to 12m³ steel Accropode moulds and Rock Grapples for heavy breakwater armor unit precasting.",
       "specs": "Mould Units Supplied: 64 sets | Daily stripping output: 128 units",
-      "image": "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=900&q=80",
+      "image": "uploads/metro-viaduct.png",
       "featured": false
     },
     {
@@ -183,7 +255,7 @@ window.WINSTEEL_DATA = {
       "year": "2023",
       "description": "Supplied automatic H-Beam welded composite steel girders and curved deck shuttering systems for a multi-level cloverleaf interchange.",
       "specs": "Girder Span: 52m single piece | Structural Steel: 3,100 MT",
-      "image": "https://images.unsplash.com/photo-1508873696983-2df529a3c882?auto=format&fit=crop&w=900&q=80",
+      "image": "uploads/river-bridge.png",
       "featured": false
     },
     {
@@ -195,7 +267,7 @@ window.WINSTEEL_DATA = {
       "year": "2023",
       "description": "Engineered hydraulic self-advancing tunnel lining formworks and movable falsework systems for twin-tube road tunnels.",
       "specs": "Tunnel Diameter: 11.2m | Hydraulic stripping mechanism",
-      "image": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80",
+      "image": "uploads/hero-gantry.png",
       "featured": false
     }
   ],
@@ -212,7 +284,7 @@ window.WINSTEEL_DATA = {
         "Hydraulic self-launching mechanism with PLC control",
         "Integrated safety locks and load monitoring sensors"
       ],
-      "image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+      "image": "uploads/hero-gantry.png",
       "featured": true
     },
     {
@@ -227,7 +299,7 @@ window.WINSTEEL_DATA = {
         "Built-in access ladders and worker safety working platforms",
         "Interchangeable panels for varying pier heights"
       ],
-      "image": "https://images.unsplash.com/photo-1541888946425-d09bb18086f6?auto=format&fit=crop&w=800&q=80",
+      "image": "uploads/river-bridge.png",
       "featured": true
     },
     {
@@ -242,7 +314,7 @@ window.WINSTEEL_DATA = {
         "Deflection adjustment during concrete pouring",
         "All-weather overhead protection enclosure options"
       ],
-      "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80",
+      "image": "uploads/hydraulic-forming.png",
       "featured": true
     },
     {
@@ -257,7 +329,7 @@ window.WINSTEEL_DATA = {
         "Available sizes from 2.0 m³ to 20.0 m³",
         "High reuse life exceeding 1,000 casting cycles"
       ],
-      "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+      "image": "uploads/metro-viaduct.png",
       "featured": false
     },
     {
@@ -272,7 +344,7 @@ window.WINSTEEL_DATA = {
         "Pre-cambered and shot-blasted to SA 2.5 standard",
         "Monthly output capacity up to 750 MT"
       ],
-      "image": "https://images.unsplash.com/photo-1508873696983-2df529a3c882?auto=format&fit=crop&w=800&q=80",
+      "image": "uploads/robotic-welding.png",
       "featured": false
     },
     {
@@ -287,7 +359,7 @@ window.WINSTEEL_DATA = {
         "Hydraulic opening and closing around bridge columns",
         "High wind-resistance structural stabilization"
       ],
-      "image": "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80",
+      "image": "uploads/crane-handling.png",
       "featured": false
     }
   ],

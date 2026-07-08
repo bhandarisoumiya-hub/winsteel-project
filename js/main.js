@@ -3,10 +3,22 @@
  * Ultra-modern interactive JavaScript with offline support & animated UX
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-  const data = window.WINSTEEL_DATA || {};
+document.addEventListener('DOMContentLoaded', async () => {
+  let data = window.WINSTEEL_DATA;
 
-
+  // Fallback to live server API if WINSTEEL_DATA is missing or empty
+  if (!data || Object.keys(data).length === 0) {
+    try {
+      const res = await fetch('/api/data');
+      if (res.ok) {
+        data = await res.json();
+        window.WINSTEEL_DATA = data;
+      }
+    } catch (e) {
+      console.log('Offline mode: using embedded static bundle');
+    }
+  }
+  data = data || {};
 
   // Determine current page
   const page = document.body.getAttribute('data-page') || 'home';
@@ -32,8 +44,8 @@ function initAnimatedCounters() {
   const speed = 40;
 
   const animate = (counter) => {
-    const target = +counter.getAttribute('data-target');
-    const count = +counter.innerText;
+    const target = +counter.getAttribute('data-target') || 0;
+    const count = +counter.innerText || 0;
     const inc = target / speed;
 
     if (count < target) {
@@ -44,7 +56,6 @@ function initAnimatedCounters() {
     }
   };
 
-  // Run animation immediately or on scroll
   counters.forEach(counter => animate(counter));
 }
 
@@ -52,7 +63,101 @@ function initAnimatedCounters() {
 // HOME PAGE INITIALIZATION
 // ==========================================
 function initHomePage(data) {
-  // Populate Strengths
+  // 1. Populate Hero Banner
+  if (data.hero) {
+    const h = data.hero;
+    const titleElem = document.getElementById('hero-title');
+    const subElem = document.getElementById('hero-subtitle');
+    const badgeElem = document.getElementById('hero-badge');
+    const bgElem = document.getElementById('hero-bg');
+    const cta1 = document.getElementById('hero-cta1');
+    const cta2 = document.getElementById('hero-cta2');
+
+    if (titleElem && h.title) {
+      // Highlight last two words or custom text in gold
+      const parts = h.title.split(' ');
+      if (parts.length > 2) {
+        const lastTwo = parts.splice(-2).join(' ');
+        titleElem.innerHTML = `${parts.join(' ')} <span class="gold-highlight">${lastTwo}</span>`;
+      } else {
+        titleElem.textContent = h.title;
+      }
+    }
+    if (subElem && h.subtitle) subElem.textContent = h.subtitle;
+    if (badgeElem && h.badgeText) badgeElem.innerHTML = `<i class="fa-solid fa-award"></i> ${h.badgeText}`;
+    if (bgElem && h.bgImage) bgElem.src = h.bgImage;
+    if (cta1) {
+      if (h.cta1Text) cta1.innerHTML = `<i class="fa-solid fa-gear"></i> ${h.cta1Text}`;
+      if (h.cta1Link) cta1.href = h.cta1Link;
+    }
+    if (cta2) {
+      if (h.cta2Text) cta2.textContent = h.cta2Text;
+      if (h.cta2Link) cta2.href = h.cta2Link;
+    }
+  }
+
+  // 2. Populate Stats Counter Bar
+  if (data.stats) {
+    const s = data.stats;
+    const yearsElem = document.getElementById('stat-years');
+    const workersElem = document.getElementById('stat-workers');
+    const plotElem = document.getElementById('stat-plot');
+    const capacityElem = document.getElementById('stat-capacity');
+
+    if (yearsElem && s.yearsExperience) yearsElem.setAttribute('data-target', s.yearsExperience);
+    if (workersElem && s.skilledWorkers) {
+      const num = parseInt(s.skilledWorkers) || 550;
+      workersElem.setAttribute('data-target', num);
+    }
+    if (plotElem && s.plotAreaSqFt) {
+      const num = parseInt(s.plotAreaSqFt.replace(/,/g, '')) || 324000;
+      plotElem.setAttribute('data-target', Math.round(num / 1000));
+      plotElem.setAttribute('data-suffix', ',000');
+    }
+    if (capacityElem && s.annualCapacityMT) {
+      const num = parseInt(s.annualCapacityMT.replace(/,/g, '')) || 18000;
+      capacityElem.setAttribute('data-target', Math.round(num / 1000));
+      capacityElem.setAttribute('data-suffix', ',000');
+    }
+  }
+
+  // 3. Populate About & Partner Section
+  if (data.about) {
+    const a = data.about;
+    const titleElem = document.getElementById('about-title');
+    const descElem = document.getElementById('about-desc');
+    const imgMain = document.getElementById('about-img-main');
+    const pName = document.getElementById('about-partner-name');
+    const pDesc = document.getElementById('about-partner-desc');
+    const pWeb = document.getElementById('about-partner-web');
+
+    if (titleElem) titleElem.textContent = a.subtitle || a.title;
+    if (descElem && a.description) {
+      descElem.innerHTML = `<p><strong>WINSTEEL ENGINEERING WORKS PVT. LTD.</strong> ${a.description}</p>`;
+    }
+    if (imgMain && a.image) imgMain.src = a.image;
+    if (pName && a.partnerName) pName.innerHTML = `<i class="fa-solid fa-handshake" style="color: var(--accent-gold);"></i> Technical Associate: ${a.partnerName}`;
+    if (pDesc && a.partnerDesc) pDesc.textContent = a.partnerDesc;
+    if (pWeb && a.partnerWebsite) {
+      pWeb.href = a.partnerWebsite;
+      pWeb.innerHTML = `Visit ${a.partnerName || 'Technical Associate'} Portal <i class="fa-solid fa-arrow-up-right-from-square"></i>`;
+    }
+  }
+
+  // 4. Populate Turnkey Process Workflow
+  const processContainer = document.getElementById('process-container');
+  if (processContainer && data.process) {
+    processContainer.innerHTML = data.process.map(p => `
+      <div class="process-card">
+        <div class="process-step-num">${p.step || '01'}</div>
+        <div class="process-icon"><i class="fa-solid ${p.icon || 'fa-clipboard-list'}"></i></div>
+        <h4>${p.title}</h4>
+        <p>${p.description}</p>
+      </div>
+    `).join('');
+  }
+
+  // 5. Populate Strengths
   const strengthsContainer = document.getElementById('strengths-container');
   if (strengthsContainer && data.strengths) {
     const icons = ['fa-award', 'fa-cogs', 'fa-users-gear', 'fa-crane', 'fa-industry', 'fa-microchip', 'fa-compass-drafting', 'fa-shield-halved', 'fa-truck-fast'];
@@ -67,16 +172,16 @@ function initHomePage(data) {
     `).join('');
   }
 
-  // Populate Facilities / Infrastructure
+  // 6. Populate Facilities / Infrastructure
   const facilitiesContainer = document.getElementById('facilities-container');
   if (facilitiesContainer && data.facilities) {
     facilitiesContainer.innerHTML = data.facilities.map(f => `
       <div class="facility-card">
         <div class="facility-img-box">
-          <img src="${f.image}" alt="${f.title}" loading="lazy">
+          <img src="${f.image}" alt="${f.title}" loading="lazy" onerror="this.src='uploads/about-factory.png'">
         </div>
         <div class="facility-content">
-          <h4>${f.subtitle}</h4>
+          <h4>${f.subtitle || 'Manufacturing Unit'}</h4>
           <h3>${f.title}</h3>
           <p>${f.description}</p>
         </div>
@@ -84,21 +189,42 @@ function initHomePage(data) {
     `).join('');
   }
 
-  // Populate Featured Projects Preview
-  const featProjectsContainer = document.getElementById('featured-projects-grid');
-  if (featProjectsContainer && data.projects) {
-    const featured = data.projects.slice(0, 3);
-    featProjectsContainer.innerHTML = featured.map(p => renderProjectCard(p)).join('');
-  }
-
-  // Populate Featured Products Preview
+  // 7. Populate Featured Products Preview
   const featProductsContainer = document.getElementById('featured-products-grid');
   if (featProductsContainer && data.products) {
     const featured = data.products.slice(0, 3);
     featProductsContainer.innerHTML = featured.map(p => renderProductCard(p)).join('');
   }
 
-  // Populate Recent News in Footer
+  // 8. Populate Featured Projects Preview
+  const featProjectsContainer = document.getElementById('featured-projects-grid');
+  if (featProjectsContainer && data.projects) {
+    const featured = data.projects.slice(0, 3);
+    featProjectsContainer.innerHTML = featured.map(p => renderProjectCard(p)).join('');
+  }
+
+  // 9. Populate Client Testimonials
+  const testimonialsContainer = document.getElementById('testimonials-container');
+  if (testimonialsContainer && data.testimonials) {
+    testimonialsContainer.innerHTML = data.testimonials.map(t => {
+      const initial = (t.author && t.author[0]) || 'C';
+      return `
+        <div class="testimonial-card">
+          <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+          <p>"${t.quote}"</p>
+          <div class="client-author">
+            <div class="author-avatar">${initial}</div>
+            <div>
+              <strong style="display:block; color:#0f172a;">${t.author}</strong>
+              <span style="font-size:13px; color:#64748b;">${t.title} • ${t.company}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // 10. Populate Recent News in Footer
   populateFooterNews(data.news);
 }
 
@@ -115,7 +241,6 @@ function initProductsPage(data) {
 
   const categories = (data.categories && data.categories.products) || ['All', 'Bridge Equipment', 'Formwork Systems', 'Gantry & Launchers', 'Precast Moulds'];
 
-  // Render Filter Tabs
   if (filterTabsContainer) {
     filterTabsContainer.innerHTML = categories.map(cat => `
       <button class="filter-btn ${cat === 'All' ? 'active' : ''}" data-category="${cat}">${cat}</button>
@@ -131,7 +256,6 @@ function initProductsPage(data) {
     });
   }
 
-  // Search Input Listener
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value.toLowerCase().trim();
@@ -234,7 +358,7 @@ function renderProjectCard(p) {
     <div class="card">
       <div class="card-img-wrapper">
         <span class="card-badge">${p.category}</span>
-        <img src="${p.image}" alt="${p.title}" loading="lazy">
+        <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='uploads/metro-viaduct.png'">
       </div>
       <div class="card-content">
         <span class="card-subtitle"><i class="fa-solid fa-location-dot"></i> ${p.location || 'India'} • ${p.year || ''}</span>
@@ -254,7 +378,7 @@ function renderProductCard(p) {
     <div class="card">
       <div class="card-img-wrapper">
         <span class="card-badge">${p.category}</span>
-        <img src="${p.image}" alt="${p.name}" loading="lazy">
+        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='uploads/hero-gantry.png'">
       </div>
       <div class="card-content">
         <span class="card-subtitle"><i class="fa-solid fa-star" style="color: #f3ad1b;"></i> ${p.tagline || 'Engineered Equipment'}</span>

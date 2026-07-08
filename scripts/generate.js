@@ -42,13 +42,53 @@ window.WINSTEEL_DATA = ${JSON.stringify(db, null, 2)};
       fs.writeFileSync(ALT_JSON_PATH, JSON.stringify(db, null, 2), 'utf-8');
     } catch (e) {}
 
+    // Synchronize uploads folder to website/uploads if exists
+    try {
+      const rootUploads = path.join(__dirname, '../uploads');
+      const webUploads = path.join(__dirname, '../website/uploads');
+      if (fs.existsSync(rootUploads)) {
+        fs.mkdirSync(webUploads, { recursive: true });
+        const files = fs.readdirSync(rootUploads);
+        for (const file of files) {
+          const srcFile = path.join(rootUploads, file);
+          const destFile = path.join(webUploads, file);
+          if (fs.statSync(srcFile).isFile()) {
+            fs.copyFileSync(srcFile, destFile);
+          }
+        }
+      }
+
+      // Synchronize HTML, CSS, JS, and Admin to website/ folder for standalone deployment
+      const filesToCopy = ['index.html', 'products.html', 'projects.html'];
+      for (const file of filesToCopy) {
+        const src = path.join(__dirname, '..', file);
+        const dest = path.join(__dirname, '../website', file);
+        if (fs.existsSync(src)) fs.copyFileSync(src, dest);
+      }
+      const dirsToCopy = ['css', 'js', 'admin'];
+      for (const dir of dirsToCopy) {
+        const srcDir = path.join(__dirname, '..', dir);
+        const destDir = path.join(__dirname, '../website', dir);
+        if (fs.existsSync(srcDir)) {
+          fs.cpSync(srcDir, destDir, { recursive: true, force: true });
+        }
+      }
+    } catch (e) {
+      console.log('⚠️ Notice: Could not sync website files:', e.message);
+    }
+
     console.log('✅ Successfully compiled master database into static site!');
     console.log(`📁 JS Bundle Output: ${OUTPUT_JS_PATH}`);
     console.log(`📊 Generated Statistics:`);
+    console.log(`   - Hero Banner: Configured (${db.hero ? 'Yes' : 'No'})`);
+    console.log(`   - About & Heritage: Configured (${db.about ? 'Yes' : 'No'})`);
+    console.log(`   - Process Steps: ${db.process ? db.process.length : 0}`);
+    console.log(`   - Strengths: ${db.strengths ? db.strengths.length : 0}`);
+    console.log(`   - Facilities: ${db.facilities ? db.facilities.length : 0}`);
     console.log(`   - Projects: ${db.projects ? db.projects.length : 0}`);
     console.log(`   - Products: ${db.products ? db.products.length : 0}`);
+    console.log(`   - Testimonials: ${db.testimonials ? db.testimonials.length : 0}`);
     console.log(`   - News Articles: ${db.news ? db.news.length : 0}`);
-    console.log(`   - Facilities: ${db.facilities ? db.facilities.length : 0}`);
     console.log('🚀 Your static website is ready for deployment without any API dependencies!');
     return true;
   } catch (error) {

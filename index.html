@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="home">
-<!-- hii mansi here -->
   <!-- Top Info Bar -->
   <div class="topbar">
     <div class="container topbar-flex">
@@ -46,19 +45,19 @@
     </div>
   </header>
 
-  <!-- Hero Section (Ultra Modern with Floating Visual Cards) -->
+  <!-- Hero Section (Ultra Modern with Floating Visual Cards & Dynamic Binding) -->
   <section class="hero">
     <div class="hero-bg-grid"></div>
     <div class="container hero-grid">
       <div class="hero-content">
-        <div class="hero-tag">
+        <div class="hero-tag" id="hero-badge">
           <i class="fa-solid fa-award"></i> 52 Years of Indian Bridge Engineering Legacy
         </div>
-        <h1>ENGINEERING <span class="gold-highlight">EXCELLENCE</span> SINCE FIVE DECADES</h1>
-        <p>Pioneer and leading manufacturer of custom bridge formwork, launching gantries, movable scaffolding systems, and specialized heavy engineering equipment across India.</p>
+        <h1 id="hero-title">ENGINEERING <span class="gold-highlight">EXCELLENCE</span> SINCE FIVE DECADES</h1>
+        <p id="hero-subtitle">International quality heavy steel formworks, bridge launching equipment, and custom infrastructure fabrication engineered for precision and durability.</p>
         <div class="hero-actions">
-          <a href="products.html" class="btn-hero-primary"><i class="fa-solid fa-gear"></i> Explore Equipment</a>
-          <a href="projects.html" class="btn-hero-outline">View Landmark Projects</a>
+          <a href="products.html" id="hero-cta1" class="btn-hero-primary"><i class="fa-solid fa-gear"></i> Explore Equipment</a>
+          <a href="#contact" id="hero-cta2" class="btn-hero-outline">Contact Engineering Team</a>
         </div>
         <div class="hero-trust-badges">
           <div class="trust-item">
@@ -79,7 +78,7 @@
       </div>
       <div class="hero-visual">
         <div class="hero-main-img">
-          <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=1200&q=80" alt="Winsteel Launching Gantry Bridge Construction">
+          <img id="hero-bg" src="uploads/hero-gantry.png" alt="Winsteel Launching Gantry Bridge Construction">
         </div>
         <div class="hero-floating-card-1">
           <span class="floating-exp-num">52</span>
@@ -88,8 +87,8 @@
         <div class="hero-floating-card-2">
           <div class="floating-icon"><i class="fa-solid fa-shield-halved"></i></div>
           <div>
-            <span style="display:block; font-size:12px; color:#64748b; font-weight:600;">Quality Standard</span>
-            <strong style="font-size:14px; color:#0f172a;">100% Structural Safety</strong>
+            <span style="display:block; font-size:12px; color:#94a3b8; font-weight:600;">Quality Standard</span>
+            <strong style="font-size:14px; color:#fff;">100% Structural Safety</strong>
           </div>
         </div>
       </div>
@@ -100,19 +99,19 @@
   <section class="stats-bar">
     <div class="container stats-grid">
       <div class="stat-box">
-        <h3><span class="count-num" data-target="52" data-suffix="+">52</span>+</h3>
+        <h3><span class="count-num" id="stat-years" data-target="52" data-suffix="+">52</span>+</h3>
         <p>Years of Mastery</p>
       </div>
       <div class="stat-box">
-        <h3><span class="count-num" data-target="550" data-suffix="+">550</span>+</h3>
+        <h3><span class="count-num" id="stat-workers" data-target="550" data-suffix="+">550</span>+</h3>
         <p>Skilled Engineers & Workforce</p>
       </div>
       <div class="stat-box">
-        <h3><span class="count-num" data-target="324" data-suffix=",000">324,000</span> Sft</h3>
+        <h3><span class="count-num" id="stat-plot" data-target="324" data-suffix=",000">324,000</span> Sft</h3>
         <p>Total Manufacturing Area</p>
       </div>
       <div class="stat-box">
-        <h3><span class="count-num" data-target="18" data-suffix=",000">18,000</span> MT</h3>
+        <h3><span class="count-num" id="stat-capacity" data-target="18" data-suffix=",000">18,000</span> MT</h3>
         <p>Annual Steel Capacity</p>
       </div>
     </div>
@@ -128,17 +127,19 @@
       </div>
       <div class="about-grid">
         <div class="about-visual">
-          <img src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1000&q=80" alt="Winsteel Heavy Manufacturing Facility" class="about-img-main">
-          <img src="https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80" alt="CNC Precision Machining" class="about-img-overlap">
+          <img id="about-img-main" src="uploads/about-factory.png" alt="Winsteel Heavy Manufacturing Facility" class="about-img-main">
+          <img src="uploads/cnc-cutting.png" alt="CNC Precision Machining" class="about-img-overlap">
         </div>
         <div class="about-text">
-          <h3>Pioneer in Custom Heavy Bridge Equipment & Formworks</h3>
-          <p><strong>WINSTEEL ENGINEERING WORKS PVT. LTD.</strong> established in the Year 1972, has acquired a high reputation and earned vast experience in Manufacturing Custom made Equipments.</p>
-          <p>We provide end-to-end engineering turnkey services right from understanding the complex project and client's requirement, structural 3D CAD design, precision robotic manufacturing, site installation, commissioning of equipment, and staff training.</p>
+          <h3 id="about-title">52 Years of Precision Structural Steel Fabrication & Launching Systems</h3>
+          <div id="about-desc">
+            <p><strong>WINSTEEL ENGINEERING WORKS PVT. LTD.</strong> established in the Year 1972, has acquired a high reputation and earned vast experience in Manufacturing Custom made Equipments.</p>
+            <p>We provide end-to-end engineering turnkey services right from understanding the complex project and client's requirement, structural 3D CAD design, precision robotic manufacturing, site installation, commissioning of equipment, and staff training.</p>
+          </div>
           <div class="partner-card">
-            <h4><i class="fa-solid fa-handshake" style="color: var(--accent-gold);"></i> Technical Associate: Alpi Sea Ltd.</h4>
-            <p>With the surge in industry demand for world-class technology, we engaged <strong>Alpi Sea Ltd.</strong> as our long-term technical collaborators for complex Form Travellers, Beam Launchers, and Movable Scaffolding Systems.</p>
-            <a href="http://www.alpisea.com" target="_blank" class="partner-link">Visit Technical Associate Portal <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <h4 id="about-partner-name"><i class="fa-solid fa-handshake" style="color: var(--accent-gold);"></i> Technical Associate: Alpi Sea Ltd.</h4>
+            <p id="about-partner-desc">With the surge in industry demand for world-class technology, we engaged <strong>Alpi Sea Ltd.</strong> as our long-term technical collaborators for complex Form Travellers, Beam Launchers, and Movable Scaffolding Systems.</p>
+            <a id="about-partner-web" href="http://www.alpisea.com" target="_blank" class="partner-link">Visit Technical Associate Portal <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
           </div>
         </div>
       </div>
@@ -153,37 +154,12 @@
         <h2>How We Deliver Engineering Excellence</h2>
         <p>A structured 4-step execution workflow designed for high precision and zero site downtime.</p>
       </div>
-      <div class="process-grid">
-        <div class="process-card">
-          <div class="process-step-num">01</div>
-          <div class="process-icon"><i class="fa-solid fa-clipboard-list"></i></div>
-          <h4>Requirement Analysis</h4>
-          <p>Detailed evaluation of bridge span, pier geometry, load tolerances, and site topography.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-step-num">02</div>
-          <div class="process-icon"><i class="fa-solid fa-compass-drafting"></i></div>
-          <h4>3D CAD & Alpi Design</h4>
-          <p>Structural modeling and safety stress analysis in collaboration with Alpi Sea experts.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-step-num">03</div>
-          <div class="process-icon"><i class="fa-solid fa-gears"></i></div>
-          <h4>Robotic Fabrication</h4>
-          <p>Precision CNC cutting, automatic H-Beam assembly, and SAW welding across 5 premises.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-step-num">04</div>
-          <div class="process-icon"><i class="fa-solid fa-user-shield"></i></div>
-          <h4>Site Commissioning</h4>
-          <p>On-site erection, hydraulic trial testing, load validation, and operator training.</p>
-        </div>
-      </div>
+      <div id="process-container" class="process-grid"></div>
     </div>
   </section>
 
-  <!-- Our Strengths Section -->
-  <section class="section-pad">
+  <!-- Our Strengths Section (Luxury Dark Slate Grid) -->
+  <section class="section-pad strengths-section">
     <div class="container">
       <div class="section-header">
         <span class="subheading">WHY CHOOSE US</span>
@@ -244,41 +220,7 @@
         <h2>Trusted by Infrastructure Leaders</h2>
         <p>What engineering directors and project managers say about Winsteel equipment.</p>
       </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
-          <p>"Winsteel's launching gantry for our elevated metro corridor performed flawlessly under tight urban tolerances. Their site erection support was exceptional."</p>
-          <div class="client-author">
-            <div class="author-avatar">R</div>
-            <div>
-              <strong style="display:block; color:#0f172a;">Rajesh Sharma</strong>
-              <span style="font-size:13px; color:#64748b;">Chief Project Director, Metro Rail Corp</span>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
-          <p>"The custom form travellers supplied for our extra-dosed river bridge allowed us to achieve 7-day cycle times with zero concrete honeycomb defects."</p>
-          <div class="client-author">
-            <div class="author-avatar">A</div>
-            <div>
-              <strong style="display:block; color:#0f172a;">Anil Verma</strong>
-              <span style="font-size:13px; color:#64748b;">VP Infrastructure, National Highway JV</span>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
-          <p>"52 years of manufacturing discipline shows in every hydraulic joint and girder weld. Winsteel is our first choice for heavy bridge falsework."</p>
-          <div class="client-author">
-            <div class="author-avatar">V</div>
-            <div>
-              <strong style="display:block; color:#0f172a;">Vikramaditya Rao</strong>
-              <span style="font-size:13px; color:#64748b;">Managing Director, Coastal Bridge Projects</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="testimonials-container" class="testimonials-grid"></div>
     </div>
   </section>
 

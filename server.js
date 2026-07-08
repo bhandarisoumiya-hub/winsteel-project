@@ -30,9 +30,48 @@ function writeDB(data) {
   fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
 }
 
+// Ensure upload directories exist
+const UPLOAD_DIR = path.join(__dirname, 'uploads');
+const WEBSITE_UPLOAD_DIR = path.join(__dirname, 'website/uploads');
+fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+try { fs.mkdirSync(WEBSITE_UPLOAD_DIR, { recursive: true }); } catch (e) {}
+
 // ==========================================
 // REST API ENDPOINTS FOR LOCAL ADMIN CMS
 // ==========================================
+
+// POST endpoint for Image File Uploads (Base64 dataUrl -> local file)
+app.post('/api/upload', (req, res) => {
+  try {
+    const { filename, dataUrl } = req.body;
+    if (!dataUrl || !filename) {
+      return res.status(400).json({ error: 'Missing filename or image data' });
+    }
+
+    // Extract base64 data and mime type
+    const matches = dataUrl.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+      return res.status(400).json({ error: 'Invalid base64 image data' });
+    }
+
+    const imageBuffer = Buffer.from(matches[2], 'base64');
+    const ext = path.extname(filename) || '.png';
+    const uniqueName = `img_${Date.now()}_${Math.round(Math.random() * 1000)}${ext}`;
+    const targetPath = path.join(UPLOAD_DIR, uniqueName);
+    const websiteTargetPath = path.join(WEBSITE_UPLOAD_DIR, uniqueName);
+
+    // Write file to root uploads folder
+    fs.writeFileSync(targetPath, imageBuffer);
+    // Also copy to website uploads folder for offline static bundle
+    try { fs.writeFileSync(websiteTargetPath, imageBuffer); } catch (e) {}
+
+    const fileUrl = `/uploads/${uniqueName}`;
+    res.json({ success: true, url: fileUrl, message: 'Image uploaded successfully to server database!' });
+  } catch (err) {
+    console.error('Upload error:', err);
+    res.status(500).json({ error: 'Failed to save uploaded image: ' + err.message });
+  }
+});
 
 // GET master database
 app.get('/api/data', (req, res) => {
