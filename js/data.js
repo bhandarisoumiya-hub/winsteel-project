@@ -191,10 +191,13 @@ window.WINSTEEL_DATA = {
     ],
     "products": [
       "All",
-      "Bridge Equipment",
-      "Formwork Systems",
-      "Precast Moulds",
-      "Gantry & Launchers"
+      "Formworks and Moulds",
+      "Launching Gantries",
+      "RMC Batching Plant Equipments",
+      "Special Purpose Equipments",
+      "Movable scaffolding system",
+      "Balance Cantilever Systems for Segmental & In-Situ",
+      "Tunnel formworks"
     ]
   },
   "projects": [
@@ -305,7 +308,7 @@ window.WINSTEEL_DATA = {
     {
       "id": "prod-1",
       "name": "Overhead & Underslung Launching Gantries",
-      "category": "Gantry & Launchers",
+      "category": "Launching Gantries",
       "tagline": "Heavy-Duty Span-by-Span Erection Systems",
       "description": "State-of-the-art bridge launching gantries engineered for precast segment or full-span box girder erection. Built with high-grade structural steel and automated hydraulic winching systems.",
       "features": [
@@ -325,7 +328,7 @@ window.WINSTEEL_DATA = {
     {
       "id": "prod-2",
       "name": "Custom Pier & Pier-Cap Formworks",
-      "category": "Formwork Systems",
+      "category": "Formworks and Moulds",
       "tagline": "Precision Seamless Bridge Column Moulds",
       "description": "Tailor-made steel shuttering systems for circular, rectangular, flared, and hammerhead bridge piers and pier caps. Designed for minimal deflection and mirror-like fair-faced concrete finishing.",
       "features": [
@@ -345,7 +348,7 @@ window.WINSTEEL_DATA = {
     {
       "id": "prod-3",
       "name": "Hydraulic Form Travellers",
-      "category": "Bridge Equipment",
+      "category": "Balance Cantilever Systems for Segmental & In-Situ",
       "tagline": "Balanced Cantilever Construction System",
       "description": "Advanced form travellers engineered for long-span balanced cantilever bridge construction over wide rivers, valleys, and deep gorges.",
       "features": [
@@ -365,7 +368,7 @@ window.WINSTEEL_DATA = {
     {
       "id": "prod-4",
       "name": "Accropode & Tetrapod Marine Moulds",
-      "category": "Precast Moulds",
+      "category": "Formworks and Moulds",
       "tagline": "High-Durability Coastal Armor Unit Moulds",
       "description": "Precision two-piece and three-piece steel moulds for precasting Accropodes, Core-locs, and Tetrapods used in breakwaters and coastal defense projects.",
       "features": [
@@ -380,7 +383,7 @@ window.WINSTEEL_DATA = {
     {
       "id": "prod-5",
       "name": "Automatic Welded Steel Girders (H-Beam)",
-      "category": "Bridge Equipment",
+      "category": "Special Purpose Equipments",
       "tagline": "Heavy Composite Bridge Deck Girders",
       "description": "Manufactured on our automated H-Beam welding lines, these custom steel plate girders and box girders provide superior structural integrity for highway and railway steel bridges.",
       "features": [
@@ -395,7 +398,7 @@ window.WINSTEEL_DATA = {
     {
       "id": "prod-6",
       "name": "Movable Scaffolding Systems (MSS)",
-      "category": "Gantry & Launchers",
+      "category": "Movable scaffolding system",
       "tagline": "Rapid Viaduct In-Situ Deck Shuttering",
       "description": "Underslung or overhead self-supporting movable scaffolding systems that allow continuous span-by-span in-situ concrete casting without ground scaffolding.",
       "features": [

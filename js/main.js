@@ -247,7 +247,7 @@ function initProductsPage(data) {
   let currentCategory = 'All';
   let searchQuery = '';
 
-  const categories = (data.categories && data.categories.products) || ['All', 'Bridge Equipment', 'Formwork Systems', 'Gantry & Launchers', 'Precast Moulds'];
+  const categories = (data.categories && data.categories.products) || ['All', 'Formworks and Moulds', 'Launching Gantries', 'RMC Batching Plant Equipments', 'Special Purpose Equipments', 'Movable scaffolding system', 'Balance Cantilever Systems for Segmental & In-Situ', 'Tunnel formworks'];
 
   if (filterTabsContainer) {
     filterTabsContainer.innerHTML = categories.map(cat => `
@@ -394,22 +394,12 @@ function renderProductCard(p) {
   return `
     <div class="card" style="border: 1px solid var(--border-light); background: #ffffff;">
       <a href="product-details.html?id=${p.id}" class="card-img-wrapper">
-        <span class="card-badge">${p.category}</span>
         <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='uploads/hero-gantry.png'">
       </a>
       <div class="card-content" style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
-        <span style="font-size: 11.5px; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.75px; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
-          <i class="fa-solid fa-star"></i> ${p.tagline || 'Engineered Equipment'}
-        </span>
-        
         <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.35;"><a href="product-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.name}</a></h3>
         <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">${p.description}</p>
-        
-        <!-- Elegant Minimalist Quality Tag -->
-        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #475569; margin-top: auto;">
-          <i class="fa-solid fa-circle-check" style="color: var(--accent-gold);"></i>
-          <span>ISO 9001:2015 Quality Standards</span>
-        </div>
+       
         
         <div style="display: flex; justify-content: flex-end; padding-top: 14px; border-top: 1px solid var(--border-light); margin-top: 14px;">
           <a href="product-details.html?id=${p.id}" class="btn-card-link">View Specifications <i class="fa-solid fa-arrow-right"></i></a>
@@ -502,24 +492,24 @@ window.openModal = function (type, id) {
 function initProductDetailsPage(data) {
   const params = new URLSearchParams(window.location.search);
   const productId = params.get('id');
-  
+
   const container = document.querySelector('.product-details-container');
   const errorContainer = document.getElementById('details-error-state');
-  
+
   if (!productId || !data.products) {
     showProductNotFound();
     return;
   }
-  
+
   const product = data.products.find(p => p.id === productId);
   if (!product) {
     showProductNotFound();
     return;
   }
-  
+
   // Dynamic Page Title
   document.title = `${product.name} | Winsteel Engineering Works Pvt. Ltd.`;
-  
+
   // Populate UI elements
   const categoryElem = document.getElementById('details-category');
   const titleElem = document.getElementById('details-title');
@@ -527,7 +517,7 @@ function initProductDetailsPage(data) {
   const descElem = document.getElementById('details-desc');
   const imgElem = document.getElementById('details-img');
   const breadcrumbProduct = document.getElementById('breadcrumb-product-title');
-  
+
   if (categoryElem) categoryElem.textContent = product.category;
   if (titleElem) titleElem.textContent = product.name;
   if (taglineElem) taglineElem.textContent = product.tagline || 'Heavy-Duty Engineering Equipment';
@@ -537,29 +527,29 @@ function initProductDetailsPage(data) {
   const productImages = product.images || (product.image ? [product.image] : []);
   let currentImgIndex = 0;
   let autoSlideTimer = null;
-  
+
   const prevBtn = document.getElementById('details-prev-btn');
   const nextBtn = document.getElementById('details-next-btn');
-  
+
   const updateSliderImage = (index, direction = 'next') => {
     currentImgIndex = index;
     if (imgElem && productImages[currentImgIndex]) {
       const outClass = direction === 'next' ? 'slide-next-out' : 'slide-prev-out';
       const inClass = direction === 'next' ? 'slide-next-in' : 'slide-prev-in';
-      
+
       imgElem.classList.add(outClass);
-      
+
       setTimeout(() => {
         imgElem.src = productImages[currentImgIndex];
         imgElem.classList.remove(outClass);
         imgElem.classList.add(inClass);
-        
+
         setTimeout(() => {
           imgElem.classList.remove(inClass);
         }, 320);
       }, 200);
     }
-    
+
     // Update active class on thumbnails
     document.querySelectorAll('.thumbnail-item').forEach((thumb, idx) => {
       if (idx === currentImgIndex) {
@@ -587,17 +577,17 @@ function initProductDetailsPage(data) {
       autoSlideTimer = null;
     }
   };
-  
+
   if (imgElem) {
     imgElem.src = productImages[0] || 'uploads/hero-gantry.png';
     imgElem.alt = product.name;
     imgElem.onerror = () => { imgElem.src = 'uploads/hero-gantry.png'; };
   }
-  
+
   if (productImages.length > 1) {
     if (prevBtn) prevBtn.style.display = 'flex';
     if (nextBtn) nextBtn.style.display = 'flex';
-    
+
     if (prevBtn) {
       prevBtn.onclick = (e) => {
         e.stopPropagation();
@@ -614,7 +604,7 @@ function initProductDetailsPage(data) {
         startAutoSlide();
       };
     }
-    
+
     // Keyboard navigation for image slider
     document.onkeydown = (e) => {
       if (e.key === 'ArrowLeft') {
@@ -641,7 +631,7 @@ function initProductDetailsPage(data) {
     if (prevBtn) prevBtn.style.display = 'none';
     if (nextBtn) nextBtn.style.display = 'none';
   }
-  
+
   if (galleryThumbs) {
     if (productImages.length > 1) {
       galleryThumbs.innerHTML = productImages.map((img, idx) => `
@@ -655,7 +645,7 @@ function initProductDetailsPage(data) {
       galleryThumbs.style.display = 'none';
     }
   }
-  
+
   window.switchDetailImage = function (elem, idx) {
     if (idx === currentImgIndex) return;
     const direction = idx > currentImgIndex ? 'next' : 'prev';
@@ -664,7 +654,7 @@ function initProductDetailsPage(data) {
   };
 
   if (breadcrumbProduct) breadcrumbProduct.textContent = product.name;
-  
+
   // Features Checklist
   const featuresList = document.getElementById('details-features');
   if (featuresList && product.features) {
@@ -675,7 +665,7 @@ function initProductDetailsPage(data) {
       </li>
     `).join('');
   }
-  
+
   // Generate Dynamic Technical Specifications Table
   const specsTable = document.getElementById('details-specs-table');
   if (specsTable) {
@@ -734,14 +724,14 @@ function initProductDetailsPage(data) {
         "Codes Compliance": "Indian Road Congress (IRC) & Indian Railways Standard Code"
       }
     };
-    
+
     const specs = PRODUCT_SPECS[productId] || {
       "Engineering Grade": "Premium Industrial Structural Grade",
       "Design Standard": "IS / BS / AISC Standards compliant",
       "Testing Method": "100% Ultrasonic & Load Proof Tested",
       "Manufacturing Process": "CNC Laser Profile Cutting & Submerged Arc Welding"
     };
-    
+
     specsTable.innerHTML = Object.entries(specs).map(([key, val]) => `
       <tr>
         <td class="spec-name">${key}</td>
@@ -749,24 +739,24 @@ function initProductDetailsPage(data) {
       </tr>
     `).join('');
   }
-  
+
   // Set Product Name in Inquiry Form
   const formProductInput = document.getElementById('inquiry-product');
   if (formProductInput) {
     formProductInput.value = product.name;
   }
-  
+
   // Inquiry Form Handler
   const inquiryForm = document.getElementById('details-inquiry-form');
   if (inquiryForm) {
     inquiryForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      
+
       const clientName = document.getElementById('inquiry-name').value;
       const clientEmail = document.getElementById('inquiry-email').value;
       const clientPhone = document.getElementById('inquiry-phone').value;
       const clientMsg = document.getElementById('inquiry-message').value;
-      
+
       // Save inquiry to localStorage for CMS feedback demonstration
       const inquiries = JSON.parse(localStorage.getItem('winsteel_inquiries') || '[]');
       inquiries.push({
@@ -780,15 +770,15 @@ function initProductDetailsPage(data) {
         date: new Date().toISOString()
       });
       localStorage.setItem('winsteel_inquiries', JSON.stringify(inquiries));
-      
+
       // Show Success Modal / Toast
       showSuccessToast(product.name, clientName);
-      
+
       inquiryForm.reset();
       if (formProductInput) formProductInput.value = product.name;
     });
   }
-  
+
   // Related Products Grid
   const relatedGrid = document.getElementById('related-products-grid');
   if (relatedGrid && data.products) {
@@ -800,10 +790,10 @@ function initProductDetailsPage(data) {
         return 0;
       })
       .slice(0, 3);
-    
+
     relatedGrid.innerHTML = related.map(p => renderProductCard(p)).join('');
   }
-  
+
   // Populate recent news in footer
   populateFooterNews(data.news);
 }
@@ -811,7 +801,7 @@ function initProductDetailsPage(data) {
 function showProductNotFound() {
   const container = document.querySelector('.product-details-container');
   const errorContainer = document.getElementById('details-error-state');
-  
+
   if (container) container.style.display = 'none';
   if (errorContainer) {
     errorContainer.style.display = 'block';
@@ -833,17 +823,17 @@ function showSuccessToast(productName, clientName) {
     </div>
   `;
   document.body.appendChild(toast);
-  
+
   // Add animation class
   setTimeout(() => toast.classList.add('active'), 50);
-  
+
   // Close triggers
   const closeBtn = toast.querySelector('.toast-close-btn');
   const dismiss = () => {
     toast.classList.remove('active');
     setTimeout(() => toast.remove(), 400);
   };
-  
+
   closeBtn.addEventListener('click', dismiss);
   setTimeout(dismiss, 7000); // auto dismiss after 7s
 }
@@ -854,24 +844,24 @@ function showSuccessToast(productName, clientName) {
 function initProjectDetailsPage(data) {
   const params = new URLSearchParams(window.location.search);
   const projectId = params.get('id');
-  
+
   const container = document.querySelector('.product-details-container');
   const errorContainer = document.getElementById('details-error-state');
-  
+
   if (!projectId || !data.projects) {
     showProjectNotFound();
     return;
   }
-  
+
   const project = data.projects.find(p => p.id === projectId);
   if (!project) {
     showProjectNotFound();
     return;
   }
-  
+
   // Dynamic Page Title
   document.title = `${project.title} | Winsteel Engineering Works Pvt. Ltd.`;
-  
+
   // Populate UI elements
   const categoryElem = document.getElementById('details-category');
   const titleElem = document.getElementById('details-title');
@@ -882,7 +872,7 @@ function initProjectDetailsPage(data) {
   const categoryMetaElem = document.getElementById('details-project-category');
   const imgElem = document.getElementById('details-img');
   const breadcrumbProject = document.getElementById('breadcrumb-project-title');
-  
+
   if (categoryElem) categoryElem.textContent = project.category;
   if (titleElem) titleElem.textContent = project.title;
   if (descElem) descElem.textContent = project.description;
@@ -890,35 +880,35 @@ function initProjectDetailsPage(data) {
   if (locationElem) locationElem.textContent = project.location || 'India';
   if (yearElem) yearElem.textContent = project.year || '2024';
   if (categoryMetaElem) categoryMetaElem.textContent = project.category;
-  
+
   // Handle gallery images
   const galleryThumbs = document.getElementById('details-gallery-thumbnails');
   const projectImages = project.images || (project.image ? [project.image] : []);
   let currentImgIndex = 0;
   let autoSlideTimer = null;
-  
+
   const prevBtn = document.getElementById('details-prev-btn');
   const nextBtn = document.getElementById('details-next-btn');
-  
+
   const updateSliderImage = (index, direction = 'next') => {
     currentImgIndex = index;
     if (imgElem && projectImages[currentImgIndex]) {
       const outClass = direction === 'next' ? 'slide-next-out' : 'slide-prev-out';
       const inClass = direction === 'next' ? 'slide-next-in' : 'slide-prev-in';
-      
+
       imgElem.classList.add(outClass);
-      
+
       setTimeout(() => {
         imgElem.src = projectImages[currentImgIndex];
         imgElem.classList.remove(outClass);
         imgElem.classList.add(inClass);
-        
+
         setTimeout(() => {
           imgElem.classList.remove(inClass);
         }, 320);
       }, 200);
     }
-    
+
     // Update active class on thumbnails
     document.querySelectorAll('.thumbnail-item').forEach((thumb, idx) => {
       if (idx === currentImgIndex) {
@@ -946,17 +936,17 @@ function initProjectDetailsPage(data) {
       autoSlideTimer = null;
     }
   };
-  
+
   if (imgElem) {
     imgElem.src = projectImages[0] || 'uploads/metro-viaduct.png';
     imgElem.alt = project.title;
     imgElem.onerror = () => { imgElem.src = 'uploads/metro-viaduct.png'; };
   }
-  
+
   if (projectImages.length > 1) {
     if (prevBtn) prevBtn.style.display = 'flex';
     if (nextBtn) nextBtn.style.display = 'flex';
-    
+
     if (prevBtn) {
       prevBtn.onclick = (e) => {
         e.stopPropagation();
@@ -973,7 +963,7 @@ function initProjectDetailsPage(data) {
         startAutoSlide();
       };
     }
-    
+
     // Keyboard navigation for image slider
     document.onkeydown = (e) => {
       if (e.key === 'ArrowLeft') {
@@ -1000,7 +990,7 @@ function initProjectDetailsPage(data) {
     if (prevBtn) prevBtn.style.display = 'none';
     if (nextBtn) nextBtn.style.display = 'none';
   }
-  
+
   if (galleryThumbs) {
     if (projectImages.length > 1) {
       galleryThumbs.innerHTML = projectImages.map((img, idx) => `
@@ -1014,7 +1004,7 @@ function initProjectDetailsPage(data) {
       galleryThumbs.style.display = 'none';
     }
   }
-  
+
   window.switchDetailImage = function (elem, idx) {
     if (idx === currentImgIndex) return;
     const direction = idx > currentImgIndex ? 'next' : 'prev';
@@ -1023,7 +1013,7 @@ function initProjectDetailsPage(data) {
   };
 
   if (breadcrumbProject) breadcrumbProject.textContent = project.title;
-  
+
   // Specifications Parsing
   const specsList = document.getElementById('details-specs-list');
   if (specsList && project.specs) {
@@ -1044,20 +1034,20 @@ function initProjectDetailsPage(data) {
   // Inquiry Form Integration
   const inquiryForm = document.getElementById('details-inquiry-form');
   const inquiryProdInput = document.getElementById('inquiry-project');
-  
+
   if (inquiryProdInput) {
     inquiryProdInput.value = project.title;
   }
-  
+
   if (inquiryForm) {
     inquiryForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      
+
       const clientName = document.getElementById('inquiry-name').value.trim();
-      
+
       // Trigger success Toast popup
       showSuccessToast(project.title, clientName);
-      
+
       // Reset form fields
       inquiryForm.reset();
       if (inquiryProdInput) {
@@ -1065,14 +1055,14 @@ function initProjectDetailsPage(data) {
       }
     });
   }
-  
+
   // Populate Related Projects Showcase (up to 3 in same category or catalog)
   const relatedGrid = document.getElementById('related-projects-grid');
   if (relatedGrid && data.projects) {
     const related = data.projects
       .filter(p => p.id !== project.id && (p.category === project.category || p.featured))
       .slice(0, 3);
-      
+
     if (related.length > 0) {
       relatedGrid.innerHTML = related.map(p => renderProjectCard(p)).join('');
     } else {
@@ -1086,7 +1076,7 @@ function initProjectDetailsPage(data) {
 
 function showProjectNotFound() {
   const container = document.querySelector('.product-details-container');
-  
+
   if (container) container.innerHTML = `
     <div style="text-align: center; padding: 120px 20px; background: #fff; border-radius: 24px; border: 1px solid #e2e8f0; max-width: 680px; margin: 40px auto; box-shadow: var(--shadow-md);">
       <i class="fa-solid fa-triangle-exclamation" style="font-size: 64px; color: #ef4444; margin-bottom: 24px;"></i>

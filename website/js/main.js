@@ -247,7 +247,7 @@ function initProductsPage(data) {
   let currentCategory = 'All';
   let searchQuery = '';
 
-  const categories = (data.categories && data.categories.products) || ['All', 'Bridge Equipment', 'Formwork Systems', 'Gantry & Launchers', 'Precast Moulds'];
+  const categories = (data.categories && data.categories.products) || ['All', 'Formworks and Moulds', 'Launching Gantries', 'RMC Batching Plant Equipments', 'Special Purpose Equipments', 'Movable scaffolding system', 'Balance Cantilever Systems for Segmental & In-Situ', 'Tunnel formworks'];
 
   if (filterTabsContainer) {
     filterTabsContainer.innerHTML = categories.map(cat => `
@@ -394,22 +394,13 @@ function renderProductCard(p) {
   return `
     <div class="card" style="border: 1px solid var(--border-light); background: #ffffff;">
       <a href="product-details.html?id=${p.id}" class="card-img-wrapper">
-        <span class="card-badge">${p.category}</span>
         <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='uploads/hero-gantry.png'">
       </a>
       <div class="card-content" style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
-        <span style="font-size: 11.5px; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.75px; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
-          <i class="fa-solid fa-star"></i> ${p.tagline || 'Engineered Equipment'}
-        </span>
-        
         <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.35;"><a href="product-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.name}</a></h3>
         <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">${p.description}</p>
         
-        <!-- Elegant Minimalist Quality Tag -->
-        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #475569; margin-top: auto;">
-          <i class="fa-solid fa-circle-check" style="color: var(--accent-gold);"></i>
-          <span>ISO 9001:2015 Quality Standards</span>
-        </div>
+     
         
         <div style="display: flex; justify-content: flex-end; padding-top: 14px; border-top: 1px solid var(--border-light); margin-top: 14px;">
           <a href="product-details.html?id=${p.id}" class="btn-card-link">View Specifications <i class="fa-solid fa-arrow-right"></i></a>
