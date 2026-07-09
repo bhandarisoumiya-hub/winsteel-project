@@ -36,9 +36,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     initProjectDetailsPage(data);
   }
 
+  // Setup navbar dropdown & active state
+  initNavbarDropdown(page);
+
   // Setup modal close events
   setupModal();
 });
+
 
 // ==========================================
 // ANIMATED NUMBERS COUNTER
