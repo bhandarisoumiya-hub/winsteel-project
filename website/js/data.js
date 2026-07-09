@@ -208,6 +208,11 @@ window.WINSTEEL_DATA = {
       "description": "Design, manufacturing, and commissioning of customized Overhead Launching Gantries and Pier Cap Moulds for a 15 km elevated metro viaduct crossing dense urban intersections.",
       "specs": "Span length: 35m | Girder Weight: 450 MT | Equipment: 2 Launching Gantries",
       "image": "uploads/metro-viaduct.png",
+      "images": [
+        "uploads/metro-viaduct.png",
+        "uploads/about-factory.png",
+        "uploads/cnc-cutting.png"
+      ],
       "featured": true
     },
     {
@@ -220,6 +225,11 @@ window.WINSTEEL_DATA = {
       "description": "Supplied heavy-duty custom steel formworks and hydraulic form travellers for deep-water river piers and extra-dosed deck launching in collaboration with Alpi Sea Ltd.",
       "specs": "Total Steel Supplied: 4,200 MT | Pier Height: up to 48m",
       "image": "uploads/river-bridge.png",
+      "images": [
+        "uploads/river-bridge.png",
+        "uploads/hydraulic-forming.png",
+        "uploads/crane-handling.png"
+      ],
       "featured": true
     },
     {
@@ -232,6 +242,11 @@ window.WINSTEEL_DATA = {
       "description": "Manufactured ultra-precision full-span box girder casting yard moulds and heavy hydraulic lifting spreaders for 40m full-span precast box girders.",
       "specs": "Precision tolerance: ±1.5mm | Cycle time reduction: 35%",
       "image": "uploads/crane-handling.png",
+      "images": [
+        "uploads/crane-handling.png",
+        "uploads/robotic-welding.png",
+        "uploads/about-factory.png"
+      ],
       "featured": true
     },
     {
@@ -244,6 +259,11 @@ window.WINSTEEL_DATA = {
       "description": "Fabrication and rapid deployment of 4m³ to 12m³ steel Accropode moulds and Rock Grapples for heavy breakwater armor unit precasting.",
       "specs": "Mould Units Supplied: 64 sets | Daily stripping output: 128 units",
       "image": "uploads/metro-viaduct.png",
+      "images": [
+        "uploads/metro-viaduct.png",
+        "uploads/hydraulic-forming.png",
+        "uploads/cnc-cutting.png"
+      ],
       "featured": false
     },
     {
@@ -256,6 +276,11 @@ window.WINSTEEL_DATA = {
       "description": "Supplied automatic H-Beam welded composite steel girders and curved deck shuttering systems for a multi-level cloverleaf interchange.",
       "specs": "Girder Span: 52m single piece | Structural Steel: 3,100 MT",
       "image": "uploads/river-bridge.png",
+      "images": [
+        "uploads/river-bridge.png",
+        "uploads/crane-handling.png",
+        "uploads/robotic-welding.png"
+      ],
       "featured": false
     },
     {
@@ -268,6 +293,11 @@ window.WINSTEEL_DATA = {
       "description": "Engineered hydraulic self-advancing tunnel lining formworks and movable falsework systems for twin-tube road tunnels.",
       "specs": "Tunnel Diameter: 11.2m | Hydraulic stripping mechanism",
       "image": "uploads/hero-gantry.png",
+      "images": [
+        "uploads/hero-gantry.png",
+        "uploads/river-bridge.png",
+        "uploads/metro-viaduct.png"
+      ],
       "featured": false
     }
   ],

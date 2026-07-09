@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     initProjectsPage(data);
   } else if (page === 'product-details') {
     initProductDetailsPage(data);
+  } else if (page === 'project-details') {
+    initProjectDetailsPage(data);
   }
 
   // Setup modal close events
@@ -357,18 +359,27 @@ function initProjectsPage(data) {
 // ==========================================
 function renderProjectCard(p) {
   return `
-    <div class="card">
-      <div class="card-img-wrapper">
+    <div class="card" style="border: 1px solid var(--border-light); background: #ffffff;">
+      <a href="project-details.html?id=${p.id}" class="card-img-wrapper">
         <span class="card-badge">${p.category}</span>
         <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='uploads/metro-viaduct.png'">
-      </div>
-      <div class="card-content">
-        <span class="card-subtitle"><i class="fa-solid fa-location-dot"></i> ${p.location || 'India'} • ${p.year || ''}</span>
-        <h3>${p.title}</h3>
-        <p>${p.description}</p>
-        <div class="card-footer">
-          <span style="font-size: 13.5px; font-weight: 700; color: #475569;"><i class="fa-solid fa-user-tie"></i> ${p.client || 'Winsteel Client'}</span>
-          <button class="btn-card" onclick="openModal('project', '${p.id}')">Case Study <i class="fa-solid fa-arrow-right"></i></button>
+      </a>
+      <div class="card-content" style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
+        <span style="font-size: 11.5px; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.75px; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+          <i class="fa-solid fa-location-dot"></i> ${p.location || 'India'} &bull; ${p.year || ''}
+        </span>
+        
+        <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.35;"><a href="project-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.title}</a></h3>
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">${p.description}</p>
+        
+        <!-- Elegant Minimalist Client Tag -->
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #475569; margin-top: auto;">
+          <i class="fa-solid fa-user-tie" style="color: var(--accent-gold);"></i>
+          <span>${p.client || 'Winsteel Client'}</span>
+        </div>
+        
+        <div style="display: flex; justify-content: flex-end; padding-top: 14px; border-top: 1px solid var(--border-light); margin-top: 14px;">
+          <a href="project-details.html?id=${p.id}" class="btn-card-link">Explore Case Study <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
@@ -377,18 +388,27 @@ function renderProjectCard(p) {
 
 function renderProductCard(p) {
   return `
-    <div class="card">
+    <div class="card" style="border: 1px solid var(--border-light); background: #ffffff;">
       <a href="product-details.html?id=${p.id}" class="card-img-wrapper">
         <span class="card-badge">${p.category}</span>
         <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='uploads/hero-gantry.png'">
       </a>
-      <div class="card-content">
-        <span class="card-subtitle"><i class="fa-solid fa-star" style="color: #f3ad1b;"></i> ${p.tagline || 'Engineered Equipment'}</span>
-        <h3><a href="product-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.name}</a></h3>
-        <p>${p.description}</p>
-        <div class="card-footer">
-          <span style="font-size: 13px; font-weight: 700; color: #004680; background: #eff6ff; padding: 4px 12px; border-radius: 20px;">Heavy Duty Spec</span>
-          <a href="product-details.html?id=${p.id}" class="btn-card">View Specs <i class="fa-solid fa-arrow-right"></i></a>
+      <div class="card-content" style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
+        <span style="font-size: 11.5px; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.75px; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+          <i class="fa-solid fa-star"></i> ${p.tagline || 'Engineered Equipment'}
+        </span>
+        
+        <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.35;"><a href="product-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.name}</a></h3>
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">${p.description}</p>
+        
+        <!-- Elegant Minimalist Quality Tag -->
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #475569; margin-top: auto;">
+          <i class="fa-solid fa-circle-check" style="color: var(--accent-gold);"></i>
+          <span>ISO 9001:2015 Quality Standards</span>
+        </div>
+        
+        <div style="display: flex; justify-content: flex-end; padding-top: 14px; border-top: 1px solid var(--border-light); margin-top: 14px;">
+          <a href="product-details.html?id=${p.id}" class="btn-card-link">View Specifications <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
@@ -517,14 +537,23 @@ function initProductDetailsPage(data) {
   const prevBtn = document.getElementById('details-prev-btn');
   const nextBtn = document.getElementById('details-next-btn');
   
-  const updateSliderImage = (index) => {
+  const updateSliderImage = (index, direction = 'next') => {
     currentImgIndex = index;
     if (imgElem && productImages[currentImgIndex]) {
-      imgElem.classList.add('image-switching');
+      const outClass = direction === 'next' ? 'slide-next-out' : 'slide-prev-out';
+      const inClass = direction === 'next' ? 'slide-next-in' : 'slide-prev-in';
+      
+      imgElem.classList.add(outClass);
+      
       setTimeout(() => {
         imgElem.src = productImages[currentImgIndex];
-        imgElem.classList.remove('image-switching');
-      }, 120);
+        imgElem.classList.remove(outClass);
+        imgElem.classList.add(inClass);
+        
+        setTimeout(() => {
+          imgElem.classList.remove(inClass);
+        }, 320);
+      }, 200);
     }
     
     // Update active class on thumbnails
@@ -543,7 +572,7 @@ function initProductDetailsPage(data) {
     if (productImages.length > 1) {
       autoSlideTimer = setInterval(() => {
         const nextIdx = (currentImgIndex + 1) % productImages.length;
-        updateSliderImage(nextIdx);
+        updateSliderImage(nextIdx, 'next');
       }, 5000);
     }
   };
@@ -569,7 +598,7 @@ function initProductDetailsPage(data) {
       prevBtn.onclick = (e) => {
         e.stopPropagation();
         const prevIdx = (currentImgIndex - 1 + productImages.length) % productImages.length;
-        updateSliderImage(prevIdx);
+        updateSliderImage(prevIdx, 'prev');
         startAutoSlide();
       };
     }
@@ -577,7 +606,7 @@ function initProductDetailsPage(data) {
       nextBtn.onclick = (e) => {
         e.stopPropagation();
         const nextIdx = (currentImgIndex + 1) % productImages.length;
-        updateSliderImage(nextIdx);
+        updateSliderImage(nextIdx, 'next');
         startAutoSlide();
       };
     }
@@ -586,11 +615,11 @@ function initProductDetailsPage(data) {
     document.onkeydown = (e) => {
       if (e.key === 'ArrowLeft') {
         const prevIdx = (currentImgIndex - 1 + productImages.length) % productImages.length;
-        updateSliderImage(prevIdx);
+        updateSliderImage(prevIdx, 'prev');
         startAutoSlide();
       } else if (e.key === 'ArrowRight') {
         const nextIdx = (currentImgIndex + 1) % productImages.length;
-        updateSliderImage(nextIdx);
+        updateSliderImage(nextIdx, 'next');
         startAutoSlide();
       }
     };
@@ -624,7 +653,9 @@ function initProductDetailsPage(data) {
   }
   
   window.switchDetailImage = function (elem, idx) {
-    updateSliderImage(idx);
+    if (idx === currentImgIndex) return;
+    const direction = idx > currentImgIndex ? 'next' : 'prev';
+    updateSliderImage(idx, direction);
     startAutoSlide();
   };
 
@@ -811,4 +842,253 @@ function showSuccessToast(productName, clientName) {
   
   closeBtn.addEventListener('click', dismiss);
   setTimeout(dismiss, 7000); // auto dismiss after 7s
+}
+
+// ==========================================
+// PROJECT DETAILS PAGE INITIALIZATION
+// ==========================================
+function initProjectDetailsPage(data) {
+  const params = new URLSearchParams(window.location.search);
+  const projectId = params.get('id');
+  
+  const container = document.querySelector('.product-details-container');
+  const errorContainer = document.getElementById('details-error-state');
+  
+  if (!projectId || !data.projects) {
+    showProjectNotFound();
+    return;
+  }
+  
+  const project = data.projects.find(p => p.id === projectId);
+  if (!project) {
+    showProjectNotFound();
+    return;
+  }
+  
+  // Dynamic Page Title
+  document.title = `${project.title} | Winsteel Engineering Works Pvt. Ltd.`;
+  
+  // Populate UI elements
+  const categoryElem = document.getElementById('details-category');
+  const titleElem = document.getElementById('details-title');
+  const descElem = document.getElementById('details-desc');
+  const clientElem = document.getElementById('details-client');
+  const locationElem = document.getElementById('details-location');
+  const yearElem = document.getElementById('details-year');
+  const categoryMetaElem = document.getElementById('details-project-category');
+  const imgElem = document.getElementById('details-img');
+  const breadcrumbProject = document.getElementById('breadcrumb-project-title');
+  
+  if (categoryElem) categoryElem.textContent = project.category;
+  if (titleElem) titleElem.textContent = project.title;
+  if (descElem) descElem.textContent = project.description;
+  if (clientElem) clientElem.textContent = project.client || 'National Authority';
+  if (locationElem) locationElem.textContent = project.location || 'India';
+  if (yearElem) yearElem.textContent = project.year || '2024';
+  if (categoryMetaElem) categoryMetaElem.textContent = project.category;
+  
+  // Handle gallery images
+  const galleryThumbs = document.getElementById('details-gallery-thumbnails');
+  const projectImages = project.images || (project.image ? [project.image] : []);
+  let currentImgIndex = 0;
+  let autoSlideTimer = null;
+  
+  const prevBtn = document.getElementById('details-prev-btn');
+  const nextBtn = document.getElementById('details-next-btn');
+  
+  const updateSliderImage = (index, direction = 'next') => {
+    currentImgIndex = index;
+    if (imgElem && projectImages[currentImgIndex]) {
+      const outClass = direction === 'next' ? 'slide-next-out' : 'slide-prev-out';
+      const inClass = direction === 'next' ? 'slide-next-in' : 'slide-prev-in';
+      
+      imgElem.classList.add(outClass);
+      
+      setTimeout(() => {
+        imgElem.src = projectImages[currentImgIndex];
+        imgElem.classList.remove(outClass);
+        imgElem.classList.add(inClass);
+        
+        setTimeout(() => {
+          imgElem.classList.remove(inClass);
+        }, 320);
+      }, 200);
+    }
+    
+    // Update active class on thumbnails
+    document.querySelectorAll('.thumbnail-item').forEach((thumb, idx) => {
+      if (idx === currentImgIndex) {
+        thumb.classList.add('active');
+        thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      } else {
+        thumb.classList.remove('active');
+      }
+    });
+  };
+
+  const startAutoSlide = () => {
+    stopAutoSlide();
+    if (projectImages.length > 1) {
+      autoSlideTimer = setInterval(() => {
+        const nextIdx = (currentImgIndex + 1) % projectImages.length;
+        updateSliderImage(nextIdx, 'next');
+      }, 5000);
+    }
+  };
+
+  const stopAutoSlide = () => {
+    if (autoSlideTimer) {
+      clearInterval(autoSlideTimer);
+      autoSlideTimer = null;
+    }
+  };
+  
+  if (imgElem) {
+    imgElem.src = projectImages[0] || 'uploads/metro-viaduct.png';
+    imgElem.alt = project.title;
+    imgElem.onerror = () => { imgElem.src = 'uploads/metro-viaduct.png'; };
+  }
+  
+  if (projectImages.length > 1) {
+    if (prevBtn) prevBtn.style.display = 'flex';
+    if (nextBtn) nextBtn.style.display = 'flex';
+    
+    if (prevBtn) {
+      prevBtn.onclick = (e) => {
+        e.stopPropagation();
+        const prevIdx = (currentImgIndex - 1 + projectImages.length) % projectImages.length;
+        updateSliderImage(prevIdx, 'prev');
+        startAutoSlide();
+      };
+    }
+    if (nextBtn) {
+      nextBtn.onclick = (e) => {
+        e.stopPropagation();
+        const nextIdx = (currentImgIndex + 1) % projectImages.length;
+        updateSliderImage(nextIdx, 'next');
+        startAutoSlide();
+      };
+    }
+    
+    // Keyboard navigation for image slider
+    document.onkeydown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        const prevIdx = (currentImgIndex - 1 + projectImages.length) % projectImages.length;
+        updateSliderImage(prevIdx, 'prev');
+        startAutoSlide();
+      } else if (e.key === 'ArrowRight') {
+        const nextIdx = (currentImgIndex + 1) % projectImages.length;
+        updateSliderImage(nextIdx, 'next');
+        startAutoSlide();
+      }
+    };
+
+    // Pause on hover over image card
+    const imgCard = document.querySelector('.details-img-card');
+    if (imgCard) {
+      imgCard.onmouseenter = stopAutoSlide;
+      imgCard.onmouseleave = startAutoSlide;
+    }
+
+    // Start auto slide
+    startAutoSlide();
+  } else {
+    if (prevBtn) prevBtn.style.display = 'none';
+    if (nextBtn) nextBtn.style.display = 'none';
+  }
+  
+  if (galleryThumbs) {
+    if (projectImages.length > 1) {
+      galleryThumbs.innerHTML = projectImages.map((img, idx) => `
+        <div class="thumbnail-item ${idx === 0 ? 'active' : ''}" onclick="switchDetailImage(this, ${idx})">
+          <img src="${img}" alt="${project.title} View ${idx + 1}" onerror="this.src='uploads/metro-viaduct.png'">
+        </div>
+      `).join('');
+      galleryThumbs.style.display = 'flex';
+    } else {
+      galleryThumbs.innerHTML = '';
+      galleryThumbs.style.display = 'none';
+    }
+  }
+  
+  window.switchDetailImage = function (elem, idx) {
+    if (idx === currentImgIndex) return;
+    const direction = idx > currentImgIndex ? 'next' : 'prev';
+    updateSliderImage(idx, direction);
+    startAutoSlide();
+  };
+
+  if (breadcrumbProject) breadcrumbProject.textContent = project.title;
+  
+  // Specifications Parsing
+  const specsList = document.getElementById('details-specs-list');
+  if (specsList && project.specs) {
+    const specItems = project.specs.split('|');
+    specsList.innerHTML = specItems.map(spec => {
+      const parts = spec.split(':');
+      const label = parts[0] ? parts[0].trim() : 'Spec';
+      const val = parts[1] ? parts[1].trim() : '';
+      return `
+        <div class="project-spec-item">
+          <span class="spec-label">${label}</span>
+          <span class="spec-val">${val || 'Compliant'}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Inquiry Form Integration
+  const inquiryForm = document.getElementById('details-inquiry-form');
+  const inquiryProdInput = document.getElementById('inquiry-project');
+  
+  if (inquiryProdInput) {
+    inquiryProdInput.value = project.title;
+  }
+  
+  if (inquiryForm) {
+    inquiryForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const clientName = document.getElementById('inquiry-name').value.trim();
+      
+      // Trigger success Toast popup
+      showSuccessToast(project.title, clientName);
+      
+      // Reset form fields
+      inquiryForm.reset();
+      if (inquiryProdInput) {
+        inquiryProdInput.value = project.title;
+      }
+    });
+  }
+  
+  // Populate Related Projects Showcase (up to 3 in same category or catalog)
+  const relatedGrid = document.getElementById('related-projects-grid');
+  if (relatedGrid && data.projects) {
+    const related = data.projects
+      .filter(p => p.id !== project.id && (p.category === project.category || p.featured))
+      .slice(0, 3);
+      
+    if (related.length > 0) {
+      relatedGrid.innerHTML = related.map(p => renderProjectCard(p)).join('');
+    } else {
+      // Fallback: slice any first 3 projects
+      relatedGrid.innerHTML = data.projects.filter(p => p.id !== project.id).slice(0, 3).map(p => renderProjectCard(p)).join('');
+    }
+  }
+
+  populateFooterNews(data.news);
+}
+
+function showProjectNotFound() {
+  const container = document.querySelector('.product-details-container');
+  
+  if (container) container.innerHTML = `
+    <div style="text-align: center; padding: 120px 20px; background: #fff; border-radius: 24px; border: 1px solid #e2e8f0; max-width: 680px; margin: 40px auto; box-shadow: var(--shadow-md);">
+      <i class="fa-solid fa-triangle-exclamation" style="font-size: 64px; color: #ef4444; margin-bottom: 24px;"></i>
+      <h2 style="font-size: 28px; color: #0f172a; margin-bottom: 12px;">Case Study Not Found</h2>
+      <p style="color: #64748b; font-size: 17px; margin-bottom: 30px;">The requested infrastructure project cannot be retrieved from the database, or does not exist.</p>
+      <a href="projects.html" class="btn-inquiry" style="display: inline-block; padding: 12px 30px;"><i class="fa-solid fa-arrow-left"></i> Return to Projects Portfolio</a>
+    </div>
+  `;
 }
