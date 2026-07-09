@@ -1,3 +1,5 @@
+const API_BASE = (typeof window !== 'undefined' && (window.location.port === '4000' || window.location.port === '4001')) ? '' : 'http://localhost:4000';
+
 let db = {
   projects: [],
   products: [],
@@ -73,32 +75,34 @@ function switchTab(tabId) {
 // Fetch complete database
 async function fetchDatabase() {
   try {
-    const res = await fetch('/api/data');
-    if (!res.ok) throw new Error('Network error');
+    const res = await fetch(API_BASE + '/api/data');
+    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
     db = await res.json();
     renderAll();
   } catch (err) {
-    showToast('Failed to load database from server. Ensure local Express server is running.', true);
+    showToast('Failed to load database from server. Ensure the local Express server is running on port 4000 (npm start).', true);
   }
 }
 
 // Save complete database back to server
 async function saveDatabase(customMsg = 'Database updated and offline static site regenerated!') {
   try {
-    const res = await fetch('/api/data', {
+    const res = await fetch(API_BASE + '/api/data', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(db)
     });
-    const data = await res.json();
-    if (res.ok) {
-      showToast(customMsg);
-      renderAll();
-    } else {
-      showToast(data.error || 'Failed to save database', true);
+    if (!res.ok) {
+      const errText = await res.text();
+      let errMsg = 'Failed to save database';
+      try { errMsg = JSON.parse(errText).error || errMsg; } catch(e) {}
+      throw new Error(errMsg);
     }
+    const data = await res.json();
+    showToast(customMsg);
+    renderAll();
   } catch (err) {
-    showToast('Failed to save to server.', true);
+    showToast('Failed to save to server: ' + err.message, true);
   }
 }
 
@@ -162,13 +166,16 @@ async function handleImageUpload(inputElem, targetInputId, previewImgId) {
     const dataUrl = e.target.result;
     showToast('⏳ Uploading image file to server database...');
     try {
-      const res = await fetch('/api/upload', {
+      const res = await fetch(API_BASE + '/api/upload', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ filename: file.name, dataUrl })
       });
+      if (!res.ok) {
+        throw new Error(`Server returned HTTP ${res.status}. Please make sure the backend server is running on port 4000.`);
+      }
       const data = await res.json();
-      if (res.ok && data.url) {
+      if (data.url) {
         document.getElementById(targetInputId).value = data.url;
         if (targetInputId === 'product-image') {
           const textarea = document.getElementById('product-images');
@@ -192,7 +199,7 @@ async function handleImageUpload(inputElem, targetInputId, previewImgId) {
         showToast(data.error || 'Upload failed', true);
       }
     } catch (err) {
-      showToast('Upload error: ' + err.message, true);
+      showToast('Upload error: ' + err.message + '. Ensure the local server is started (npm start) on port 4000.', true);
     }
   };
   reader.readAsDataURL(file);
@@ -516,8 +523,8 @@ function renderProductsTable() {
     <tr>
       <td><img src="${p.image}" alt="${p.name}" onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=100'"></td>
       <td><strong>${p.name}</strong></td>
-      <td><span style="background: rgba(251,191,36,0.15); color: #fbbf24; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;">${p.category}</span></td>
-      <td>${p.tagline || '-'}</td>
+      <td><span style="background: rgba(251,191,36,0.15); color: #fbbf24; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;">${p.item || p.category || ''}</span></td>
+      <td>${p.client || '-'} <br><small style="color: #94a3b8;">${p.year || ''}</small></td>
       <td>
         <div class="action-btns">
           <button class="btn-icon" onclick="editProduct('${p.id}')"><i class="fa-solid fa-pen"></i></button>
@@ -538,18 +545,17 @@ function openProductModal(id = null) {
     if (!p) return;
     document.getElementById('modal-product-title').textContent = 'Edit Product';
     document.getElementById('product-id').value = p.id;
-    document.getElementById('product-name').value = p.name;
-    document.getElementById('product-category').value = p.category;
-    document.getElementById('product-tagline').value = p.tagline || '';
+    document.getElementById('product-name').value = p.name || '';
+    document.getElementById('product-item').value = p.item || p.category || '';
+    document.getElementById('product-client').value = p.client || '';
+    document.getElementById('product-year').value = p.year || '';
     document.getElementById('product-image').value = p.image || '';
-    document.getElementById('product-images').value = (p.images || [p.image || '']).join('\n');
-    document.getElementById('product-features').value = (p.features || []).join('\n');
     document.getElementById('product-description').value = p.description || '';
     if (preview && p.image) { preview.src = p.image; preview.style.display = 'block'; }
   } else {
     document.getElementById('modal-product-title').textContent = 'Add New Product';
     document.getElementById('product-id').value = '';
-    document.getElementById('product-images').value = '';
+    document.getElementById('product-year').value = new Date().getFullYear();
   }
   document.getElementById('modal-product').classList.remove('hidden');
 }
@@ -566,22 +572,20 @@ function deleteProduct(id) {
 function saveProduct(e) {
   e.preventDefault();
   const id = document.getElementById('product-id').value;
-  const featuresRaw = document.getElementById('product-features').value;
-  const features = featuresRaw.split('\n').map(f => f.trim()).filter(f => f.length > 0);
-
-  const imagesRaw = document.getElementById('product-images').value;
-  const images = imagesRaw.split('\n').map(img => img.trim()).filter(img => img.length > 0);
-  const coverImage = images[0] || document.getElementById('product-image').value || '';
+  const coverImage = document.getElementById('product-image').value || '';
 
   const item = {
     id: id || 'prod_' + Date.now(),
     name: document.getElementById('product-name').value,
-    category: document.getElementById('product-category').value,
-    tagline: document.getElementById('product-tagline').value,
+    category: document.getElementById('product-item').value,
+    item: document.getElementById('product-item').value,
+    tagline: 'Heavy-Duty Engineering Equipment',
     image: coverImage,
-    images: images.length > 0 ? images : [coverImage],
-    features: features,
+    images: [coverImage],
+    features: ['CNC Precision Machining', 'Robotic Welded Steel Joints', 'Hydraulic Load Tested', 'Easy Site Assembly & Reusability'],
     description: document.getElementById('product-description').value,
+    client: document.getElementById('product-client').value,
+    year: document.getElementById('product-year').value,
     featured: true
   };
 
@@ -849,14 +853,10 @@ async function triggerStaticGeneration() {
   btn.disabled = true;
 
   try {
-    const res = await fetch('/api/generate', { method: 'POST' });
+    const res = await fetch(API_BASE + '/api/generate', { method: 'POST' });
+    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
     const data = await res.json();
-    
-    if (res.ok) {
-      showToast('⚡ Standalone Static Website Generated successfully!');
-    } else {
-      showToast(data.error || 'Generation failed', true);
-    }
+    showToast('⚡ Standalone Static Website Generated successfully!');
   } catch (err) {
     showToast('Failed to trigger generation.', true);
   } finally {
@@ -881,13 +881,16 @@ async function handleGalleryUpload(inputElem) {
         reader.readAsDataURL(file);
       });
 
-      const res = await fetch('/api/upload', {
+      const res = await fetch(API_BASE + '/api/upload', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ filename: file.name, dataUrl })
       });
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
       const data = await res.json();
-      if (res.ok && data.url) {
+      if (data.url) {
         urls.push(data.url);
       }
     } catch (err) {
@@ -915,6 +918,6 @@ async function handleGalleryUpload(inputElem) {
       showToast(`✅ Uploaded ${urls.length} gallery image(s) and added to gallery list!`);
     }
   } else {
-    showToast('❌ Gallery upload failed or no images uploaded.', true);
+    showToast('❌ Gallery upload failed. Ensure the local Node.js server (npm start) is running on port 4000.', true);
   }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css?v=1.1">
 </head>
+
 <body data-page="projects">
 
   <!-- Common Reusable Header (Loaded from js/components.js) -->
@@ -17,7 +19,8 @@
     <div class="container">
       <span class="subheading">PROVEN TRACK RECORD</span>
       <h1>Projects</h1>
-      <p>Discover our proven track record delivering mission-critical construction equipment for elevated metro rail viaducts, marine projects, and landmark highway bridges.</p>
+      <p>Discover our proven track record delivering mission-critical construction equipment for elevated metro rail
+        viaducts, marine projects, and landmark highway bridges.</p>
     </div>
   </section>
 
@@ -34,11 +37,61 @@
     </div>
   </section>
 
-  <!-- Common Reusable Footer & Modal (Loaded from js/components.js) -->
-  <div id="app-footer"></div>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2>Winsteel Engineering Works</h2>
+          <p>Pioneer & leading Formwork, Falsework, and Bridge Construction Equipment manufacturer in India since 1972.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home Overview</a></li>
+            <li><a href="products.html">Equipment Products</a></li>
+            <li><a href="projects.html">Infrastructure Projects</a></li>
+            <li><a href="admin/index.html" target="_blank" style="color: var(--accent-gold);"><i
+                  class="fa-solid fa-lock"></i> CMS Admin Portal</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Project Sectors</h4>
+          <ul class="footer-links">
+            <li><a href="projects.html"><i class="fa-solid fa-bridge"></i> Highway Bridges</a></li>
+            <li><a href="projects.html"><i class="fa-solid fa-train-subway"></i> Elevated Metro Rail</a></li>
+            <li><a href="projects.html"><i class="fa-solid fa-water"></i> Marine & Sea Ports</a></li>
+            <li><a href="projects.html"><i class="fa-solid fa-cubes"></i> Special Structures</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Recent News</h4>
+          <ul id="footer-news-list" class="news-widget"></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 WinSteel Engineering Works Pvt. Ltd. All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Container -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-box">
+      <button id="modal-close" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
 
   <script src="js/data.js"></script>
   <script src="js/components.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>

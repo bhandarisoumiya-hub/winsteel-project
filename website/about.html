@@ -27,7 +27,7 @@
   </section>
 
   <!-- Main About Content -->
-  <section class="section-pad" style="background-color: #fff;">
+  <section class="section-pad" style="background-color: #fff; padding-bottom: 50px;">
     <div class="container">
       <div class="about-grid">
         <div class="about-visual">
@@ -55,29 +55,33 @@
   </section>
 
   <!-- Key Statistics Highlights -->
-  <section class="stats-bar" style="margin: 40px 0;">
+  <section class="stats-bar">
     <div class="container stats-grid">
       <div class="stat-box">
-        <h3>52+</h3>
+        <div class="stat-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+        <h3><span class="count-num" id="stat-years" data-target="52" data-suffix="+">52</span></h3>
         <p>Years of Proven Legacy</p>
       </div>
       <div class="stat-box">
-        <h3>550+</h3>
+        <div class="stat-icon"><i class="fa-solid fa-users-gear"></i></div>
+        <h3><span class="count-num" id="stat-workers" data-target="550" data-suffix="+">550</span></h3>
         <p>Skilled Engineers & Workforce</p>
       </div>
       <div class="stat-box">
-        <h3>324,000 Sft</h3>
+        <div class="stat-icon"><i class="fa-solid fa-industry"></i></div>
+        <h3><span class="count-num" id="stat-plot" data-target="324" data-suffix=",000">324,000</span> <span class="unit">Sft</span></h3>
         <p>Sprawling Manufacturing Area</p>
       </div>
       <div class="stat-box">
-        <h3>18,000 MT</h3>
+        <div class="stat-icon"><i class="fa-solid fa-weight-hanging"></i></div>
+        <h3><span class="count-num" id="stat-capacity" data-target="18" data-suffix=",000">18,000</span> <span class="unit">MT</span></h3>
         <p>Annual Steel Fabrication Capacity</p>
       </div>
     </div>
   </section>
 
   <!-- Manufacturing Powerhouse Overview -->
-  <section class="section-pad" style="background-color: #f8fafc;">
+  <section class="section-pad" style="background-color: #f8fafc; padding-top: 50px;">
     <div class="container">
       <div class="section-header">
         <span class="subheading">MANUFACTURING POWERHOUSE</span>
@@ -85,21 +89,156 @@
         <p>Five specialized units equipped with 45+ Heavy EOT Cranes to execute massive structural fabrication with sub-millimeter precision.</p>
       </div>
 
-      <div class="values-grid">
-        <div class="value-card">
-          <div class="value-icon"><i class="fa-solid fa-gears"></i></div>
-          <h3>Unit 1: CNC Plasma & Machining</h3>
-          <p>Equipped with heavy-duty CNC plasma cutting machines, multi-axis drilling stations, and automated plate preparation units for precision raw material processing.</p>
+      <div class="infra-showcase">
+        <!-- Tabs Navigation -->
+        <div class="infra-tabs">
+          <div class="infra-tab active" data-unit="unit-1">
+            <div class="infra-tab-num">01</div>
+            <div class="infra-tab-content">
+              <h3>CNC Plasma & Machining</h3>
+              <span>Unit 1 Raw Processing</span>
+            </div>
+            <div class="infra-tab-icon"><i class="fa-solid fa-gears"></i></div>
+          </div>
+          <div class="infra-tab" data-unit="unit-2">
+            <div class="infra-tab-num">02</div>
+            <div class="infra-tab-content">
+              <h3>Heavy Hydraulic Forming</h3>
+              <span>Unit 2 Shaping & Bending</span>
+            </div>
+            <div class="infra-tab-icon"><i class="fa-solid fa-crane"></i></div>
+          </div>
+          <div class="infra-tab" data-unit="unit-3">
+            <div class="infra-tab-num">03</div>
+            <div class="infra-tab-content">
+              <h3>Robotic Welding & Assembly</h3>
+              <span>Unit 3 & 4 Structural Integration</span>
+            </div>
+            <div class="infra-tab-icon"><i class="fa-solid fa-robot"></i></div>
+          </div>
         </div>
-        <div class="value-card">
-          <div class="value-icon"><i class="fa-solid fa-crane"></i></div>
-          <h3>Unit 2: Heavy Hydraulic Forming</h3>
-          <p>Featuring 500-ton hydraulic press brakes, heavy girder bending rolls, and specialized structural forming presses capable of handling complex bridge girder geometries.</p>
-        </div>
-        <div class="value-card">
-          <div class="value-icon"><i class="fa-solid fa-robot"></i></div>
-          <h3>Unit 3 & 4: Robotic Welding & EOT Bays</h3>
-          <p>Sprawling assembly bays with 45+ heavy EOT cranes (up to 50 MT capacity each) and automated submerged arc & robotic MIG welding stations ensuring 100% weld integrity.</p>
+
+        <!-- Showcase Viewport -->
+        <div class="infra-viewport">
+          <!-- View 1 -->
+          <div class="infra-view active" id="unit-1">
+            <div class="infra-view-image" style="background-image: linear-gradient(to right, rgba(9, 14, 26, 0.92) 30%, rgba(9, 14, 26, 0.4) 100%), url('uploads/cnc-cutting.png');">
+              <div class="infra-view-content">
+                <span class="infra-tag">Unit 1 Raw Processing</span>
+                <h2>CNC Plasma & Cutting Complex</h2>
+                <p>Equipped with high-precision CNC plasma cutting lines and multi-axis drilling stations for processing thick structural steel plates with sub-millimeter accuracy.</p>
+                
+                <div class="infra-specs-grid">
+                  <div class="infra-spec">
+                    <span class="label">Processing Capacity</span>
+                    <strong class="val">5 CNC Profile Cutters</strong>
+                  </div>
+                  <div class="infra-spec">
+                    <span class="label">Steel Plate Thickness</span>
+                    <strong class="val">Up to 120mm Sheets</strong>
+                  </div>
+                  <div class="infra-spec">
+                    <span class="label">Daily Cutting Output</span>
+                    <strong class="val">50 Metric Tons</strong>
+                  </div>
+                  <div class="infra-spec">
+                    <span class="label">Automation System</span>
+                    <strong class="val">CAD/CAM Integrated</strong>
+                  </div>
+                </div>
+
+                <div class="capacity-bar-wrapper">
+                  <div class="capacity-bar-label">
+                    <span>Operational Efficiency</span>
+                    <span>98.4%</span>
+                  </div>
+                  <div class="capacity-bar-track">
+                    <div class="capacity-bar-fill" style="width: 98.4%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- View 2 -->
+          <div class="infra-view" id="unit-2">
+            <div class="infra-view-image" style="background-image: linear-gradient(to right, rgba(9, 14, 26, 0.92) 30%, rgba(9, 14, 26, 0.4) 100%), url('uploads/about-factory.png');">
+              <div class="infra-view-content">
+                <span class="infra-tag">Unit 2 Shaping & Bending</span>
+                <h2>Heavy Hydraulic Forming Bay</h2>
+                <p>Featuring 500-ton hydraulic press brakes, heavy plate bending rolls, and structural forming presses capable of shaping complex bridge shutters and pier moulds.</p>
+                
+                <div class="infra-specs-grid">
+                  <div class="infra-spec">
+                    <span class="label">Press Capacity</span>
+                    <strong class="val">500 Tons Single Stroke</strong>
+                  </div>
+                  <div class="infra-spec">
+                    <span class="label">Max Bending Length</span>
+                    <strong class="val">Up to 6.0 Meters</strong>
+                  </div>
+                  <div class="infra-spec">
+                    <span class="label">Tolerance Limit</span>
+                    <strong class="val">Accurate to ±0.5mm</strong>
+                  </div>
+                  <div class="infra-spec">
+                    <span class="label">Mould Engineering</span>
+                    <strong class="val">Segmental & Hammerhead</strong>
+                  </div>
+                </div>
+
+                <div class="capacity-bar-wrapper">
+                  <div class="capacity-bar-label">
+                    <span>Operational Efficiency</span>
+                    <span>95.8%</span>
+                  </div>
+                  <div class="capacity-bar-track">
+                    <div class="capacity-bar-fill" style="width: 95.8%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- View 3 -->
+          <div class="infra-view" id="unit-3">
+            <div class="infra-view-image" style="background-image: linear-gradient(to right, rgba(9, 14, 26, 0.92) 30%, rgba(9, 14, 26, 0.4) 100%), url('uploads/hero-gantry.png');">
+              <div class="infra-view-content">
+                <span class="infra-tag">Unit 3 & 4 Assembly</span>
+                <h2>Robotic Welding & Assembly Bays</h2>
+                <p>Sprawling assembly bays with 45+ heavy EOT cranes (up to 50 MT capacity each) and automated submerged arc & robotic MIG welding stations ensuring 100% weld integrity.</p>
+                
+                <div class="infra-specs-grid">
+                  <div class="infra-spec">
+                    <span class="label">Lifting Capacity</span>
+                    <strong class="val">45+ Cranes (up to 50 MT)</strong>
+                  </div>
+                  <div class="infra-spec">
+                    <span class="label">Welding Standards</span>
+                    <strong class="val">ASME & EN ISO Certified</strong>
+                  </div>
+                  <div class="infra-spec">
+                    <span class="label">Annual Output</span>
+                    <strong class="val">18,000 Metric Tons</strong>
+                  </div>
+                  <div class="infra-spec">
+                    <span class="label">Quality Check</span>
+                    <strong class="val">100% NDT (UT/RT) Tested</strong>
+                  </div>
+                </div>
+
+                <div class="capacity-bar-wrapper">
+                  <div class="capacity-bar-label">
+                    <span>Operational Efficiency</span>
+                    <span>99.2%</span>
+                  </div>
+                  <div class="capacity-bar-track">
+                    <div class="capacity-bar-fill" style="width: 99.2%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

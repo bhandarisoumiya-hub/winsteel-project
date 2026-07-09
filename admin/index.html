@@ -357,9 +357,9 @@
               <thead>
                 <tr>
                   <th>Image</th>
-                  <th>Equipment Name</th>
-                  <th>Category</th>
-                  <th>Tagline</th>
+                  <th>Title</th>
+                  <th>Item</th>
+                  <th>Client & Year</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -525,34 +525,30 @@
         <input type="hidden" id="product-id">
         <div class="form-row">
           <div class="form-group">
-            <label>Equipment / Product Name</label>
+            <label>Title</label>
             <input type="text" id="product-name" required>
           </div>
           <div class="form-group">
-            <label>Category</label>
-            <select id="product-category" required>
-              <option value="Formworks and Moulds">Formworks and Moulds</option>
-              <option value="Launching Gantries">Launching Gantries</option>
-              <option value="RMC Batching Plant Equipments">RMC Batching Plant Equipments</option>
-              <option value="Special Purpose Equipments">Special Purpose Equipments</option>
-              <option value="Movable scaffolding system">Movable scaffolding system</option>
-              <option value="Balance Cantilever Systems for Segmental & In-Situ">Balance Cantilever Systems for Segmental & In-Situ</option>
-              <option value="Tunnel formworks">Tunnel formworks</option>
-            </select>
+            <label>Item</label>
+            <input type="text" id="product-item" required>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label>Tagline / Subtitle</label>
-            <input type="text" id="product-tagline" required>
+            <label>Client Name</label>
+            <input type="text" id="product-client" required>
           </div>
           <div class="form-group">
-            <label>Cover Image URL / Path (First item in gallery)</label>
-            <input type="text" id="product-image" required>
+            <label>Year</label>
+            <input type="text" id="product-year" required>
           </div>
         </div>
         <div class="form-group">
-          <label>Upload Cover Image File to Database</label>
+          <label>Image URL / Database Path</label>
+          <input type="text" id="product-image" required>
+        </div>
+        <div class="form-group">
+          <label>Upload Image File</label>
           <div class="upload-dropzone" onclick="document.getElementById('product-file').click()">
             <i class="fa-solid fa-cloud-arrow-up"></i>
             <p>Click to select image file from computer</p>
@@ -563,23 +559,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Product Gallery Images List (One path / URL per line. The first line acts as the main cover.)</label>
-          <textarea id="product-images" rows="3" placeholder="uploads/image1.png&#10;uploads/image2.png" required></textarea>
-        </div>
-        <div class="form-group">
-          <label>Upload & Add Image(s) to Gallery</label>
-          <div class="upload-dropzone" onclick="document.getElementById('product-gallery-file').click()">
-            <i class="fa-solid fa-images"></i>
-            <p>Click to select one or more images from computer (appended to gallery text above)</p>
-            <input type="file" id="product-gallery-file" accept="image/*" multiple style="display:none" onchange="handleGalleryUpload(this)">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Key Features (One feature per line)</label>
-          <textarea id="product-features" rows="4" placeholder="Capacity ranging from 250 MT to 1200 MT&#10;Hydraulic self-launching mechanism&#10;PLC control safety locks" required></textarea>
-        </div>
-        <div class="form-group">
-          <label>Detailed Equipment Description</label>
+          <label>Description</label>
           <textarea id="product-description" rows="4" required></textarea>
         </div>
         <div class="modal-footer">

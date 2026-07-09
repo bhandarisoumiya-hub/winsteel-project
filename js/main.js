@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (page === 'home') {
     initHomePage(data);
     initAnimatedCounters();
+  } else if (page === 'about') {
+    initAnimatedCounters();
+    initInfraShowcase();
   } else if (page === 'products') {
     initProductsPage(data);
   } else if (page === 'projects') {
@@ -392,16 +395,33 @@ function renderProjectCard(p) {
 
 function renderProductCard(p) {
   return `
-    <div class="card" style="border: 1px solid var(--border-light); background: #ffffff;">
+    <div class="card" style="border: 1px solid var(--border-light); background: #ffffff; position: relative;">
+      ${p.item || p.category ? `<span class="card-badge">${p.item || p.category}</span>` : ''}
       <a href="product-details.html?id=${p.id}" class="card-img-wrapper">
         <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='uploads/hero-gantry.png'">
       </a>
       <div class="card-content" style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
         <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.35;"><a href="product-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.name}</a></h3>
-        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">${p.description}</p>
-       
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px; flex: 1;">${p.description}</p>
         
-        <div style="display: flex; justify-content: flex-end; padding-top: 14px; border-top: 1px solid var(--border-light); margin-top: 14px;">
+        <!-- Specs Bar: Client and Year -->
+        <div style="display: flex; align-items: center; gap: 14px; margin-top: auto; margin-bottom: 16px; font-size: 13.5px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 14px;">
+          ${p.client ? `
+            <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-navy); font-weight: 600;">
+              <i class="fa-solid fa-user-tie" style="color: var(--accent-gold); font-size: 12.5px;"></i>
+              <span>${p.client}</span>
+            </div>
+          ` : ''}
+          ${p.client && p.year ? `<span style="width: 1px; height: 12px; background: var(--border-light);"></span>` : ''}
+          ${p.year ? `
+            <div style="display: flex; align-items: center; gap: 6px; color: var(--text-muted);">
+              <i class="fa-solid fa-calendar-days" style="color: var(--accent-gold); font-size: 12.5px;"></i>
+              <span>${p.year}</span>
+            </div>
+          ` : ''}
+        </div>
+        
+        <div style="display: flex; justify-content: flex-end; padding-top: 14px; border-top: 1px solid var(--border-light); margin-top: 0;">
           <a href="product-details.html?id=${p.id}" class="btn-card-link">View Specifications <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
@@ -1085,4 +1105,29 @@ function showProjectNotFound() {
       <a href="projects.html" class="btn-inquiry" style="display: inline-block; padding: 12px 30px;"><i class="fa-solid fa-arrow-left"></i> Return to Projects Portfolio</a>
     </div>
   `;
+}
+
+function initInfraShowcase() {
+  const tabs = document.querySelectorAll('.infra-tab');
+  const views = document.querySelectorAll('.infra-view');
+  
+  if (tabs.length === 0) return;
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Deactivate all tabs & views
+      tabs.forEach(t => t.classList.remove('active'));
+      views.forEach(v => v.classList.remove('active'));
+      
+      // Activate clicked tab
+      tab.classList.add('active');
+      
+      // Activate matching view
+      const targetUnit = tab.getAttribute('data-unit');
+      const targetView = document.getElementById(targetUnit);
+      if (targetView) {
+        targetView.classList.add('active');
+      }
+    });
+  });
 }

@@ -59,7 +59,17 @@ window.WINSTEEL_DATA = ${JSON.stringify(db, null, 2)};
       }
 
       // Synchronize HTML, CSS, JS, and Admin to website/ folder for standalone deployment
-      const filesToCopy = ['index.html', 'products.html', 'projects.html', 'product-details.html', 'project-details.html'];
+      const filesToCopy = [
+        'index.html', 
+        'products.html', 
+        'projects.html', 
+        'product-details.html', 
+        'project-details.html', 
+        'core-values.html', 
+        'certificates.html', 
+        'about.html', 
+        'our-history.html'
+      ];
       for (const file of filesToCopy) {
         const src = path.join(__dirname, '..', file);
         const dest = path.join(__dirname, '../website', file);
