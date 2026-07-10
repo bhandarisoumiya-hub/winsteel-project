@@ -25,9 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (page === 'home') {
     initHomePage(data);
-    initAnimatedCounters();
   } else if (page === 'about') {
-    initAnimatedCounters();
     initInfraShowcase();
   } else if (page === 'products') {
     initProductsPage(data);
@@ -39,6 +37,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     initProjectDetailsPage(data);
   }
 
+  // Always initialize animated counters across all pages (Home, About, Core Values, etc.)
+  initAnimatedCounters();
+
   // Setup navbar dropdown & active state
   initNavbarDropdown(page);
 
@@ -48,26 +49,68 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 // ==========================================
-// ANIMATED NUMBERS COUNTER
+// ANIMATED NUMBERS COUNTER (INTERSECTION OBSERVER + FORMATTING)
 // ==========================================
 function initAnimatedCounters() {
   const counters = document.querySelectorAll('.count-num');
-  const speed = 40;
+  if (!counters.length) return;
 
-  const animate = (counter) => {
-    const target = +counter.getAttribute('data-target') || 0;
-    const count = +counter.innerText || 0;
-    const inc = target / speed;
-
-    if (count < target) {
-      counter.innerText = Math.ceil(count + inc);
-      setTimeout(() => animate(counter), 30);
-    } else {
-      counter.innerText = target + (counter.getAttribute('data-suffix') || '');
+  const formatNumber = (num, format) => {
+    if (format === 'comma') {
+      return Math.floor(num).toLocaleString('en-US');
+    } else if (format === 'pad') {
+      return Math.floor(num) < 10 ? '0' + Math.floor(num) : Math.floor(num);
     }
+    return Math.floor(num);
   };
 
-  counters.forEach(counter => animate(counter));
+  const animate = (counter) => {
+    const target = parseFloat(counter.getAttribute('data-target')) || 0;
+    const format = counter.getAttribute('data-format') || '';
+    const prefix = counter.getAttribute('data-prefix') || '';
+    const suffix = counter.getAttribute('data-suffix') || '';
+    const duration = 1600; // 1.6 seconds smooth animation
+    const startTime = performance.now();
+
+    const updateCount = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic for satisfying slowdown
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const currentNum = target * easeProgress;
+
+      if (progress < 1) {
+        counter.innerText = prefix + formatNumber(currentNum, format) + suffix;
+        requestAnimationFrame(updateCount);
+      } else {
+        counter.innerText = prefix + formatNumber(target, format) + suffix;
+      }
+    };
+
+    requestAnimationFrame(updateCount);
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animate(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    counters.forEach(counter => {
+      // Set initial state
+      const format = counter.getAttribute('data-format') || '';
+      const prefix = counter.getAttribute('data-prefix') || '';
+      const suffix = counter.getAttribute('data-suffix') || '';
+      counter.innerText = prefix + formatNumber(0, format) + suffix;
+      observer.observe(counter);
+    });
+  } else {
+    counters.forEach(counter => animate(counter));
+  }
 }
 
 // ==========================================
@@ -171,14 +214,22 @@ function initHomePage(data) {
   // 5. Populate Strengths
   const strengthsContainer = document.getElementById('strengths-container');
   if (strengthsContainer && data.strengths) {
-    const icons = ['fa-award', 'fa-cogs', 'fa-users-gear', 'fa-crane', 'fa-industry', 'fa-microchip', 'fa-compass-drafting', 'fa-shield-halved', 'fa-truck-fast'];
+    const icons = ['fa-award', 'fa-bolt', 'fa-users-gear', 'fa-gears', 'fa-chart-line', 'fa-industry', 'fa-compass-drafting', 'fa-shield-halved', 'fa-truck-fast'];
+    const tags = ['52+ Years Mastery', 'Turnkey Execution', '550+ Skilled Workforce', '10-25 Ton Crane Capacity', '18,000 MT Annual Output', '0.1mm Precision Tolerances', 'Alpi Sea Technical Collab', 'ISO 9001:2015 & NDT Tested', '100% Client Satisfaction'];
     strengthsContainer.innerHTML = data.strengths.map((s, idx) => `
-      <div class="strength-card">
-        <div class="strength-icon">
-          <i class="fa-solid ${icons[idx % icons.length]}"></i>
+      <div class="strength-card ${idx === 8 ? 'gold-card' : ''}">
+        <div class="strength-card-top">
+          <span class="strength-num-badge" ${idx === 8 ? 'style="background:#0f172a; color:#fbbf24;"' : ''}>${(idx + 1).toString().padStart(2, '0')}</span>
+          <div class="strength-icon-circle"><i class="fa-solid ${icons[idx % icons.length]}"></i></div>
         </div>
-        <h4>${s.title}</h4>
-        <p>${s.description}</p>
+        <div class="strength-card-body">
+          <h4>${s.title}</h4>
+          <p>${s.description}</p>
+        </div>
+        <div class="strength-card-footer">
+          <span class="strength-tag" ${idx === 8 ? 'style="background:rgba(15,23,42,0.15); color:#0f172a;"' : ''}><i class="fa-solid fa-check"></i> ${tags[idx % tags.length]}</span>
+          <span class="strength-clean-arrow">→</span>
+        </div>
       </div>
     `).join('');
   }
@@ -1131,3 +1182,22 @@ function initInfraShowcase() {
     });
   });
 }
+
+// ==========================================
+// INTERACTIVE STICKY VISUAL SWITCHER
+// ==========================================
+window.switchStickyImage = function(imgSrc, btnElem) {
+  const imgElem = document.getElementById('sticky-showcase-img');
+  if (imgElem) {
+    imgElem.style.opacity = '0';
+    setTimeout(() => {
+      imgElem.src = imgSrc;
+      imgElem.style.opacity = '1';
+    }, 200);
+  }
+  if (btnElem && btnElem.parentElement) {
+    const tabs = btnElem.parentElement.querySelectorAll('.sticky-tab');
+    tabs.forEach(t => t.classList.remove('active'));
+    btnElem.classList.add('active');
+  }
+};

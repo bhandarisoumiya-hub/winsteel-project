@@ -4051,25 +4051,29 @@ ul {
 }
 
 .about-clean-box::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  background: linear-gradient(90deg, var(--primary-blue), var(--accent-gold), var(--primary-blue-dark));
+  display: none !important;
 }
 
 .about-clean-grid {
   display: grid;
   grid-template-columns: 1.32fr 0.88fr;
   gap: 46px;
-  align-items: start;
+  align-items: stretch !important;
+  position: relative;
 }
 
 .about-side-visual-col {
+  position: relative;
+  height: 100%;
+}
+
+.about-side-sticky-wrapper {
   position: sticky;
-  top: 100px;
+  top: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 20;
 }
 
 .about-side-visual {
@@ -4540,5 +4544,759 @@ ul {
   }
   .about-clean-box, .partner-modern-card {
     padding: 26px 20px;
+  }
+}
+
+/* ==========================================
+ * EXECUTIVE CORPORATE NARRATIVE & STICKY SHOWCASE
+ * ========================================== */
+.about-section-header {
+  margin-bottom: 34px;
+}
+
+.about-pill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(2, 132, 199, 0.08);
+  color: #0284c7;
+  font-size: 12.5px;
+  font-weight: 800;
+  border-radius: 30px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+
+.about-main-title {
+  font-size: 34px;
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.25;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.about-title-divider {
+  width: 80px;
+  height: 4px;
+  background: var(--accent-gold);
+  border-radius: 2px;
+}
+
+.about-cards-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.about-story-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 32px 36px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  display: flex;
+  gap: 24px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-story-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.09);
+  border-color: #cbd5e1;
+}
+
+.about-story-card.featured-story {
+  border-left: 6px solid var(--primary-blue);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.about-story-card.collab-card {
+  border: 1.5px solid #bae6fd;
+  background: #f0f9ff;
+}
+
+.story-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: #f1f5f9;
+  color: var(--primary-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.about-story-card:hover .story-card-icon {
+  background: var(--primary-blue);
+  color: #ffffff;
+  transform: scale(1.08) rotate(-4deg);
+}
+
+.about-story-card.featured-story .story-card-icon {
+  background: rgba(2, 132, 199, 0.12);
+  color: #0284c7;
+}
+
+.about-story-card.collab-card .story-card-icon {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.story-card-body {
+  flex-grow: 1;
+}
+
+.story-step-badge {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.story-card-body h3 {
+  font-size: 21px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.story-card-body p {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+
+.story-card-body p:last-child {
+  margin-bottom: 0;
+}
+
+.story-lead {
+  font-size: 16px !important;
+  color: #1e293b !important;
+  font-weight: 500;
+}
+
+.story-grid-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.feature-item i {
+  color: #10b981;
+  font-size: 15px;
+}
+
+.story-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.story-tag {
+  padding: 5px 12px;
+  background: #e2e8f0;
+  color: #334155;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.btn-story-collab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #0284c7;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+.btn-story-collab:hover {
+  background: #0369a1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+  color: #ffffff;
+}
+
+/* Sticky Visual Gallery Tabs */
+.sticky-visual-tabs {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 15;
+  display: flex;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.82);
+  padding: 6px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sticky-tab {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.sticky-tab:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sticky-tab.active {
+  background: var(--accent-gold);
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+
+/* Sticky Trust & Capacity Stat Box */
+.sticky-trust-card {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.12);
+}
+
+.sticky-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sticky-trust-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.sticky-trust-item strong {
+  display: block;
+  font-size: 16.5px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.sticky-trust-item span {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* Numbered Strength Card Header & Footer */
+.strength-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.strength-num-badge {
+  font-size: 13px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: #64748b;
+  letter-spacing: 0.5px;
+}
+
+.strength-card-body {
+  flex-grow: 1;
+}
+
+.strength-card-body h3, .strength-card-body h4 {
+  font-size: 19px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.strength-card-body p {
+  font-size: 14.5px;
+  color: #475569;
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+.strength-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.strength-tag {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.strength-tag i {
+  color: #10b981;
+}
+
+@media (max-width: 992px) {
+  .about-story-card {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .story-grid-features {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================
+ * WORLD-CLASS MANUFACTURING FACILITIES & CORE VALUES
+ * ========================================== */
+
+/* 1. Sleek Infrastructure Overview Band */
+.facility-metrics-strip {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 36px 44px;
+  margin: -40px auto 50px auto;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
+}
+
+.facility-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  align-items: center;
+}
+
+.facility-metric-box {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  position: relative;
+}
+
+.facility-metric-box:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -16px;
+  top: 15%;
+  height: 70%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.facility-metric-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.facility-metric-info h3 {
+  font-size: 26px;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 2px;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.facility-metric-info p {
+  font-size: 13.5px;
+  color: #94a3b8;
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* 2. Compact 2x2 Operations Grid (Cutting, Forming, Handling, Welding) */
+.operations-premium-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 36px;
+}
+
+.facility-op-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.facility-op-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
+  border-color: #94a3b8;
+}
+
+.facility-op-header {
+  position: relative;
+  height: 250px;
+  background: #0f172a;
+  overflow: hidden;
+}
+
+.facility-op-header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.facility-op-card:hover .facility-op-header img {
+  transform: scale(1.06);
+}
+
+.facility-op-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.8) 100%);
+}
+
+.facility-op-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: #0f172a;
+  color: var(--accent-gold);
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  z-index: 5;
+}
+
+.facility-op-title-bar {
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+  right: 20px;
+  z-index: 5;
+}
+
+.facility-op-title-bar h3 {
+  font-size: 24px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.facility-op-body {
+  padding: 26px 28px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.facility-op-desc {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 22px;
+  flex-grow: 1;
+}
+
+.op-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.op-check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.op-check-item i {
+  color: #0284c7;
+  font-size: 15px;
+}
+
+/* 3. Flagship Full-Width Masterpiece Showcase (Automatic Steel Girder) */
+.automatic-girder-showcase {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 24px;
+  padding: 50px;
+  margin: 50px 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+  display: grid;
+  grid-template-columns: 1.15fr 1.35fr;
+  gap: 44px;
+  align-items: center;
+}
+
+.automatic-girder-imgbox {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 380px;
+  border: 2px solid var(--accent-gold);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.automatic-girder-imgbox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.flagship-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(245, 158, 11, 0.18);
+  color: var(--accent-gold);
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  margin-bottom: 16px;
+}
+
+.automatic-girder-content h3 {
+  font-size: 32px;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 18px;
+  line-height: 1.2;
+}
+
+.automatic-girder-content p {
+  font-size: 16px;
+  color: #cbd5e1;
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.flagship-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.flagship-stat-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 16px 14px;
+  text-align: center;
+}
+
+.flagship-stat-pill h4 {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--accent-gold);
+  margin-bottom: 4px;
+}
+
+.flagship-stat-pill span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  display: block;
+  line-height: 1.3;
+}
+
+/* 4. Guiding Pillars 3-Column Corporate Grid */
+.guiding-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.pillar-corporate-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 30px 26px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.pillar-corporate-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.08);
+  border-color: #0284c7;
+}
+
+.pillar-number {
+  font-size: 32px;
+  font-weight: 900;
+  color: #e2e8f0;
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  line-height: 1;
+}
+
+.pillar-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.pillar-corporate-card.gold-theme .pillar-icon-box {
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+}
+
+.pillar-corporate-card:hover .pillar-number {
+  color: #cbd5e1;
+}
+
+.pillar-corporate-card h3 {
+  font-size: 19px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.pillar-corporate-card p {
+  font-size: 14.5px;
+  color: #475569;
+  line-height: 1.65;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.pillar-meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0369a1;
+  padding-top: 14px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.pillar-corporate-card.gold-theme .pillar-meta-tag {
+  color: #b45309;
+}
+
+/* Responsive Rules */
+@media (max-width: 992px) {
+  .facility-metrics-grid,
+  .automatic-girder-showcase,
+  .guiding-pillars-grid {
+    grid-template-columns: 1fr;
+  }
+  .operations-premium-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .facility-metric-box:not(:last-child)::after {
+    display: none;
+  }
+  .automatic-girder-showcase {
+    padding: 34px 24px;
+  }
+  .automatic-girder-imgbox {
+    height: 260px;
+  }
+}
+
+@media (max-width: 576px) {
+  .facility-metrics-strip {
+    padding: 26px 20px;
+  }
+  .flagship-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .facility-op-header {
+    height: 210px;
   }
 }
