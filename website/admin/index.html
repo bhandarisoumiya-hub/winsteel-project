@@ -145,8 +145,8 @@
               <div class="upload-dropzone" onclick="document.getElementById('hero-file').click()">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
                 <p>Click to select an image file from your computer</p>
-                <input type="file" id="hero-file" accept="image/*" style="display:none" onchange="handleImageUpload(this, 'hero-bg', 'hero-preview')">
               </div>
+              <input type="file" id="hero-file" accept="image/*" style="opacity: 0; width: 0; height: 0; position: absolute; z-index: -1;" onchange="handleImageUpload(this, 'hero-bg', 'hero-preview')">
               <div class="img-preview-box">
                 <img id="hero-preview" src="" alt="Hero Preview" style="max-height: 120px; display: none; margin-top: 10px; border-radius: 8px;">
               </div>
@@ -206,8 +206,8 @@
               <div class="upload-dropzone" onclick="document.getElementById('about-file').click()">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
                 <p>Click to select an image file from your computer</p>
-                <input type="file" id="about-file" accept="image/*" style="display:none" onchange="handleImageUpload(this, 'about-image', 'about-preview')">
               </div>
+              <input type="file" id="about-file" accept="image/*" style="opacity: 0; width: 0; height: 0; position: absolute; z-index: -1;" onchange="handleImageUpload(this, 'about-image', 'about-preview')">
               <div class="img-preview-box">
                 <img id="about-preview" src="" alt="About Preview" style="max-height: 120px; display: none; margin-top: 10px; border-radius: 8px;">
               </div>
@@ -358,8 +358,7 @@
                 <tr>
                   <th>Image</th>
                   <th>Title</th>
-                  <th>Item</th>
-                  <th>Client & Year</th>
+                  <th>Description</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -382,8 +381,8 @@
                 <tr>
                   <th>Image</th>
                   <th>Project Title</th>
-                  <th>Category</th>
-                  <th>Client & Location</th>
+                  <th>Items</th>
+                  <th>Client Name</th>
                   <th>Year</th>
                   <th>Actions</th>
                 </tr>
@@ -458,53 +457,38 @@
             <input type="text" id="project-title" required>
           </div>
           <div class="form-group">
-            <label>Category</label>
-            <select id="project-category" required>
-              <option value="Highway Bridges">Highway Bridges</option>
-              <option value="Metro Rail">Metro Rail</option>
-              <option value="Special Structures">Special Structures</option>
-              <option value="Marine & Ports">Marine & Ports</option>
-            </select>
+            <label>Items</label>
+            <input type="text" id="project-items" placeholder="e.g. Formwork, Gantry, Falsework" required>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label>Client Authority</label>
+            <label>Client Name</label>
             <input type="text" id="project-client" required>
           </div>
-          <div class="form-group">
-            <label>Location</label>
-            <input type="text" id="project-location" required>
-          </div>
-        </div>
-        <div class="form-row">
           <div class="form-group">
             <label>Completion Year</label>
             <input type="text" id="project-year" required>
           </div>
-          <div class="form-group">
-            <label>Image URL / Database Path</label>
-            <input type="text" id="project-image" required>
-          </div>
+        </div>
+        <div class="form-group">
+          <label>Image URL / Database Path</label>
+          <input type="text" id="project-image" required>
         </div>
         <div class="form-group">
           <label>Upload Project Image File to Database</label>
           <div class="upload-dropzone" onclick="document.getElementById('project-file').click()">
             <i class="fa-solid fa-cloud-arrow-up"></i>
             <p>Click to select image file from computer</p>
-            <input type="file" id="project-file" accept="image/*" style="display:none" onchange="handleImageUpload(this, 'project-image', 'project-preview')">
           </div>
+          <input type="file" id="project-file" accept="image/*" style="opacity: 0; width: 0; height: 0; position: absolute; z-index: -1;" onchange="handleImageUpload(this, 'project-image', 'project-preview')">
           <div class="img-preview-box">
             <img id="project-preview" src="" alt="Project Preview" style="max-height: 100px; display: none; margin-top: 10px; border-radius: 6px;">
           </div>
         </div>
         <div class="form-group">
-          <label>Technical Specifications / Deployment Specs</label>
-          <input type="text" id="project-specs" placeholder="e.g. Span length: 35m | Equipment: 2 Launching Gantries">
-        </div>
-        <div class="form-group">
           <label>Detailed Description</label>
-          <textarea id="project-description" rows="4" required></textarea>
+          <textarea id="project-description" rows="4"></textarea>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary" onclick="closeModal('project')">Cancel</button>
@@ -523,25 +507,9 @@
       </div>
       <form id="form-product" onsubmit="saveProduct(event)">
         <input type="hidden" id="product-id">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Title</label>
-            <input type="text" id="product-name" required>
-          </div>
-          <div class="form-group">
-            <label>Item</label>
-            <input type="text" id="product-item" required>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Client Name</label>
-            <input type="text" id="product-client" required>
-          </div>
-          <div class="form-group">
-            <label>Year</label>
-            <input type="text" id="product-year" required>
-          </div>
+        <div class="form-group">
+          <label>Product Title</label>
+          <input type="text" id="product-name" required>
         </div>
         <div class="form-group">
           <label>Image URL / Database Path</label>
@@ -552,8 +520,8 @@
           <div class="upload-dropzone" onclick="document.getElementById('product-file').click()">
             <i class="fa-solid fa-cloud-arrow-up"></i>
             <p>Click to select image file from computer</p>
-            <input type="file" id="product-file" accept="image/*" style="display:none" onchange="handleImageUpload(this, 'product-image', 'product-preview')">
           </div>
+          <input type="file" id="product-file" accept="image/*" style="opacity: 0; width: 0; height: 0; position: absolute; z-index: -1;" onchange="handleImageUpload(this, 'product-image', 'product-preview')">
           <div class="img-preview-box">
             <img id="product-preview" src="" alt="Product Preview" style="max-height: 100px; display: none; margin-top: 10px; border-radius: 6px;">
           </div>
@@ -598,8 +566,8 @@
           <div class="upload-dropzone" onclick="document.getElementById('facility-file').click()">
             <i class="fa-solid fa-cloud-arrow-up"></i>
             <p>Click to select image file from computer</p>
-            <input type="file" id="facility-file" accept="image/*" style="display:none" onchange="handleImageUpload(this, 'facility-image', 'facility-preview')">
           </div>
+          <input type="file" id="facility-file" accept="image/*" style="opacity: 0; width: 0; height: 0; position: absolute; z-index: -1;" onchange="handleImageUpload(this, 'facility-image', 'facility-preview')">
           <div class="img-preview-box">
             <img id="facility-preview" src="" alt="Facility Preview" style="max-height: 100px; display: none; margin-top: 10px; border-radius: 6px;">
           </div>

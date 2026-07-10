@@ -419,12 +419,12 @@ function renderProjectCard(p) {
   return `
     <div class="card" style="border: 1px solid var(--border-light); background: #ffffff;">
       <a href="project-details.html?id=${p.id}" class="card-img-wrapper">
-        <span class="card-badge">${p.category}</span>
+        <span class="card-badge">${p.items || p.category || 'Infrastructure'}</span>
         <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='uploads/metro-viaduct.png'">
       </a>
       <div class="card-content" style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
         <span style="font-size: 11.5px; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.75px; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
-          <i class="fa-solid fa-location-dot"></i> ${p.location || 'India'} &bull; ${p.year || ''}
+          <i class="fa-solid fa-calendar-days"></i> Completed ${p.year || ''}
         </span>
         
         <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.35;"><a href="project-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.title}</a></h3>
@@ -520,17 +520,12 @@ window.openModal = function (type, id) {
     modalBody.innerHTML = `
       <img src="${p.image}" alt="${p.title}">
       <div class="modal-text">
-        <span class="subheading" style="margin-bottom: 12px;">${p.category} • Completed ${p.year || ''}</span>
+        <span class="subheading" style="margin-bottom: 12px;">${p.items || p.category || 'Infrastructure'} • Completed ${p.year || ''}</span>
         <h2>${p.title}</h2>
         <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; font-weight: 600; color: #004680; font-size: 15px;">
           <span><i class="fa-solid fa-building"></i> Client: ${p.client || 'National Authority'}</span>
-          <span><i class="fa-solid fa-location-dot"></i> Location: ${p.location || 'India'}</span>
         </div>
-        <p style="margin-bottom: 24px; color: #475569; font-size: 16.5px; line-height: 1.7;">${p.description}</p>
-        <div style="background: #f8fafc; padding: 24px; border-radius: 16px; border: 1px solid #e2e8f0; border-left: 6px solid #f3ad1b;">
-          <h4 style="font-size: 16px; color: #0f172a; margin-bottom: 8px;"><i class="fa-solid fa-gears" style="color: #f3ad1b;"></i> Technical Deployment Specifications:</h4>
-          <p style="font-size: 15px; color: #334155; margin: 0;">${p.specs || 'Custom high-grade structural steel formwork, automated hydraulic adjustment, and specialized launching gantry mechanisms built to withstand heavy load tolerances.'}</p>
-        </div>
+        <p style="margin-bottom: 24px; color: #475569; font-size: 16.5px; line-height: 1.7;">${p.description || 'No project description provided.'}</p>
       </div>
     `;
   } else if (type === 'product') {
@@ -1087,19 +1082,25 @@ function initProjectDetailsPage(data) {
 
   // Specifications Parsing
   const specsList = document.getElementById('details-specs-list');
-  if (specsList && project.specs) {
-    const specItems = project.specs.split('|');
-    specsList.innerHTML = specItems.map(spec => {
-      const parts = spec.split(':');
-      const label = parts[0] ? parts[0].trim() : 'Spec';
-      const val = parts[1] ? parts[1].trim() : '';
-      return `
-        <div class="project-spec-item">
-          <span class="spec-label">${label}</span>
-          <span class="spec-val">${val || 'Compliant'}</span>
-        </div>
-      `;
-    }).join('');
+  const specsSection = document.querySelector('.details-specs-section');
+  if (specsList) {
+    if (project.specs) {
+      const specItems = project.specs.split('|');
+      specsList.innerHTML = specItems.map(spec => {
+        const parts = spec.split(':');
+        const label = parts[0] ? parts[0].trim() : 'Spec';
+        const val = parts[1] ? parts[1].trim() : '';
+        return `
+          <div class="project-spec-item">
+            <span class="spec-label">${label}</span>
+            <span class="spec-val">${val || 'Compliant'}</span>
+          </div>
+        `;
+      }).join('');
+      if (specsSection) specsSection.style.display = 'block';
+    } else {
+      if (specsSection) specsSection.style.display = 'none';
+    }
   }
 
   // Inquiry Form Integration

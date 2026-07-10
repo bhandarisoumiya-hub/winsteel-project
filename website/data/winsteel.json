@@ -1,28 +1,6 @@
 {
   "projects": [],
-  "products": [
-    {
-      "id": "prod_1783595051679",
-      "name": " 2nd Narmada Bridge, Bharuch, Gujarat",
-      "category": "Long line Segment Mould",
-      "item": "Long line Segment Mould",
-      "tagline": "Heavy-Duty Engineering Equipment",
-      "image": "/uploads/img_1783595171617_238.jpg",
-      "images": [
-        "/uploads/img_1783595171617_238.jpg"
-      ],
-      "features": [
-        "CNC Precision Machining",
-        "Robotic Welded Steel Joints",
-        "Hydraulic Load Tested",
-        "Easy Site Assembly & Reusability"
-      ],
-      "description": "Hello",
-      "client": "M/S L&T Constructions Ltd.",
-      "year": "1998",
-      "featured": true
-    }
-  ],
+  "products": [],
   "facilities": [],
   "strengths": [],
   "process": [],

@@ -1,4 +1,6 @@
-const API_BASE = (typeof window !== 'undefined' && (window.location.port === '4000' || window.location.port === '4001')) ? '' : 'http://localhost:4000';
+const API_BASE = (typeof window !== 'undefined' && (window.location.port === '4000' || window.location.port === '4001')) 
+  ? '' 
+  : `http://${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:4000`;
 
 let db = {
   projects: [],
@@ -19,6 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchDatabase();
   setupNavigation();
   
+  // Restore saved active tab from localStorage if exists
+  const savedTab = localStorage.getItem('adminActiveTab') || 'dashboard';
+  switchTab(savedTab);
+
   // Generate button listener
   const btnGen = document.getElementById('btn-generate');
   if (btnGen) {
@@ -47,6 +53,9 @@ function setupNavigation() {
 }
 
 function switchTab(tabId) {
+  // Save active tab state
+  localStorage.setItem('adminActiveTab', tabId);
+
   document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
   const activeLi = document.querySelector(`.nav-links li[data-tab="${tabId}"]`);
   if (activeLi) activeLi.classList.add('active');
@@ -137,7 +146,7 @@ function renderRecent() {
         <img src="${p.image}" alt="${p.title}" onerror="this.src='https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=100'">
         <div class="list-item-info">
           <h4>${p.title}</h4>
-          <span>${p.category} • ${p.client || 'Winsteel'}</span>
+          <span>${p.items || p.category || ''} • ${p.client || 'Winsteel'}</span>
         </div>
       </div>
     `).join('');
@@ -158,37 +167,35 @@ function renderRecent() {
 
 // IMAGE UPLOAD HANDLER
 async function handleImageUpload(inputElem, targetInputId, previewImgId) {
+  console.log('📷 handleImageUpload initiated', { targetInputId, previewImgId });
   const file = inputElem.files[0];
-  if (!file) return;
+  if (!file) {
+    console.warn('⚠️ No file chosen');
+    return;
+  }
+  console.log('📁 File details:', { name: file.name, size: file.size, type: file.type });
 
   const reader = new FileReader();
   reader.onload = async (e) => {
     const dataUrl = e.target.result;
+    console.log('💾 File base64 read completed. Sending to API...');
     showToast('⏳ Uploading image file to server database...');
     try {
-      const res = await fetch(API_BASE + '/api/upload', {
+      const uploadUrl = API_BASE + '/api/upload';
+      console.log('📡 Sending POST to:', uploadUrl);
+      const res = await fetch(uploadUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ filename: file.name, dataUrl })
       });
+      console.log('📥 Response status:', res.status);
       if (!res.ok) {
         throw new Error(`Server returned HTTP ${res.status}. Please make sure the backend server is running on port 4000.`);
       }
       const data = await res.json();
+      console.log('📦 Parsed data:', data);
       if (data.url) {
         document.getElementById(targetInputId).value = data.url;
-        if (targetInputId === 'product-image') {
-          const textarea = document.getElementById('product-images');
-          if (textarea) {
-            const currentLines = textarea.value.trim().split('\n').filter(l => l.trim().length > 0);
-            if (currentLines.length > 0) {
-              currentLines[0] = data.url;
-            } else {
-              currentLines.push(data.url);
-            }
-            textarea.value = currentLines.join('\n');
-          }
-        }
         const preview = document.getElementById(previewImgId);
         if (preview) {
           preview.src = data.url;
@@ -199,6 +206,7 @@ async function handleImageUpload(inputElem, targetInputId, previewImgId) {
         showToast(data.error || 'Upload failed', true);
       }
     } catch (err) {
+      console.error('❌ Upload exception occurred:', err);
       showToast('Upload error: ' + err.message + '. Ensure the local server is started (npm start) on port 4000.', true);
     }
   };
@@ -523,8 +531,7 @@ function renderProductsTable() {
     <tr>
       <td><img src="${p.image}" alt="${p.name}" onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=100'"></td>
       <td><strong>${p.name}</strong></td>
-      <td><span style="background: rgba(251,191,36,0.15); color: #fbbf24; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;">${p.item || p.category || ''}</span></td>
-      <td>${p.client || '-'} <br><small style="color: #94a3b8;">${p.year || ''}</small></td>
+      <td>${p.description ? p.description.slice(0, 80) + '...' : ''}</td>
       <td>
         <div class="action-btns">
           <button class="btn-icon" onclick="editProduct('${p.id}')"><i class="fa-solid fa-pen"></i></button>
@@ -546,16 +553,12 @@ function openProductModal(id = null) {
     document.getElementById('modal-product-title').textContent = 'Edit Product';
     document.getElementById('product-id').value = p.id;
     document.getElementById('product-name').value = p.name || '';
-    document.getElementById('product-item').value = p.item || p.category || '';
-    document.getElementById('product-client').value = p.client || '';
-    document.getElementById('product-year').value = p.year || '';
     document.getElementById('product-image').value = p.image || '';
     document.getElementById('product-description').value = p.description || '';
     if (preview && p.image) { preview.src = p.image; preview.style.display = 'block'; }
   } else {
     document.getElementById('modal-product-title').textContent = 'Add New Product';
     document.getElementById('product-id').value = '';
-    document.getElementById('product-year').value = new Date().getFullYear();
   }
   document.getElementById('modal-product').classList.remove('hidden');
 }
@@ -577,15 +580,15 @@ function saveProduct(e) {
   const item = {
     id: id || 'prod_' + Date.now(),
     name: document.getElementById('product-name').value,
-    category: document.getElementById('product-item').value,
-    item: document.getElementById('product-item').value,
+    category: 'Equipment',
+    item: 'Equipment',
     tagline: 'Heavy-Duty Engineering Equipment',
     image: coverImage,
     images: [coverImage],
     features: ['CNC Precision Machining', 'Robotic Welded Steel Joints', 'Hydraulic Load Tested', 'Easy Site Assembly & Reusability'],
     description: document.getElementById('product-description').value,
-    client: document.getElementById('product-client').value,
-    year: document.getElementById('product-year').value,
+    client: '',
+    year: '',
     featured: true
   };
 
@@ -610,8 +613,8 @@ function renderProjectsTable() {
     <tr>
       <td><img src="${p.image}" alt="${p.title}" onerror="this.src='https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=100'"></td>
       <td><strong>${p.title}</strong></td>
-      <td><span style="background: rgba(56,189,248,0.15); color: #38bdf8; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;">${p.category}</span></td>
-      <td>${p.client || '-'} <br><small style="color: #94a3b8;">${p.location || ''}</small></td>
+      <td><span style="background: rgba(56,189,248,0.15); color: #38bdf8; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;">${p.items || p.category || ''}</span></td>
+      <td>${p.client || ''}</td>
       <td>${p.year || ''}</td>
       <td>
         <div class="action-btns">
@@ -634,12 +637,10 @@ function openProjectModal(id = null) {
     document.getElementById('modal-project-title').textContent = 'Edit Project';
     document.getElementById('project-id').value = p.id;
     document.getElementById('project-title').value = p.title;
-    document.getElementById('project-category').value = p.category;
+    document.getElementById('project-items').value = p.items || p.category || '';
     document.getElementById('project-client').value = p.client || '';
-    document.getElementById('project-location').value = p.location || '';
     document.getElementById('project-year').value = p.year || '';
     document.getElementById('project-image').value = p.image || '';
-    document.getElementById('project-specs').value = p.specs || '';
     document.getElementById('project-description').value = p.description || '';
     if (preview && p.image) { preview.src = p.image; preview.style.display = 'block'; }
   } else {
@@ -665,13 +666,12 @@ function saveProject(e) {
   const item = {
     id: id || 'proj_' + Date.now(),
     title: document.getElementById('project-title').value,
-    category: document.getElementById('project-category').value,
+    items: document.getElementById('project-items').value,
+    category: document.getElementById('project-items').value,
     client: document.getElementById('project-client').value,
-    location: document.getElementById('project-location').value,
     year: document.getElementById('project-year').value,
     image: document.getElementById('project-image').value,
-    specs: document.getElementById('project-specs').value,
-    description: document.getElementById('project-description').value,
+    description: document.getElementById('project-description').value || '',
     featured: true
   };
 

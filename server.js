@@ -110,7 +110,7 @@ app.post('/api/generate', (req, res) => {
 });
 
 // Start local server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log('====================================================');
   console.log(`🌐 Winsteel CMS Server Running at: http://localhost:${PORT}`);
   console.log(`🎛️  Admin Portal URL           : http://localhost:${PORT}/admin`);
