@@ -69,14 +69,16 @@ function initAnimatedCounters() {
     const format = counter.getAttribute('data-format') || '';
     const prefix = counter.getAttribute('data-prefix') || '';
     const suffix = counter.getAttribute('data-suffix') || '';
-    const duration = 1600; // 1.6 seconds smooth animation
+    const duration = 1800; // 1.8 seconds smooth easing animation
     const startTime = performance.now();
+
+    counter.setAttribute('data-animated', 'true');
 
     const updateCount = (currentTime) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic for satisfying slowdown
-      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      // Ease out quartic for ultra-smooth slowdown
+      const easeProgress = 1 - Math.pow(1 - progress, 4);
       const currentNum = target * easeProgress;
 
       if (progress < 1) {
@@ -98,15 +100,16 @@ function initAnimatedCounters() {
           obs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1 });
 
     counters.forEach(counter => {
-      // Set initial state
-      const format = counter.getAttribute('data-format') || '';
-      const prefix = counter.getAttribute('data-prefix') || '';
-      const suffix = counter.getAttribute('data-suffix') || '';
-      counter.innerText = prefix + formatNumber(0, format) + suffix;
-      observer.observe(counter);
+      if (counter.getAttribute('data-animated') !== 'true') {
+        const format = counter.getAttribute('data-format') || '';
+        const prefix = counter.getAttribute('data-prefix') || '';
+        const suffix = counter.getAttribute('data-suffix') || '';
+        counter.innerText = prefix + formatNumber(0, format) + suffix;
+        observer.observe(counter);
+      }
     });
   } else {
     counters.forEach(counter => animate(counter));
@@ -288,6 +291,9 @@ function initHomePage(data) {
 
   // 10. Populate Recent News in Footer
   populateFooterNews(data.news);
+
+  // 11. Re-initialize and trigger any updated number counters
+  initAnimatedCounters();
 }
 
 // ==========================================
@@ -323,8 +329,8 @@ function initProductsPage(data) {
       searchQuery = e.target.value.toLowerCase().trim();
       renderFilteredProducts();
     });
-  }
-
+  }  
+  
   function renderFilteredProducts() {
     if (!container || !data.products) return;
 
@@ -336,10 +342,15 @@ function initProductsPage(data) {
       return matchesCategory && matchesSearch;
     });
 
+    const countEl = document.getElementById('products-count');
+    if (countEl) {
+      countEl.innerHTML = `Showing <span style="color: var(--primary-navy); font-weight: 700;">${filtered.length}</span> of <span style="color: var(--primary-navy); font-weight: 700;">${data.products.length}</span> Engineering Solutions`;
+    }
+
     if (filtered.length === 0) {
       container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 80px 20px; background: #fff; border-radius: 20px; border: 1px solid #e2e8f0;">
         <i class="fa-solid fa-magnifying-glass" style="font-size: 48px; color: #94a3b8; margin-bottom: 16px;"></i>
-        <h3 style="font-size: 24px;">No equipment matched your search</h3>
+        <h3 style="font-size: 24px; color: var(--primary-navy); margin-bottom: 8px;">No equipment matched your search</h3>
         <p style="color: #64748b;">Try selecting a different category or clearing your search term.</p>
       </div>`;
     } else {
@@ -397,6 +408,11 @@ function initProjectsPage(data) {
       return matchesCategory && matchesSearch;
     });
 
+    const countEl = document.getElementById('projects-count');
+    if (countEl) {
+      countEl.innerHTML = `Showing <span style="color: var(--primary-navy); font-weight: 700;">${filtered.length}</span> of <span style="color: var(--primary-navy); font-weight: 700;">${data.projects.length}</span> Infrastructure Projects`;
+    }
+
     if (filtered.length === 0) {
       container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 80px 20px; background: #fff; border-radius: 20px; border: 1px solid #e2e8f0;">
         <i class="fa-solid fa-folder-open" style="font-size: 48px; color: #94a3b8; margin-bottom: 16px;"></i>
@@ -413,30 +429,33 @@ function initProjectsPage(data) {
 }
 
 // ==========================================
-// CARD RENDERING HELPERS
+// RENDER HELPERS
 // ==========================================
 function renderProjectCard(p) {
   return `
-    <div class="card" style="border: 1px solid var(--border-light); background: #ffffff;">
-      <a href="project-details.html?id=${p.id}" class="card-img-wrapper">
-        <span class="card-badge">${p.items || p.category || 'Infrastructure'}</span>
-        <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='uploads/metro-viaduct.png'">
+    <div class="card" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden;">
+      ${p.category ? `<span class="card-badge">${p.category}</span>` : ''}
+      <a href="project-details.html?id=${p.id}" class="card-img-wrapper" style="height: 240px; display: block; overflow: hidden;">
+        <img src="${p.image}" alt="${p.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='uploads/hero-gantry.png'">
       </a>
       <div class="card-content" style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
-        <span style="font-size: 11.5px; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.75px; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
-          <i class="fa-solid fa-calendar-days"></i> Completed ${p.year || ''}
-        </span>
+        <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em; max-height: 2.7em;"><a href="project-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.title}</a></h3>
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 18px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.2em; max-height: 3.2em;">${p.description || ''}</p>
         
-        <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.35;"><a href="project-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.title}</a></h3>
-        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">${p.description}</p>
-        
-        <!-- Elegant Minimalist Client Tag -->
-        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #475569; margin-top: auto;">
-          <i class="fa-solid fa-user-tie" style="color: var(--accent-gold);"></i>
-          <span>${p.client || 'Winsteel Client'}</span>
+        <!-- Specs Bar: Location and Year -->
+        <div style="display: flex; align-items: center; gap: 14px; margin-top: auto; margin-bottom: 16px; font-size: 13.5px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 14px;">
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-navy); font-weight: 600;">
+            <i class="fa-solid fa-location-dot" style="color: var(--accent-gold); font-size: 13px;"></i>
+            <span>${p.location}</span>
+          </div>
+          <span style="width: 1px; height: 12px; background: var(--border-light);"></span>
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--text-muted);">
+            <i class="fa-solid fa-calendar-days" style="color: var(--accent-gold); font-size: 13px;"></i>
+            <span>${p.year}</span>
+          </div>
         </div>
         
-        <div style="display: flex; justify-content: flex-end; padding-top: 14px; border-top: 1px solid var(--border-light); margin-top: 14px;">
+        <div style="display: flex; justify-content: flex-end; padding-top: 14px; border-top: 1px solid var(--border-light); margin-top: 0;">
           <a href="project-details.html?id=${p.id}" class="btn-card-link">Explore Case Study <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
@@ -446,39 +465,49 @@ function renderProjectCard(p) {
 
 function renderProductCard(p) {
   return `
-    <div class="card" style="border: 1px solid var(--border-light); background: #ffffff; position: relative;">
-      ${p.item || p.category ? `<span class="card-badge">${p.item || p.category}</span>` : ''}
-      <a href="product-details.html?id=${p.id}" class="card-img-wrapper">
-        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='uploads/hero-gantry.png'">
+    <div class="card product-showcase-card" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+      ${p.category ? `<span class="card-badge" style="background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); color: #f3ad1b; font-weight: 700; font-size: 11.5px; padding: 5px 12px; border-radius: 50px; position: absolute; top: 14px; left: 14px; z-index: 2; border: 1px solid rgba(243, 173, 27, 0.35); box-shadow: 0 2px 10px rgba(0,0,0,0.2);">${p.category}</span>` : ''}
+      
+      <a href="product-details.html?id=${p.id}" class="card-img-wrapper" style="position: relative; overflow: hidden; height: 240px; background: #0f172a; display: block;">
+        <img src="${p.image}" alt="${p.name}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);" onerror="this.src='Winsteel Trans Logo.png'">
       </a>
-      <div class="card-content" style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
-        <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.35;"><a href="product-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.name}</a></h3>
-        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px; flex: 1;">${p.description}</p>
+      
+      <div class="card-content" style="padding: 26px 24px; display: flex; flex-direction: column; flex: 1;">
+        <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 8px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em; max-height: 2.7em;">
+          <a href="product-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.name}</a>
+        </h3>
+        
+        <div style="color: #d97706; font-size: 13px; font-weight: 600; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.8em; max-height: 2.8em;">
+          ${p.tagline ? `<i class="fa-solid fa-shield-halved" style="color: #f59e0b; margin-right: 4px;"></i> ${p.tagline}` : '&nbsp;'}
+        </div>
+        
+        <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.2em; max-height: 3.2em;">${p.description || ''}</p>
         
         <!-- Specs Bar: Client and Year -->
-        <div style="display: flex; align-items: center; gap: 14px; margin-top: auto; margin-bottom: 16px; font-size: 13.5px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 14px;">
+        <div style="display: flex; align-items: center; gap: 14px; margin-top: auto; margin-bottom: 16px; font-size: 13px; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 16px;">
           ${p.client ? `
             <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-navy); font-weight: 600;">
-              <i class="fa-solid fa-user-tie" style="color: var(--accent-gold); font-size: 12.5px;"></i>
-              <span>${p.client}</span>
+              <i class="fa-solid fa-briefcase" style="color: var(--accent-gold); font-size: 13px;"></i>
+              <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 190px;">${p.client}</span>
             </div>
           ` : ''}
           ${p.client && p.year ? `<span style="width: 1px; height: 12px; background: var(--border-light);"></span>` : ''}
           ${p.year ? `
             <div style="display: flex; align-items: center; gap: 6px; color: var(--text-muted);">
-              <i class="fa-solid fa-calendar-days" style="color: var(--accent-gold); font-size: 12.5px;"></i>
+              <i class="fa-solid fa-calendar-check" style="color: var(--accent-gold); font-size: 13px;"></i>
               <span>${p.year}</span>
             </div>
           ` : ''}
         </div>
         
-        <div style="display: flex; justify-content: flex-end; padding-top: 14px; border-top: 1px solid var(--border-light); margin-top: 0;">
-          <a href="product-details.html?id=${p.id}" class="btn-card-link">View Specifications <i class="fa-solid fa-arrow-right"></i></a>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border-light); margin-top: 0;">
+          <span style="font-size: 12.5px; font-weight: 700; color: #059669; background: #ecfdf5; padding: 4px 10px; border-radius: 50px;"><i class="fa-solid fa-circle-check"></i> Factory Certified</span>
+          <a href="product-details.html?id=${p.id}" class="btn-card-link" style="font-weight: 700;">Full Specs <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
   `;
-}
+};
 
 function populateFooterNews(newsList) {
   const container = document.getElementById('footer-news-list');

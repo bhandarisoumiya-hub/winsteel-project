@@ -11,12 +11,11 @@ const WINSTEEL_COMPONENTS = {
     const isHome = activePage === 'home' ? 'active' : '';
     const isProducts = (activePage === 'products' || activePage === 'product-details') ? 'active' : '';
     const isProjects = activePage === 'projects' ? 'active' : '';
-    const isWinsteel = ['about', 'core-values', 'our-history', 'certificates'].includes(activePage) ? 'active' : '';
+    const isWinsteel = ['about', 'core-values', 'our-history'].includes(activePage) ? 'active' : '';
     
     const isAboutItem = activePage === 'about' ? 'active' : '';
     const isCoreValuesItem = activePage === 'core-values' ? 'active' : '';
     const isOurHistoryItem = activePage === 'our-history' ? 'active' : '';
-    const isCertificatesItem = activePage === 'certificates' ? 'active' : '';
 
     return `
     <header class="navbar">
@@ -36,7 +35,6 @@ const WINSTEEL_COMPONENTS = {
                 <li><a href="about.html" class="dropdown-item ${isAboutItem}"><i class="fa-solid fa-building"></i> About Company</a></li>
                 <li><a href="core-values.html" class="dropdown-item ${isCoreValuesItem}"><i class="fa-solid fa-gem"></i> Core Values</a></li>
                 <li><a href="our-history.html" class="dropdown-item ${isOurHistoryItem}"><i class="fa-solid fa-clock-rotate-left"></i> Our History</a></li>
-                <li><a href="certificates.html" class="dropdown-item ${isCertificatesItem}"><i class="fa-solid fa-award"></i> Certificates</a></li>
               </ul>
             </li>
             <li><a href="products.html" class="nav-link ${isProducts}">Products</a></li>

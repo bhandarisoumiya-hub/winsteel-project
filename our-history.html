@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our History | Winsteel Engineering Works Pvt. Ltd.</title>
+  <title>Our History & Milestones | Winsteel Engineering Works Pvt. Ltd.</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -11,101 +11,311 @@
   <!-- Common Reusable Header (Loaded from js/components.js) -->
   <div id="app-header"></div>
 
-  <!-- Page Banner -->
+  <!-- Page Banner (Clean Executive Banner - Zero Breadcrumbs) -->
   <section class="inner-banner">
     <div class="container">
-      <ul class="breadcrumbs" style="margin-bottom: 12px;">
-        <li><a href="index.html">Home</a></li>
-        <li><i class="fa-solid fa-chevron-right"></i></li>
-        <li>Winsteel</li>
-        <li><i class="fa-solid fa-chevron-right"></i></li>
-        <li style="color: var(--accent-gold);">Our History</li>
-      </ul>
-      <h1 class="inner-banner-title">COMPANY <span class="gold-highlight">HISTORY</span></h1>
-      <p class="inner-banner-sub">Over five decades of pioneering engineering leadership, custom bridge equipment manufacturing, and unwavering structural safety.</p>
+      <h1 class="inner-banner-title">COMPANY <span class="gold-highlight">HISTORY & MILESTONES</span></h1>
+      <p class="inner-banner-sub">Over five decades of pioneering heavy engineering leadership, custom bridge equipment innovation, and national infrastructure mastery across India.</p>
     </div>
   </section>
 
-  <!-- Timeline Section -->
-  <section class="section-pad" style="background-color: #f8fafc;">
+  <!-- Sleek History Overview Dashboard Bar (Animated Numbers) -->
+  <div class="container">
+    <div class="history-stats-bar">
+      <div class="history-stats-grid">
+        <div class="history-stat-box">
+          <div class="history-stat-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div class="history-stat-info">
+            <h3><span class="count-num" data-target="52" data-suffix="+ Years">52+ Years</span></h3>
+            <p>Uninterrupted engineering heritage across 5 decades.</p>
+          </div>
+        </div>
+        <div class="history-stat-box">
+          <div class="history-stat-icon"><i class="fa-solid fa-trophy"></i></div>
+          <div class="history-stat-info">
+            <h3><span class="count-num" data-target="17" data-suffix="+ Milestones">17+ Milestones</span></h3>
+            <p>Pioneering national records & segmental mould firsts.</p>
+          </div>
+        </div>
+        <div class="history-stat-box">
+          <div class="history-stat-icon"><i class="fa-solid fa-industry"></i></div>
+          <div class="history-stat-info">
+            <h3><span class="count-num" data-target="5" data-format="pad">05</span> High-Tech Units</h3>
+            <p>Expanding from New Delhi inception to 324,000 Sft.</p>
+          </div>
+        </div>
+        <div class="history-stat-box">
+          <div class="history-stat-icon"><i class="fa-solid fa-globe"></i></div>
+          <div class="history-stat-info">
+            <h3>Alpi Sea Collab</h3>
+            <p>Prestigious technical partnership for global turnkey design.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Era-Grouped Heritage Showcase -->
+  <section class="section-pad" style="padding-top: 10px; background-color: #f8fafc;">
     <div class="container">
-      <div class="timeline-header">
-        <span class="subheading">52 YEARS OF EXCELLENCE</span>
-        <div style="margin-top: 10px;">
-          <span class="timeline-title-badge">TIMELINE</span>
-        </div>
-        <p style="max-width: 650px; margin: 20px auto 0; color: var(--text-muted); font-size: 16px;">
-          Trace the milestone journey of Winsteel Engineering Works Pvt. Ltd. from its establishment in 1972 to becoming an international infrastructure powerhouse.
-        </p>
+      <div class="section-header" style="margin-bottom: 25px;">
+        <span class="subheading">CHRONOLOGICAL JOURNEY (1972 – 2023)</span>
+        <h2>Milestones That Built A Nation's Bridges</h2>
+        <p>Explore the exact chronological evolution of Winsteel—from chemical & construction equipment roots to manufacturing India's first and longest bridge launching moulds.</p>
       </div>
 
-      <div class="timeline-container">
-        <div class="timeline-spine"></div>
+      <!-- Interactive Quick-Filter Tabs Bar (Clean Static Box - Zero Overlap!) -->
+      <div class="era-filter-bar">
+        <button class="era-tab active" onclick="filterHistory('all', this)"><i class="fa-solid fa-layer-group"></i> All Eras (1972–2023)</button>
+        <button class="era-tab" onclick="filterHistory('era-1970', this)"><i class="fa-solid fa-flag"></i> Genesis & Foundation (1972–1989)</button>
+        <button class="era-tab" onclick="filterHistory('era-1990', this)"><i class="fa-solid fa-bridge"></i> Segmental Expansion (1990–1999)</button>
+        <button class="era-tab" onclick="filterHistory('era-2000', this)"><i class="fa-solid fa-crane"></i> Launching & Units 2-3 (2000–2010)</button>
+        <button class="era-tab" onclick="filterHistory('era-2010', this)"><i class="fa-solid fa-crown"></i> Alpi Sea & India's Firsts (2017–2023)</button>
+      </div>
 
-        <!-- 1972 -->
-        <div class="timeline-item left">
-          <div class="timeline-circle">1972</div>
-          <div class="timeline-card">
-            <span class="timeline-card-tag"><i class="fa-solid fa-flag"></i> Inception & Foundation</span>
-            <h3>Establishment of WINSTEEL</h3>
-            <p>Winsteel Engineering Works Pvt. Ltd. was established in New Delhi by visionary structural engineers with a mission to deliver precision custom-made heavy steel equipment for India's growing industrial sector.</p>
+      <!-- CHAPTER 1: THE GENESIS & INDUSTRIAL FOUNDATION (1972 - 1989) -->
+      <div class="history-era-chapter" id="era-1970">
+        <div class="chapter-header">
+          <div class="chapter-title-box">
+            <h3>CHAPTER 01: THE GENESIS & INDUSTRIAL FOUNDATION</h3>
+            <p>Laying the roots of heavy fabrication and industrial manufacturing in New Delhi.</p>
           </div>
+          <span class="chapter-badge"><i class="fa-solid fa-calendar-check"></i> 1972 – 1989</span>
         </div>
 
-        <!-- 1985 -->
-        <div class="timeline-item right">
-          <div class="timeline-circle">1985</div>
-          <div class="timeline-card">
-            <span class="timeline-card-tag"><i class="fa-solid fa-industry"></i> Heavy Manufacturing Expansion</span>
-            <h3>Hydraulic & EOT Crane Assembly Bays</h3>
-            <p>Commissioned specialized heavy hydraulic forming bays and installed our first heavy EOT cranes to manufacture customized bridge falsework, shuttering units, and structural steel girders.</p>
+        <div class="milestones-grid">
+          <!-- 1972 -->
+          <div class="milestone-modern-card highlight-gold">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill"><i class="fa-solid fa-flag"></i> 1972</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-building-flag"></i></div>
+            </div>
+            <h4>Establishment of WINSTEEL</h4>
+            <p>Winsteel Engineering Works Pvt. Ltd. was formally established by visionary structural engineers with a dedicated mission to deliver robust, precision heavy steel equipment and custom fabrication solutions.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-location-dot"></i> Inception in New Delhi</div>
           </div>
-        </div>
 
-        <!-- 1998 -->
-        <div class="timeline-item left">
-          <div class="timeline-circle">1998</div>
-          <div class="timeline-card">
-            <span class="timeline-card-tag"><i class="fa-solid fa-bridge"></i> Landmark Infrastructure</span>
-            <h3>National Highway & Flyover Leadership</h3>
-            <p>Emerged as a primary equipment supplier for major Indian national highway corridors, river crossings, and urban elevated metro viaducts, delivering zero-failure structural launching systems.</p>
-          </div>
-        </div>
-
-        <!-- 2010 -->
-        <div class="timeline-item right">
-          <div class="timeline-circle">2010</div>
-          <div class="timeline-card">
-            <span class="timeline-card-tag"><i class="fa-solid fa-handshake"></i> Global Technology Collab</span>
-            <h3>Technical Collaboration with Alpi Sea Ltd.</h3>
-            <p>Signed a prestigious long-term international technical collaboration with <strong>Alpi Sea Ltd.</strong> to design and engineer world-class Form Travellers, Beam Launchers, and Movable Scaffolding Systems (MSS).</p>
-          </div>
-        </div>
-
-        <!-- 2018 -->
-        <div class="timeline-item left">
-          <div class="timeline-circle">2018</div>
-          <div class="timeline-card">
-            <span class="timeline-card-tag"><i class="fa-solid fa-robot"></i> Robotic Automation Complex</span>
-            <h3>Sprawling 324,000 Sft Modern Manufacturing</h3>
-            <p>Consolidated and expanded manufacturing operations across 5 sprawling premises with automated CNC precision plasma cutting, robotic welding bays, and 45+ EOT cranes supporting 18,000 MT annual capacity.</p>
-          </div>
-        </div>
-
-        <!-- 2024 & Beyond -->
-        <div class="timeline-item right">
-          <div class="timeline-circle">2024+</div>
-          <div class="timeline-card">
-            <span class="timeline-card-tag"><i class="fa-solid fa-bolt"></i> Next-Gen Smart Equipment</span>
-            <h3>Smart Bridge Launching & Global Turnkey Excellence</h3>
-            <p>Continuously innovating with IoT-monitored hydraulic launching gantries, high-speed rail formworks, and custom offshore infrastructure solutions across India and international export markets.</p>
+          <!-- 1980 -->
+          <div class="milestone-modern-card">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill"><i class="fa-solid fa-flask"></i> 1980</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-flask-vial"></i></div>
+            </div>
+            <h4>Manufacturing of Chemical Equipments</h4>
+            <p>Expanded heavy manufacturing capabilities into specialized chemical processing vessels, industrial reactors, and high-pressure storage tanks requiring certified plate bending and weld integrity.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-check-circle"></i> Heavy Industrial Diversification</div>
           </div>
         </div>
       </div>
 
-      <div style="text-align: center; margin-top: 60px;">
-        <a href="products.html" class="btn-inquiry" style="display: inline-flex;">Explore Our Engineered Equipment Portfolio <i class="fa-solid fa-arrow-right"></i></a>
+      <!-- CHAPTER 2: SEGMENTAL MOULDS & RMC EXPANSION (1990 - 1999) -->
+      <div class="history-era-chapter" id="era-1990">
+        <div class="chapter-header">
+          <div class="chapter-title-box">
+            <h3>CHAPTER 02: SEGMENTAL MOULDS & RMC EXPANSION</h3>
+            <p>Entering national construction equipment and pioneering India's first bridge segmental moulds.</p>
+          </div>
+          <span class="chapter-badge"><i class="fa-solid fa-calendar-check"></i> 1990 – 1999</span>
+        </div>
+
+        <div class="milestones-grid">
+          <!-- 1990 -->
+          <div class="milestone-modern-card">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill">1990</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-trowel-bricks"></i></div>
+            </div>
+            <h4>Manufacturing of Construction Equipments</h4>
+            <p>Strategically pivoted towards the civil construction boom, engineering heavy shuttering units, bridge falsework, and custom structural steel supports for national highway corridors.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-road"></i> Civil Infrastructure Focus</div>
+          </div>
+
+          <!-- 1996 -->
+          <div class="milestone-modern-card">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill">1996</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-truck-concrete"></i></div>
+            </div>
+            <h4>Started with manufacturing RMC batching equipment plant</h4>
+            <p>Initiated the full-scale turnkey manufacturing of Ready-Mix Concrete (RMC) batching plants, silos, and automated concrete mixing structures to accelerate rapid site execution.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-gears"></i> Batching Plant Production</div>
+          </div>
+
+          <!-- 1998 (Expansion) -->
+          <div class="milestone-modern-card full-span">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill">1998</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-warehouse"></i></div>
+            </div>
+            <h4>Shifting Expansion from Old premises to current premises.</h4>
+            <p>Accommodating a massive surge in national infrastructure demand for heavy bridge girders, Winsteel shifted its operations from the old facility to sprawling modern industrial premises equipped with high-tonnage overhead EOT crane bays and heavy fabrication lines.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-arrow-up-right-dots"></i> Major Industrial Capacity Upgrade</div>
+          </div>
+
+          <!-- 1998 (First Long Line Mould) -->
+          <div class="milestone-modern-card highlight-gold">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill"><i class="fa-solid fa-star"></i> 1998</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-bridge-water"></i></div>
+            </div>
+            <h4>Manufacturing of first long line mould for segmental casting in India</h4>
+            <p>Engineered and manufactured <strong>India's very first Long Line Mould</strong> for precast segmental bridge casting, revolutionizing metro and highway viaduct erection accuracy nationwide.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-award"></i> 🇮🇳 Historic Indian First</div>
+          </div>
+
+          <!-- 1999 (First Short Line Mould) -->
+          <div class="milestone-modern-card highlight-gold">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill"><i class="fa-solid fa-star"></i> 1999</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-cube"></i></div>
+            </div>
+            <h4>Manufacturing of first short line moulds for segmental casting</h4>
+            <p>Following our long-line triumph, we engineered <strong>India's first Short Line Mould systems</strong>, enabling complex 3D curved precast segments with sub-millimeter hydraulic alignment.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-award"></i> 🇮🇳 National Segmental Pioneer</div>
+          </div>
+        </div>
       </div>
+
+      <!-- CHAPTER 3: LAUNCHING GANTRIES, IMPORT SUBSTITUTION & UNITS 2-3 (2000 - 2010) -->
+      <div class="history-era-chapter" id="era-2000">
+        <div class="chapter-header">
+          <div class="chapter-title-box">
+            <h3>CHAPTER 03: LAUNCHING GANTRIES & UNIT EXPANSION</h3>
+            <p>Achieving self-reliance via import substitution and scaling manufacturing footprint.</p>
+          </div>
+          <span class="chapter-badge"><i class="fa-solid fa-calendar-check"></i> 2000 – 2010</span>
+        </div>
+
+        <div class="milestones-grid">
+          <!-- 2003 -->
+          <div class="milestone-modern-card">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill">2003</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-water"></i></div>
+            </div>
+            <h4>Manufacture of first accropod mould for breakwater system</h4>
+            <p>Successfully fabricated India's first complex 3D steel Accropod moulds used for casting giant interlocking concrete armor units protecting coastal harbors and marine breakwaters.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-anchor"></i> Marine & Coastal Engineering</div>
+          </div>
+
+          <!-- 2004 (Import Substitution) -->
+          <div class="milestone-modern-card highlight-gold">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill"><i class="fa-solid fa-trophy"></i> 2004</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-hand-fist"></i></div>
+            </div>
+            <h4>Started manufacturing of rock grapples being import substitution</h4>
+            <p>Pioneered the indigenous manufacturing of heavy-duty hydraulic Rock Grapples for port and quarry operations, successfully eliminating reliance on foreign European imports.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-shield-check"></i> 🏆 Proud Import Substitution</div>
+          </div>
+
+          <!-- 2004 (Launching Gantries) -->
+          <div class="milestone-modern-card highlight-gold full-span">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill"><i class="fa-solid fa-bolt"></i> 2004 • FLAGSHIP MILESTONE</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-crane"></i></div>
+            </div>
+            <h4>Started manufacturing of LGs (Launching Gantries)</h4>
+            <p>Commenced the complete turnkey design, heavy structural fabrication, and site commissioning of high-capacity overhead and under-slung **Launching Gantries (LGs)**. This milestone marked Winsteel's emergence as an indispensable partner for rapid span-by-span viaduct launching across India's biggest metro and highway corridors.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-bridge"></i> Heavy Launching Equipment Mastery</div>
+          </div>
+
+          <!-- 2007 -->
+          <div class="milestone-modern-card">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill">2007</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-industry"></i></div>
+            </div>
+            <h4>Adding manufacturing Unit 2</h4>
+            <p>Commissioned our second heavy fabrication plant (**Unit 2**) equipped with heavy CNC profile shearing and plate bending machines to support surging order volumes.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-plus-circle"></i> Multi-Plant Expansion</div>
+          </div>
+
+          <!-- 2009 -->
+          <div class="milestone-modern-card">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill">2009</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-warehouse"></i></div>
+            </div>
+            <h4>Adding manufacturing Unit 3</h4>
+            <p>Further expanded our industrial infrastructure by establishing **Unit 3**, dedicating covered crane bays exclusively to heavy girder fitment and automated SAW welding lines.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-check-double"></i> 3rd Manufacturing Facility</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 4: ALPI SEA COLLAB, MEGA-UNITS & INDIA'S FIRSTS (2017 - 2023) -->
+      <div class="history-era-chapter" id="era-2010">
+        <div class="chapter-header">
+          <div class="chapter-title-box">
+            <h3>CHAPTER 04: GLOBAL COLLAB, MEGA-UNITS & INDIA'S FIRSTS</h3>
+            <p>International partnership with Alpi Sea Ltd., Units 4-5, and record-breaking national span moulds.</p>
+          </div>
+          <span class="chapter-badge"><i class="fa-solid fa-calendar-check"></i> 2017 – 2023</span>
+        </div>
+
+        <div class="milestones-grid">
+          <!-- 2017 -->
+          <div class="milestone-modern-card">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill">2017</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-industry"></i></div>
+            </div>
+            <h4>Adding manufacturing Unit 4</h4>
+            <p>Commissioned **Unit 4**, adding massive covered bays with 25 Ton EOT cranes to manufacture heavy form travellers and mega-gantry girder boxes under strict ISO quality control.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-chart-line"></i> 4th Industrial Complex</div>
+          </div>
+
+          <!-- 2018 (Alpi Sea Collab) -->
+          <div class="milestone-modern-card highlight-gold">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill"><i class="fa-solid fa-handshake-angle"></i> 2018</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-globe"></i></div>
+            </div>
+            <h4>Collaborated with technical partner with Alpisea (Alpi Sea Ltd.)</h4>
+            <p>Signed a prestigious international technical partnership with **Alpi Sea Ltd.**, combining European engineering innovation with Winsteel's manufacturing mastery for global bridge systems.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-certificate"></i> 🌐 World-Class Technical Collab</div>
+          </div>
+
+          <!-- 2020 -->
+          <div class="milestone-modern-card full-span">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill">2020</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-warehouse"></i></div>
+            </div>
+            <h4>Adding manufacturing Unit 5</h4>
+            <p>Established **Unit 5**, bringing Winsteel's combined manufacturing infrastructure across 5 high-tech premises to an astounding 324,000 Sft Total Plot Area (`30,000 Sq mtr`) and 237,000 Sft Covered Bay capacity (`22,000 Sq mtr`) supported by 45+ EOT cranes.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-check-circle"></i> 5 High-Tech Premises Complete</div>
+          </div>
+
+          <!-- 2021 -->
+          <div class="milestone-modern-card highlight-gold">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill"><i class="fa-solid fa-crown"></i> 2021 • NATIONAL BENCHMARK</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            </div>
+            <h4>First full span mould of India</h4>
+            <p>Designed, fabricated, and delivered **India's First Full Span Mould System** for high-speed rail and heavy metro box girders, establishing a new national benchmark in rapid casting.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-trophy"></i> 👑 National Record First</div>
+          </div>
+
+          <!-- 2023 -->
+          <div class="milestone-modern-card highlight-gold">
+            <div class="milestone-top-row">
+              <span class="milestone-year-pill"><i class="fa-solid fa-medal"></i> 2023 • RECORD BREAKING</span>
+              <div class="milestone-icon-circle"><i class="fa-solid fa-ruler-combined"></i></div>
+            </div>
+            <h4>Longest U-Girder mould</h4>
+            <p>Manufactured and commissioned **India's Longest U-Girder Mould** (`2023`), delivering flawless structural alignment and zero-deflection casting for mega urban metro corridors.</p>
+            <div class="milestone-footer-tag"><i class="fa-solid fa-award"></i> 🥇 Record Longest U-Girder</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 50px;">
+        <a href="projects.html" class="btn-inquiry" style="display: inline-flex; align-items: center; gap: 10px; padding: 16px 36px; border-radius: 12px; font-weight:800;">Witness How Our Heritage Power Today's Projects <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
     </div>
   </section>
 
@@ -115,5 +325,32 @@
   <script src="js/data.js"></script>
   <script src="js/components.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    // Interactive Era Filtering Script
+    function filterHistory(eraId, btnElement) {
+      const allTabs = document.querySelectorAll('.era-tab');
+      allTabs.forEach(tab => tab.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      const allChapters = document.querySelectorAll('.history-era-chapter');
+      if (eraId === 'all') {
+        allChapters.forEach(chap => {
+          chap.classList.remove('hidden-era');
+          chap.style.opacity = '0';
+          setTimeout(() => { chap.style.opacity = '1'; }, 50);
+        });
+      } else {
+        allChapters.forEach(chap => {
+          if (chap.id === eraId) {
+            chap.classList.remove('hidden-era');
+            chap.style.opacity = '0';
+            setTimeout(() => { chap.style.opacity = '1'; }, 50);
+          } else {
+            chap.classList.add('hidden-era');
+          }
+        });
+      }
+    }
+  </script>
 </body>
 </html>
