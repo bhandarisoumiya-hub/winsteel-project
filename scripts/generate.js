@@ -22,7 +22,7 @@ function generateStaticData() {
     try {
       fs.mkdirSync(path.dirname(ALT_JS_PATH), { recursive: true });
       fs.mkdirSync(path.dirname(ALT_JSON_PATH), { recursive: true });
-    } catch (e) {}
+    } catch (e) { }
 
     const jsContent = `/**
  * AUTO-GENERATED STATIC DATA BUNDLE FOR WINSTEEL WEBSITE
@@ -40,7 +40,7 @@ window.WINSTEEL_DATA = ${JSON.stringify(db, null, 2)};
     try {
       fs.writeFileSync(ALT_JS_PATH, jsContent, 'utf-8');
       fs.writeFileSync(ALT_JSON_PATH, JSON.stringify(db, null, 2), 'utf-8');
-    } catch (e) {}
+    } catch (e) { }
 
     // Synchronize uploads folder to website/uploads if exists
     try {
@@ -60,15 +60,16 @@ window.WINSTEEL_DATA = ${JSON.stringify(db, null, 2)};
 
       // Synchronize HTML, CSS, JS, and Admin to website/ folder for standalone deployment
       const filesToCopy = [
-        'index.html', 
-        'products.html', 
-        'projects.html', 
-        'product-details.html', 
-        'project-details.html', 
-        'core-values.html', 
-        'certificates.html', 
-        'about.html', 
-        'our-history.html'
+        'index.html',
+        'about.html',
+        'core-values.html',
+        'our-history.html',
+        'certificates.html',
+        'products.html',
+        'projects.html',
+        'product-details.html',
+        'project-details.html',
+        'Winsteel Trans Logo.png'
       ];
       for (const file of filesToCopy) {
         const src = path.join(__dirname, '..', file);

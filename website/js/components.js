@@ -5,20 +5,7 @@
  */
 
 const WINSTEEL_COMPONENTS = {
-  getTopbar: () => `
-    <div class="topbar">
-      <div class="container topbar-flex">
-        <div class="topbar-info">
-          <span><i class="fa-solid fa-phone"></i> +91 98765 43210</span>
-          <span><i class="fa-solid fa-envelope"></i> info@winsteel.co.in</span>
-          <span><i class="fa-solid fa-location-dot"></i> New Delhi, India</span>
-        </div>
-        <div class="topbar-badge">
-          <i class="fa-solid fa-certificate"></i> ISO 9001:2015 Certified Heavy Infrastructure Equipment Manufacturer
-        </div>
-      </div>
-    </div>
-  `,
+  getTopbar: () => '',
 
   getNavbar: (activePage) => {
     const isHome = activePage === 'home' ? 'active' : '';
@@ -35,10 +22,9 @@ const WINSTEEL_COMPONENTS = {
     <header class="navbar">
       <div class="container nav-container">
         <a href="index.html" class="brand-logo">
-          <div class="brand-icon">W</div>
-          <div class="brand-text">
-            <h1>Winsteel</h1>
-            <span>Engineering Works Pvt. Ltd.</span>
+          <div class="brand-logo-box">
+            <img src="Winsteel Trans Logo.png" alt="Winsteel Logo" class="brand-logo-img" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='uploads/Winsteel Trans Logo.png';}else{this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';}">
+            <div class="brand-icon" style="display:none;">W</div>
           </div>
         </a>
         <nav>
@@ -130,12 +116,12 @@ function initWinsteelComponents() {
   const footerPlaceholder = document.getElementById('app-footer');
 
   if (headerPlaceholder) {
-    headerPlaceholder.innerHTML = WINSTEEL_COMPONENTS.getTopbar() + WINSTEEL_COMPONENTS.getNavbar(page);
+    headerPlaceholder.innerHTML = WINSTEEL_COMPONENTS.getNavbar(page);
   } else {
     const existingTopbar = document.querySelector('.topbar');
     const existingNavbar = document.querySelector('.navbar');
-    if (existingTopbar && existingNavbar) {
-      existingTopbar.outerHTML = WINSTEEL_COMPONENTS.getTopbar();
+    if (existingTopbar) existingTopbar.remove();
+    if (existingNavbar) {
       existingNavbar.outerHTML = WINSTEEL_COMPONENTS.getNavbar(page);
     }
   }
