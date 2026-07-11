@@ -69,6 +69,8 @@ window.WINSTEEL_DATA = ${JSON.stringify(db, null, 2)};
         'projects.html',
         'product-details.html',
         'project-details.html',
+        'news.html',
+        'news-details.html',
         'Winsteel Trans Logo.png'
       ];
       for (const file of filesToCopy) {

@@ -12,6 +12,8 @@ const WINSTEEL_COMPONENTS = {
     const isProducts = (activePage === 'products' || activePage === 'product-details') ? 'active' : '';
     const isProjects = activePage === 'projects' ? 'active' : '';
     const isWinsteel = ['about', 'core-values', 'our-history'].includes(activePage) ? 'active' : '';
+    const isNews = (activePage === 'news' || activePage === 'news-details') ? 'active' : '';
+    const isContact = activePage === 'contact' ? 'active' : '';
     
     const isAboutItem = activePage === 'about' ? 'active' : '';
     const isCoreValuesItem = activePage === 'core-values' ? 'active' : '';
@@ -39,8 +41,8 @@ const WINSTEEL_COMPONENTS = {
             </li>
             <li><a href="products.html" class="nav-link ${isProducts}">Products</a></li>
             <li><a href="projects.html" class="nav-link ${isProjects}">Projects</a></li>
-            <li><a href="index.html#facilities" class="nav-link">Facilities</a></li>
-            <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            <li><a href="news.html" class="nav-link ${isNews}">News</a></li>
+            <li><a href="contact.html" class="nav-link ${isContact}">Contact</a></li>
             <li><a href="products.html" class="btn-inquiry"><i class="fa-solid fa-bolt"></i> Equipment Catalog</a></li>
           </ul>
         </nav>
@@ -70,16 +72,16 @@ const WINSTEEL_COMPONENTS = {
               <li><a href="about.html">About Winsteel</a></li>
               <li><a href="products.html">Equipment Catalog</a></li>
               <li><a href="projects.html">Landmark Projects</a></li>
-              <li><a href="admin/index.html" target="_blank" style="color: var(--accent-gold);"><i class="fa-solid fa-lock"></i> CMS Admin Portal</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
             </ul>
           </div>
           <div class="footer-col">
             <h4>Manufacturing Units</h4>
             <ul class="footer-links">
-              <li><a href="index.html#facilities"><i class="fa-solid fa-industry"></i> Unit 1: CNC Cutting Complex</a></li>
-              <li><a href="index.html#facilities"><i class="fa-solid fa-industry"></i> Unit 2: Heavy Hydraulic Forming</a></li>
-              <li><a href="index.html#facilities"><i class="fa-solid fa-industry"></i> Unit 3: EOT Crane Assembly Bay</a></li>
-              <li><a href="index.html#facilities"><i class="fa-solid fa-industry"></i> Unit 4: Robotic Welding Plant</a></li>
+              <li><a href="core-values.html#facilities"><i class="fa-solid fa-industry"></i> Unit 1: CNC Cutting Complex</a></li>
+              <li><a href="core-values.html#facilities"><i class="fa-solid fa-industry"></i> Unit 2: Heavy Hydraulic Forming</a></li>
+              <li><a href="core-values.html#facilities"><i class="fa-solid fa-industry"></i> Unit 3: EOT Crane Assembly Bay</a></li>
+              <li><a href="core-values.html#facilities"><i class="fa-solid fa-industry"></i> Unit 4: Robotic Welding Plant</a></li>
             </ul>
           </div>
           <div class="footer-col">

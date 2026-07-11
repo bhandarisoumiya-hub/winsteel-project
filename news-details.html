@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Article... | Winsteel Engineering Works Pvt. Ltd.</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css?v=1.1">
+</head>
+<body data-page="news-details">
+
+  <!-- Common Reusable Header (Loaded from js/components.js) -->
+  <div id="app-header"></div>
+
+  <!-- Breadcrumbs -->
+  <section class="breadcrumbs-section" style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 18px 0;">
+    <div class="container">
+      <ul class="breadcrumbs" style="list-style: none; display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted); font-weight: 500; margin: 0; padding: 0;">
+        <li><a href="index.html" style="color: inherit; text-decoration: none; transition: color 0.3s;"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li style="color: #cbd5e1;">/</li>
+        <li><a href="news.html" style="color: inherit; text-decoration: none; transition: color 0.3s;">News</a></li>
+        <li style="color: #cbd5e1;">/</li>
+        <li id="breadcrumb-news-title" style="color: var(--primary-navy); font-weight: 700; max-width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading Article...</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- News Reader Content Layout -->
+  <section class="section-pad blog-details-section" style="background: #ffffff; min-height: 800px;">
+    <div class="container blog-details-container">
+      <div class="blog-details-grid">
+        
+        <!-- Left: Main Article Column -->
+        <article class="blog-main-col">
+          <!-- Metadata header -->
+          <div class="blog-meta-header">
+            <span id="news-detail-category" class="blog-detail-badge">Category</span>
+            <span id="news-detail-date" class="blog-detail-date"><i class="fa-regular fa-calendar-days"></i> June 24, 2020</span>
+          </div>
+
+          <h1 id="news-detail-title" class="blog-detail-title">Loading Article Headline...</h1>
+
+          <!-- Author Info Strip -->
+          <div class="blog-author-strip">
+            <div class="author-avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="author-details">
+              <span>Published by</span>
+              <strong id="news-detail-author">WinSteelAdmin</strong>
+            </div>
+          </div>
+
+          <!-- Featured Image Panel -->
+          <div class="blog-featured-image-box">
+            <img id="news-detail-image" src="" alt="Featured Article Image" onerror="this.src='Winsteel Trans Logo.png'">
+            <div class="image-blueprint-pattern"></div>
+          </div>
+
+          <!-- Article Text Body -->
+          <div id="news-detail-content-body" class="blog-content-body">
+            <!-- Populated dynamically -->
+            <p>Loading article content...</p>
+          </div>
+
+          <!-- Existing Comments Section -->
+          <div id="article-comments-section" class="article-comments-card" style="display: none;">
+            <h3>COMMENTS (<span id="article-comments-count">0</span>)</h3>
+            <div id="article-comments-list" class="article-comments-list">
+              <!-- Comments will be populated dynamically -->
+            </div>
+          </div>
+
+          <div class="divider-gold" style="margin: 40px 0;"></div>
+
+          <!-- Leave a Comment Section -->
+          <div class="comment-section-card">
+            <h3>LEAVE A REPLY</h3>
+            <p class="comment-form-notice">Your email address will not be published. Required fields are marked *</p>
+
+            <form id="blog-comment-form" class="comment-form" onsubmit="handleCommentSubmit(event)">
+              <div class="comment-form-row">
+                <div class="form-group">
+                  <label for="comment-name">Name*</label>
+                  <input type="text" id="comment-name" required placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                  <label for="comment-email">Email*</label>
+                  <input type="email" id="comment-email" required placeholder="your.email@corporation.com">
+                </div>
+              </div>
+
+              <div class="form-group-checkbox">
+                <input type="checkbox" id="comment-cookies">
+                <label for="comment-cookies">Save my name, email, and website in this browser for the next time I comment.</label>
+              </div>
+
+              <div class="form-group">
+                <label for="comment-text">Comment*</label>
+                <textarea id="comment-text" rows="6" required placeholder="Type your comment details here..."></textarea>
+              </div>
+
+              <button type="submit" class="btn-post-comment">Post Comment</button>
+            </form>
+          </div>
+
+          <!-- Previous/Next Navigator -->
+          <div class="blog-navigation-footer">
+            <a id="nav-prev-article" href="#" class="nav-btn prev"><i class="fa-solid fa-arrow-left"></i> Previous Challenge</a>
+            <a id="nav-next-article" href="#" class="nav-btn next">Next Milestone <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+
+        </article>
+
+        <!-- Right: Sidebar Column -->
+        <aside class="blog-sidebar-col">
+          <!-- Search Widget -->
+          <div class="sidebar-widget search-widget">
+            <form action="news.html" method="GET" class="sidebar-search-form">
+              <input type="text" name="search" placeholder="Search ...">
+              <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+          </div>
+
+          <!-- Recent Posts Widget -->
+          <div class="sidebar-widget list-widget">
+            <h4>RECENT POSTS</h4>
+            <ul id="sidebar-recent-posts" class="recent-posts-list">
+              <!-- Populated dynamically -->
+            </ul>
+          </div>
+
+          <!-- Recent Comments Widget -->
+          <div class="sidebar-widget list-widget">
+            <h4>RECENT COMMENTS</h4>
+            <ul id="sidebar-recent-comments" class="recent-comments-list">
+              <!-- Populated dynamically -->
+            </ul>
+          </div>
+
+          <!-- Archives Widget -->
+          <div class="sidebar-widget list-widget">
+            <h4>ARCHIVES</h4>
+            <ul id="sidebar-archives" class="recent-posts-list">
+              <!-- Populated dynamically -->
+            </ul>
+          </div>
+
+          <!-- Categories Widget -->
+          <div class="sidebar-widget list-widget">
+            <h4>CATEGORIES</h4>
+            <ul id="sidebar-categories" class="recent-posts-list">
+              <!-- Populated dynamically -->
+            </ul>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Common Reusable Footer & Modal (Loaded from js/components.js) -->
+  <div id="app-footer"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
