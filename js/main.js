@@ -123,109 +123,680 @@ function initAnimatedCounters() {
 }
 
 // ==========================================
-// HOME PAGE INITIALIZATION
+// HOME PAGE INITIALIZATION (FULL 12-SECTION DYNAMIC RENDERER)
 // ==========================================
 function initHomePage(data) {
-  // 1. Populate Hero Banner
-  if (data.hero) {
-    const h = data.hero;
-    const titleElem = document.getElementById('hero-title');
-    const subElem = document.getElementById('hero-subtitle');
-    const badgeElem = document.getElementById('hero-badge');
-    const bgElem = document.getElementById('hero-bg');
-    const cta1 = document.getElementById('hero-cta1');
-    const cta2 = document.getElementById('hero-cta2');
+  // 1. Render Hero Multi-Slide Full-Screen Cinematic Auto-Slider (8 Slides)
+  const heroContainer = document.getElementById('modern-hero-slides-container');
+  if (heroContainer && data.heroSlides && data.heroSlides.length > 0) {
+    const slides = data.heroSlides;
+    let currentIdx = 0;
+    let slideTimer = null;
 
-    if (titleElem && h.title) {
-      // Highlight last two words or custom text in gold
-      const parts = h.title.split(' ');
-      if (parts.length > 2) {
-        const lastTwo = parts.splice(-2).join(' ');
-        titleElem.innerHTML = `${parts.join(' ')} <span class="gold-highlight">${lastTwo}</span>`;
-      } else {
-        titleElem.textContent = h.title;
+    heroContainer.innerHTML = slides.map((slide, idx) => `
+      <div class="modern-hero-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}" style="background-image: url('${slide.image}');">
+        <div class="modern-hero-overlay"></div>
+        <div class="container modern-hero-content-wrapper">
+          <div class="modern-hero-content">
+            <div class="modern-hero-legacy-pill">
+              <i class="fa-solid fa-award gold-pulse"></i> 52+ YEARS OF BRIDGE ENGINEERING LEGACY SINCE 1972
+            </div>
+            <h1 class="modern-hero-title">${slide.titleFormatted || slide.title}</h1>
+            <p class="modern-hero-desc">${slide.desc || slide.subtitle}</p>
+            <div class="modern-hero-actions">
+              <a href="${slide.ctaLink || 'products.html'}" class="modern-btn-primary">
+                <i class="fa-solid fa-gear"></i> ${slide.ctaText || 'Explore Complete Catalog'} <i class="fa-solid fa-arrow-right"></i>
+              </a>
+              <a href="projects.html" class="modern-btn-outline">
+                <i class="fa-solid fa-bridge-water"></i> View Landmark Projects
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    const dotsContainer = document.getElementById('hero-dots');
+    if (dotsContainer) {
+      dotsContainer.innerHTML = slides.map((_, idx) => `
+        <div class="modern-hero-dot ${idx === 0 ? 'active' : ''}" data-index="${idx}" title="Go to Slide ${idx + 1}">
+          <div class="dot-progress-bar"></div>
+        </div>
+      `).join('');
+    }
+
+    const currentSlideEl = document.getElementById('hero-current-slide');
+    const totalSlidesEl = document.getElementById('hero-total-slides');
+    if (totalSlidesEl) totalSlidesEl.textContent = slides.length.toString().padStart(2, '0');
+
+    // Function to animate the floating 52+ experience counter (`animation in the 52+ likna hai increment animation chaiye mujhe`)
+    const animateExperienceBadge = () => {
+      const badgeEl = document.getElementById('hero-exp-badge') || document.querySelector('.modern-hero-badge');
+      const numEl = document.getElementById('modern-exp-counter') || document.querySelector('.modern-exp-num');
+      if (!numEl) return;
+
+      if (badgeEl) {
+        badgeEl.style.animation = 'none';
+        void badgeEl.offsetWidth;
+        badgeEl.style.animation = 'badgePulseAnim 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards';
       }
+
+      const targetNum = parseInt(numEl.getAttribute('data-target')) || 52;
+      const suffix = numEl.getAttribute('data-suffix') || '+';
+      const duration = 1400;
+      const startTime = performance.now();
+
+      const runCounterStep = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const currentVal = Math.floor(easeOut * targetNum);
+
+        numEl.textContent = currentVal + suffix;
+
+        if (progress < 1) {
+          requestAnimationFrame(runCounterStep);
+        } else {
+          numEl.textContent = targetNum + suffix;
+        }
+      };
+
+      requestAnimationFrame(runCounterStep);
+    };
+
+    const showSlide = (newIdx, dir = null) => {
+      const oldIdx = currentIdx;
+      if (newIdx < 0) newIdx = slides.length - 1;
+      if (newIdx >= slides.length) newIdx = 0;
+      if (newIdx === oldIdx) return;
+
+      // Determine sliding direction (`right and left ho raha aesa lage`)
+      let direction = dir;
+      if (!direction) {
+        if ((newIdx > oldIdx && !(oldIdx === 0 && newIdx === slides.length - 1)) || (oldIdx === slides.length - 1 && newIdx === 0)) {
+          direction = 'next'; // Slide forward (New slide comes from right, old goes left)
+        } else {
+          direction = 'prev'; // Slide backward (New slide comes from left, old goes right)
+        }
+      }
+
+      currentIdx = newIdx;
+
+      const allSlides = heroContainer.querySelectorAll('.modern-hero-slide');
+      const allDots = dotsContainer ? dotsContainer.querySelectorAll('.modern-hero-dot') : [];
+
+      allSlides.forEach((el, i) => {
+        el.classList.remove('active', 'slide-right-in', 'slide-left-out', 'slide-left-in', 'slide-right-out');
+        if (i === currentIdx) {
+          el.classList.add('active');
+          if (direction === 'next') {
+            el.classList.add('slide-right-in');
+          } else {
+            el.classList.add('slide-left-in');
+          }
+        } else if (i === oldIdx) {
+          if (direction === 'next') {
+            el.classList.add('slide-left-out');
+          } else {
+            el.classList.add('slide-right-out');
+          }
+        }
+      });
+
+      allDots.forEach((el, i) => {
+        if (i === currentIdx) {
+          el.classList.add('active');
+          const bar = el.querySelector('.dot-progress-bar');
+          if (bar) {
+            bar.style.animation = 'none';
+            void bar.offsetWidth;
+            bar.style.animation = 'autoSlideProgress 3.8s linear forwards';
+          }
+        } else {
+          el.classList.remove('active');
+          const bar = el.querySelector('.dot-progress-bar');
+          if (bar) bar.style.animation = 'none';
+        }
+      });
+
+      if (currentSlideEl) currentSlideEl.textContent = (currentIdx + 1).toString().padStart(2, '0');
+
+      // Trigger the 52+ Increment Animation on every slide transition (`52+ increment animation chaiye mujhe`)
+      animateExperienceBadge();
+    };
+
+    const startTimer = () => {
+      clearInterval(slideTimer);
+      slideTimer = setInterval(() => {
+        showSlide(currentIdx + 1);
+      }, 3800);
+      const activeDot = dotsContainer ? dotsContainer.querySelector('.modern-hero-dot.active .dot-progress-bar') : null;
+      if (activeDot) {
+        activeDot.style.animation = 'none';
+        void activeDot.offsetWidth;
+        activeDot.style.animation = 'autoSlideProgress 3.8s linear forwards';
+      }
+    };
+
+    const prevBtn = document.getElementById('hero-prev');
+    const nextBtn = document.getElementById('hero-next');
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        showSlide(currentIdx - 1);
+        startTimer();
+      });
     }
-    if (subElem && h.subtitle) subElem.textContent = h.subtitle;
-    if (badgeElem && h.badgeText) badgeElem.innerHTML = `<i class="fa-solid fa-award"></i> ${h.badgeText}`;
-    if (bgElem && h.bgImage) bgElem.src = h.bgImage;
-    if (cta1) {
-      if (h.cta1Text) cta1.innerHTML = `<i class="fa-solid fa-gear"></i> ${h.cta1Text}`;
-      if (h.cta1Link) cta1.href = h.cta1Link;
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        showSlide(currentIdx + 1);
+        startTimer();
+      });
     }
-    if (cta2) {
-      if (h.cta2Text) cta2.textContent = h.cta2Text;
-      if (h.cta2Link) cta2.href = h.cta2Link;
+    if (dotsContainer) {
+      dotsContainer.querySelectorAll('.modern-hero-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+          showSlide(parseInt(dot.getAttribute('data-index')));
+          startTimer();
+        });
+      });
+    }
+
+    const heroSection = document.querySelector('.modern-hero-section');
+    if (heroSection) {
+      heroSection.addEventListener('mouseenter', () => {
+        clearInterval(slideTimer);
+        const activeBar = dotsContainer ? dotsContainer.querySelector('.modern-hero-dot.active .dot-progress-bar') : null;
+        if (activeBar) activeBar.style.animationPlayState = 'paused';
+      });
+      heroSection.addEventListener('mouseleave', () => {
+        const activeBar = dotsContainer ? dotsContainer.querySelector('.modern-hero-dot.active .dot-progress-bar') : null;
+        if (activeBar) activeBar.style.animationPlayState = 'running';
+        startTimer();
+      });
+
+      // Enable Mouse Drag / Touch Swipe for Hero Slider (`user mouse se scroll kare toh ho`)
+      let isHeroDragging = false;
+      let startX = 0;
+      let endX = 0;
+
+      heroSection.addEventListener('mousedown', (e) => {
+        if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.modern-hero-dot')) return;
+        isHeroDragging = true;
+        startX = e.clientX;
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isHeroDragging) return;
+        endX = e.clientX;
+      });
+
+      window.addEventListener('mouseup', (e) => {
+        if (!isHeroDragging) return;
+        isHeroDragging = false;
+        const diffX = startX - (endX || startX);
+        if (Math.abs(diffX) > 45) {
+          if (diffX > 0) {
+            showSlide(currentIdx + 1); // Dragged left -> Next Slide
+          } else {
+            showSlide(currentIdx - 1); // Dragged right -> Prev Slide
+          }
+          startTimer();
+        }
+        startX = 0;
+        endX = 0;
+      });
+
+      // Enable horizontal mouse wheel / trackpad swiping on Hero Slider
+      let wheelCooldown = false;
+      heroSection.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaX) > 30 && !wheelCooldown) {
+          wheelCooldown = true;
+          if (e.deltaX > 0) {
+            showSlide(currentIdx + 1);
+          } else {
+            showSlide(currentIdx - 1);
+          }
+          startTimer();
+          setTimeout(() => { wheelCooldown = false; }, 600);
+        }
+      }, { passive: true });
+    }
+    startTimer();
+    animateExperienceBadge(); // Trigger 52+ increment counter animation immediately when home page loads (`increment animation chaiye mujhe`)
+  }
+
+  // 2. Render All Products Showcase Auto-Slider (All 9 Products in Studio White Auto-Gliding Cards)
+  const allProductsContainer = document.getElementById('all-products-slider-container');
+  if (allProductsContainer && data.products && data.products.length > 0) {
+    const productCards = data.products.map(p => `
+      <a href="products.html" class="product-showcase-card clean-card-link">
+        <div class="product-showcase-img-box">
+          <img src="${p.image}" alt="${p.name}" onerror="this.src='uploads/river-bridge.png'">
+          <div class="product-cat-badge"><i class="fa-solid fa-tag"></i> ${p.category}</div>
+        </div>
+        <div class="product-showcase-content">
+          <h3>${p.name}</h3>
+          <p class="product-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 3em; margin-bottom: 0;">${p.description || ''}</p>
+        </div>
+      </a>
+    `);
+    renderSectionSlider(allProductsContainer, productCards, 'all-products-showcase', '', 'Complete Products Catalog');
+  }
+
+  // 3. Render Forming the Future & 3 Patents Section
+  const formingFutureContainer = document.getElementById('forming-future-container');
+  if (formingFutureContainer && data.formingFuture) {
+    const f = data.formingFuture;
+    formingFutureContainer.innerHTML = `
+      <!-- TIER 1: PANORAMIC INDUSTRIAL HEADER -->
+      <div class="forming-panorama-top">
+        <div class="panorama-img-box">
+          <img src="${f.image || 'uploads/about-factory.png'}" alt="Winsteel Engineering Facility" onerror="this.src='uploads/river-bridge.png'">
+          <div class="panorama-img-badge">
+            <span class="p-badge-icon"><i class="fa-solid fa-industry"></i></span>
+            <div>
+              <strong>324,000 SQ. FT. HEAVY MANUFACTURING POWERHOUSE</strong>
+              <span>5 HIGH-PRECISION UNITS ACROSS INDIA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panorama-narrative-box">
+          <div class="p-legacy-pill">
+            <span class="p-pill-icon"><i class="fa-solid fa-building"></i></span>
+            <span>ESTABLISHED 1972 • INDIA'S INFRASTRUCTURE LEADER</span>
+          </div>
+          <h2 class="p-main-heading">${f.mainTitle || 'Precision Structural Steel Fabrication & Launching Systems Since 1972'}</h2>
+          <div class="p-desc-wrapper">
+            <p class="p-lead"><strong>Winsteel Engineering Works Pvt. Ltd.</strong> — ${f.description1 || ''}</p>
+            <p class="p-body">${f.description2 || ''}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 2: HORIZONTAL LUXURY COMMAND BAR (SPRAWLING 4 PILLARS) -->
+      <div class="forming-command-bar">
+        <div class="cmd-pillar">
+          <div class="cmd-icon"><i class="fa-solid fa-award"></i></div>
+          <div class="cmd-content">
+            <span class="cmd-num">52+</span>
+            <span class="cmd-lbl">Years of Mastery</span>
+            <span class="cmd-sub">Since 1972</span>
+          </div>
+        </div>
+
+        <div class="cmd-pillar gold-active">
+          <div class="cmd-icon gold"><i class="fa-solid fa-certificate"></i></div>
+          <div class="cmd-content">
+            <span class="cmd-num gold">${f.patentsCount || '03'}</span>
+            <span class="cmd-lbl gold">Patents Awarded</span>
+            <span class="cmd-sub gold">Segmental Launching</span>
+          </div>
+        </div>
+
+        <div class="cmd-pillar">
+          <div class="cmd-icon"><i class="fa-solid fa-gear"></i></div>
+          <div class="cmd-content">
+            <span class="cmd-num">18,000</span>
+            <span class="cmd-lbl">Metric Tonnes/Yr</span>
+            <span class="cmd-sub">Steel Capacity</span>
+          </div>
+        </div>
+
+        <div class="cmd-pillar">
+          <div class="cmd-icon"><i class="fa-solid fa-shield"></i></div>
+          <div class="cmd-content">
+            <span class="cmd-num">ISO 9001</span>
+            <span class="cmd-lbl">NDT Quality Tested</span>
+            <span class="cmd-sub">Certified Standard</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 3: DUAL SYMMETRICAL ARCHITECTURAL CARDS -->
+      <div class="forming-bottom-dual">
+        <!-- Card 1: Core Competence Checklist -->
+        <div class="dual-feature-card competence-card">
+          <div class="dual-card-header">
+            <span class="dual-tag-pill blue"><i class="fa-solid fa-check"></i> CORE STRENGTHS & CAPABILITIES</span>
+            <h3 class="dual-card-title">Turnkey Engineering Execution</h3>
+          </div>
+          <div class="dual-checklist">
+            <div class="chk-row">
+              <span class="chk-icon"><i class="fa-solid fa-check"></i></span>
+              <div class="chk-text"><strong>Micro-Precision Fabrication:</strong> Custom Formwork & Precast Moulding tolerances strictly within ±0.1mm.</div>
+            </div>
+            <div class="chk-row">
+              <span class="chk-icon"><i class="fa-solid fa-check"></i></span>
+              <div class="chk-text"><strong>Turnkey Site Execution:</strong> Complete erection, hydraulic gantry commissioning, and operational team training.</div>
+            </div>
+            <div class="chk-row">
+              <span class="chk-icon"><i class="fa-solid fa-check"></i></span>
+              <div class="chk-text"><strong>Heavy Industrial Output:</strong> Annual structural steel processing capacity exceeding 18,000 Metric Tonnes.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Alpi Sea Italy European Partnership -->
+        <div class="dual-feature-card alpi-card">
+          <div class="dual-card-header">
+            <div class="alpi-top-row">
+              <span class="dual-tag-pill gold"><i class="fa-solid fa-handshake"></i> EUROPEAN COLLABORATION</span>
+              <span class="alpi-flag">ITALY <i class="fa-solid fa-globe"></i></span>
+            </div>
+            <h3 class="dual-card-title white">${f.partnerTitle || 'Technical Associate: Alpi Sea Ltd. (Italy)'}</h3>
+          </div>
+          <p class="alpi-card-desc">${f.partnerDesc || ''}</p>
+          <div class="alpi-card-actions">
+            <a href="${f.partnerUrl || 'http://www.alpisea.com'}" target="_blank" class="btn-alpi-gold">
+              <span>Explore Alpi Sea Portal</span>
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="projects.html" class="btn-alpi-link">
+              <span>View Collaborated Projects</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 4. Render Worldwide Footprint / Across the World Map
+  const worldMapContainer = document.getElementById('world-map-container');
+  if (worldMapContainer && data.worldMap) {
+    const m = data.worldMap;
+    worldMapContainer.innerHTML = `
+      <div class="world-map-visual">
+        <div class="distribution-map">
+          <img decoding="async" src="http://winsteel.in/wp-content/uploads/2023/08/map-world.png" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/bhandarisoumiya-hub/winsteel-project/main/uploads/map-world.png';" alt="Winsteel Worldwide Distribution Map">
+
+          <button class="map-point" style="top:35%;left:29%">
+            <div class="content">
+              <div class="centered-y">
+                <h2>Canada</h2>
+              </div>
+            </div>
+          </button>
+       
+          <button class="map-point" style="top:55%;left:72%">
+            <div class="content">
+              <div class="centered-y">
+                <h2>Thailand</h2>
+              </div>
+            </div>
+          </button>
+
+          <button class="map-point" style="top:53%;left:calc( 68% - 10px);">
+            <div class="content">
+              <div class="centered-y">
+                <h2>India</h2>
+              </div>
+            </div>
+          </button>
+
+          <button class="map-point" style="top:46%;left:58%">
+            <div class="content">
+              <div class="centered-y">
+                <h2>Jordan</h2>
+              </div>
+            </div>
+          </button>
+
+          <button class="map-point" style="top:52%;left:59%">
+            <div class="content">
+              <div class="centered-y">
+                <h2>Iran</h2>
+              </div>
+            </div>
+          </button>
+
+          <button class="map-point" style="top:53%;left:61%">
+            <div class="content">
+              <div class="centered-y">
+                <h2>Qatar</h2>
+              </div>
+            </div>
+          </button>
+
+          <button class="map-point" style="top:49%;left:60%">
+            <div class="content">
+              <div class="centered-y">
+                <h2>Kuwait</h2>
+              </div>
+            </div>
+          </button>
+        </div>
+
+        <div class="map-locations-grid">
+          ${m.locations ? m.locations.map(loc => `
+            <div class="map-location-item">
+              <div class="loc-marker"><i class="fa-solid fa-location-dot"></i></div>
+              <div class="loc-info">
+                <h4>${loc.name}</h4>
+                <span>${loc.desc}</span>
+              </div>
+            </div>
+          `).join('') : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  // ==========================================
+  // UNIVERSAL SLIDER SYSTEM HELPERS
+  // ==========================================
+  window.winsteelSlide = function (sliderId, direction) {
+    const track = document.getElementById(`${sliderId}-track`);
+    if (!track) return;
+    const card = track.firstElementChild;
+    if (!card) return;
+    const cardWidth = card.offsetWidth + 30; // width + gap
+    const currentScroll = track.scrollLeft;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+
+    if (direction > 0 && currentScroll + 15 >= maxScroll) {
+      // Reached end of right scroll, loop back to slide 1 smoothly
+      track.scrollTo({ left: 0, behavior: 'smooth' });
+    } else if (direction < 0 && currentScroll <= 15) {
+      // Reached left start, loop to the max end
+      track.scrollTo({ left: maxScroll, behavior: 'smooth' });
+    } else {
+      const targetScroll = currentScroll + (cardWidth * direction);
+      track.scrollTo({ left: targetScroll, behavior: 'smooth' });
+    }
+  };
+
+  window.winsteelSlideTo = function (sliderId, index) {
+    const track = document.getElementById(`${sliderId}-track`);
+    if (!track) return;
+    const card = track.children[index];
+    if (!card) return;
+    track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+  };
+
+  window.updateWinsteelDots = function (sliderId) {
+    const track = document.getElementById(`${sliderId}-track`);
+    if (!track) return;
+    const cards = track.children;
+    if (!cards.length) return;
+
+    const scrollLeft = track.scrollLeft;
+    const trackWidth = track.scrollWidth - track.clientWidth;
+    let activeIndex = 0;
+
+    if (trackWidth > 5) {
+      const progress = Math.max(0, Math.min(1, scrollLeft / trackWidth));
+      activeIndex = Math.min(cards.length - 1, Math.round(progress * (cards.length - 1)));
+    } else {
+      activeIndex = 0;
+    }
+
+    // Update dots
+    const dotsContainer = document.getElementById(`${sliderId}-dots`);
+    if (dotsContainer) {
+      const dots = dotsContainer.querySelectorAll('.modern-dot, .carousel-dot');
+      dots.forEach((dot, idx) => {
+        if (idx === activeIndex) dot.classList.add('active');
+        else dot.classList.remove('active');
+      });
+    }
+  };
+
+  function renderSectionSlider(containerEl, itemsArray, sliderId, colClass = '', label = 'Interactive Catalog') {
+    if (!containerEl || !itemsArray || !itemsArray.length) return;
+
+    // Override parent grid display so the slider spans 100% full width and cards get wide, luxury dimensions!
+    containerEl.style.display = 'block';
+    containerEl.style.width = '100%';
+
+    const dotsHtml = itemsArray.map((_, idx) => `
+      <span class="modern-dot ${idx === 0 ? 'active' : ''}" onclick="window.winsteelSlideTo('${sliderId}', ${idx})" title="Slide ${idx + 1}"></span>
+    `).join('');
+
+    containerEl.innerHTML = `
+      <div class="modern-slider-wrapper" id="${sliderId}-wrapper">
+        <div class="modern-slider-track ${colClass}" id="${sliderId}-track" onscroll="window.updateWinsteelDots('${sliderId}')">
+          ${itemsArray.join('')}
+        </div>
+
+        <div class="modern-slider-footer">
+          <div class="modern-slider-dots" id="${sliderId}-dots">
+            ${dotsHtml}
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Enable mouse drag-to-scroll on desktop & mouse-wheel horizontal scrolling
+    const track = document.getElementById(`${sliderId}-track`);
+    if (track) {
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+      let isDragging = false;
+
+      track.addEventListener('mousedown', (e) => {
+        isDown = true;
+        isDragging = false;
+        track.classList.add('active');
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+        }
+      });
+      track.addEventListener('mouseleave', () => {
+        isDown = false;
+        track.classList.remove('active');
+      });
+      track.addEventListener('mouseup', () => {
+        isDown = false;
+        track.classList.remove('active');
+      });
+      track.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - track.offsetLeft;
+        const walk = (x - startX) * 1.8;
+        if (Math.abs(x - startX) > 5) {
+          isDragging = true;
+        }
+        track.scrollLeft = scrollLeft - walk;
+      });
+
+      // Enable smooth horizontal scrolling when user scrolls mouse wheel over the slider
+      track.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaY) > 0) {
+          const maxScroll = track.scrollWidth - track.clientWidth;
+          if (maxScroll > 0) {
+            if ((track.scrollLeft > 0 && e.deltaY < 0) || (track.scrollLeft < maxScroll - 2 && e.deltaY > 0)) {
+              e.preventDefault();
+              track.scrollLeft += e.deltaY * 1.5;
+            }
+          }
+        }
+      }, { passive: false });
+
+      // Prevent accidental card link navigation when user dragged with mouse
+      track.addEventListener('click', (e) => {
+        if (isDragging) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+    }
+
+    // Auto-slider for all sections (`Modern Look with Auto Slider`)
+    const wrapper = document.getElementById(`${sliderId}-wrapper`);
+    if (wrapper && track) {
+      let autoTimer = setInterval(() => {
+        if (!document.hidden && !track.classList.contains('active')) {
+          window.winsteelSlide(sliderId, 1);
+        }
+      }, 3500);
+
+      wrapper.addEventListener('mouseenter', () => clearInterval(autoTimer));
+      wrapper.addEventListener('mouseleave', () => {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(() => {
+          if (!document.hidden && !track.classList.contains('active')) {
+            window.winsteelSlide(sliderId, 1);
+          }
+        }, 3500);
+      });
     }
   }
 
-  // 2. Populate Stats Counter Bar
-  if (data.stats) {
-    const s = data.stats;
-    const yearsElem = document.getElementById('stat-years');
-    const workersElem = document.getElementById('stat-workers');
-    const plotElem = document.getElementById('stat-plot');
-    const capacityElem = document.getElementById('stat-capacity');
-
-    if (yearsElem && s.yearsExperience) yearsElem.setAttribute('data-target', s.yearsExperience);
-    if (workersElem && s.skilledWorkers) {
-      const num = parseInt(s.skilledWorkers) || 550;
-      workersElem.setAttribute('data-target', num);
-    }
-    if (plotElem && s.plotAreaSqFt) {
-      const num = parseInt(s.plotAreaSqFt.replace(/,/g, '')) || 324000;
-      plotElem.setAttribute('data-target', Math.round(num / 1000));
-      plotElem.setAttribute('data-suffix', ',000');
-    }
-    if (capacityElem && s.annualCapacityMT) {
-      const num = parseInt(s.annualCapacityMT.replace(/,/g, '')) || 18000;
-      capacityElem.setAttribute('data-target', Math.round(num / 1000));
-      capacityElem.setAttribute('data-suffix', ',000');
-    }
-  }
-
-  // 3. Populate About & Partner Section
-  if (data.about) {
-    const a = data.about;
-    const titleElem = document.getElementById('about-title');
-    const descElem = document.getElementById('about-desc');
-    const imgMain = document.getElementById('about-img-main');
-    const pName = document.getElementById('about-partner-name');
-    const pDesc = document.getElementById('about-partner-desc');
-    const pWeb = document.getElementById('about-partner-web');
-
-    if (titleElem) titleElem.textContent = a.subtitle || a.title;
-    if (descElem && a.description) {
-      descElem.innerHTML = `<p><strong>WINSTEEL ENGINEERING WORKS PVT. LTD.</strong> ${a.description}</p>`;
-    }
-    if (imgMain && a.image) imgMain.src = a.image;
-    if (pName && a.partnerName) pName.innerHTML = `<i class="fa-solid fa-handshake" style="color: var(--accent-gold);"></i> Technical Associate: ${a.partnerName}`;
-    if (pDesc && a.partnerDesc) pDesc.textContent = a.partnerDesc;
-    if (pWeb && a.partnerWebsite) {
-      pWeb.href = a.partnerWebsite;
-      pWeb.innerHTML = `Visit ${a.partnerName || 'Technical Associate'} Portal <i class="fa-solid fa-arrow-up-right-from-square"></i>`;
-    }
-  }
-
-  // 4. Populate Turnkey Process Workflow
-  const processContainer = document.getElementById('process-container');
-  if (processContainer && data.process) {
-    processContainer.innerHTML = data.process.map(p => `
-      <div class="process-card">
-        <div class="process-step-num">${p.step || '01'}</div>
-        <div class="process-icon"><i class="fa-solid ${p.icon || 'fa-clipboard-list'}"></i></div>
-        <h4>${p.title}</h4>
-        <p>${p.description}</p>
+  // 6. Render Animated Odometer Counters Bar
+  const odometersGrid = document.getElementById('odometer-counters-grid');
+  if (odometersGrid && data.odometerCounters) {
+    odometersGrid.innerHTML = data.odometerCounters.map(o => `
+      <div class="odometer-card">
+        <div class="odo-icon"><i class="fa-solid ${o.id === 'odo-units' ? 'fa-industry' : o.id === 'odo-years' ? 'fa-award' : 'fa-chart-area'}"></i></div>
+        <div class="odo-num-box">
+          <span class="count-num" data-target="${o.number}" ${o.format ? `data-format="${o.format}"` : ''} ${o.suffix ? `data-suffix="${o.suffix}"` : ''}>${o.number}</span>
+          ${o.unit ? `<span class="odo-unit">${o.unit}</span>` : ''}
+        </div>
+        <h4>${o.label}</h4>
+        <p>${o.sublabel}</p>
       </div>
     `).join('');
   }
 
-  // 5. Populate Strengths
+  // 7. Render Projects Completed Showcase Slider (`Exact projects from projects page unified on Home Page slider`)
+  const projectsCompletedGrid = document.getElementById('projects-completed-grid');
+  if (projectsCompletedGrid) {
+    const combinedProjects = (data.projects || []).concat(data.projectsCompleted || []).filter((item, pos, self) =>
+      self.findIndex(t => t.id === item.id || t.title === item.title) === pos
+    );
+    if (combinedProjects.length > 0) {
+      const projectCards = combinedProjects.map(p => renderProjectCard(p));
+      renderSectionSlider(projectsCompletedGrid, projectCards, 'projects-slider', '', 'Landmark Corridors');
+    }
+  }
+
+  // 8. Render Turnkey Methodology Workflow Slider
+  const processContainer = document.getElementById('process-container');
+  if (processContainer && data.process) {
+    const processCards = data.process.map(p => `
+      <div class="process-card">
+        <div class="process-step-num">${p.step || '01'}</div>
+        <div class="process-icon"><i class="fa-solid ${p.icon || 'fa-clipboard-list'}"></i></div>
+        <h4>${p.title}</h4>
+        <p>${p.description || p.desc}</p>
+      </div>
+    `);
+    renderSectionSlider(processContainer, processCards, 'process-slider', 'cards-4-col', 'Execution Steps');
+  }
+
+  // 9. Render Core Strengths & Advantages Slider (9 Core Strengths)
   const strengthsContainer = document.getElementById('strengths-container');
   if (strengthsContainer && data.strengths) {
     const icons = ['fa-award', 'fa-bolt', 'fa-users-gear', 'fa-gears', 'fa-chart-line', 'fa-industry', 'fa-compass-drafting', 'fa-shield-halved', 'fa-truck-fast'];
     const tags = ['52+ Years Mastery', 'Turnkey Execution', '550+ Skilled Workforce', '10-25 Ton Crane Capacity', '18,000 MT Annual Output', '0.1mm Precision Tolerances', 'Alpi Sea Technical Collab', 'ISO 9001:2015 & NDT Tested', '100% Client Satisfaction'];
-    strengthsContainer.innerHTML = data.strengths.map((s, idx) => `
+    const strengthCards = data.strengths.map((s, idx) => `
       <div class="strength-card ${idx === 8 ? 'gold-card' : ''}">
         <div class="strength-card-top">
           <span class="strength-num-badge" ${idx === 8 ? 'style="background:#0f172a; color:#fbbf24;"' : ''}>${(idx + 1).toString().padStart(2, '0')}</span>
@@ -233,84 +804,86 @@ function initHomePage(data) {
         </div>
         <div class="strength-card-body">
           <h4>${s.title}</h4>
-          <p>${s.description}</p>
+          <p>${s.desc || s.description}</p>
         </div>
         <div class="strength-card-footer">
           <span class="strength-tag" ${idx === 8 ? 'style="background:rgba(15,23,42,0.15); color:#0f172a;"' : ''}><i class="fa-solid fa-check"></i> ${tags[idx % tags.length]}</span>
           <span class="strength-clean-arrow">→</span>
         </div>
       </div>
-    `).join('');
+    `);
+    renderSectionSlider(strengthsContainer, strengthCards, 'strengths-slider', '', 'Engineering Advantages');
   }
 
-  // 6. Populate News / Insights on Home Page
-  const homeNewsContainer = document.getElementById('home-news-container');
-  if (homeNewsContainer && data.news) {
-    const recentNews = data.news.slice(0, 3);
-    homeNewsContainer.innerHTML = recentNews.map(n => `
-      <div class="card news-card-home" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: all 0.3s ease;">
-        ${n.category ? `<span class="card-badge" style="background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); color: #f3ad1b; font-weight: 700; font-size: 11.5px; padding: 5px 12px; border-radius: 50px; position: absolute; top: 14px; left: 14px; z-index: 2; border: 1px solid rgba(243, 173, 27, 0.35);">${n.category}</span>` : ''}
-        <a href="news-details.html?id=${n.id}" class="card-img-wrapper" style="position: relative; overflow: hidden; height: 220px; background: #0f172a; display: block;">
-          <img src="${n.image}" alt="${n.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);" onerror="this.src='Winsteel Trans Logo.png'">
-        </a>
-        <div class="card-content" style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
-          <div style="color: #64748b; font-size: 13px; font-weight: 600; margin-bottom: 8px;">
-            <i class="fa-regular fa-calendar-days" style="color: var(--accent-gold); margin-right: 4px;"></i> ${n.date}
-          </div>
-          <h3 style="font-size: 18px; font-weight: 700; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em; max-height: 2.7em;">
-            <a href="news-details.html?id=${n.id}" style="color: inherit; text-decoration: none; transition: color 0.3s;">${n.title}</a>
-          </h3>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 18px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.2em; max-height: 3.2em;">${n.excerpt || ''}</p>
-          
-          <div style="display: flex; justify-content: flex-end; padding-top: 14px; border-top: 1px solid var(--border-light); margin-top: auto;">
-            <a href="news-details.html?id=${n.id}" class="btn-card-link" style="font-weight: 700; color: var(--primary-blue); text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">Read Article <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
+  // 10. Render Manufacturing Powerhouse Facilities Slider (5 Sprawling Facilities)
+  const facilitiesContainer = document.getElementById('facilities-container');
+  if (facilitiesContainer && data.facilities) {
+    const facilityCards = data.facilities.map(f => `
+      <div class="facility-card">
+        <div class="facility-img-box">
+          <img src="${f.image}" alt="${f.title}" loading="lazy" onerror="this.src='uploads/about-factory.png'">
+        </div>
+        <div class="facility-content">
+          <h4>${f.subtitle || 'Manufacturing Unit'}</h4>
+          <h3>${f.title}</h3>
+          <p>${f.desc || f.description || f.equipment || ''}</p>
+          ${f.area ? `<span class="facility-area-badge"><i class="fa-solid fa-chart-area"></i> ${f.area}</span>` : ''}
         </div>
       </div>
-    `).join('');
+    `);
+    renderSectionSlider(facilitiesContainer, facilityCards, 'facilities-slider', 'cards-2-col', 'Premises & Bays');
   }
 
-  // 7. Populate Featured Products Preview
-  const featProductsContainer = document.getElementById('featured-products-grid');
-  if (featProductsContainer && data.products) {
-    const featured = data.products.slice(0, 3);
-    featProductsContainer.innerHTML = featured.map(p => renderProductCard(p)).join('');
-  }
-
-  // 8. Populate Featured Projects Preview
-  const featProjectsContainer = document.getElementById('featured-projects-grid');
-  if (featProjectsContainer && data.projects) {
-    const featured = data.projects.slice(0, 3);
-    featProjectsContainer.innerHTML = featured.map(p => renderProjectCard(p)).join('');
-  }
-
-  // 9. Populate Client Testimonials
+  // 8. Render People Say About Us / Testimonials Slider (Modern UI matching screenshot `What People Say About Us`)
   const testimonialsContainer = document.getElementById('testimonials-container');
-  if (testimonialsContainer && data.testimonials) {
-    testimonialsContainer.innerHTML = data.testimonials.map(t => {
-      const initial = (t.author && t.author[0]) || 'C';
+  const testList = data.peopleSayAboutUs || data.testimonials;
+  if (testimonialsContainer && testList) {
+    const testCards = testList.map(t => {
+      const authorName = t.name || t.author || 'John Doe';
       return `
-        <div class="testimonial-card">
-          <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
-          <p>"${t.quote}"</p>
-          <div class="client-author">
-            <div class="author-avatar">${initial}</div>
-            <div>
-              <strong style="display:block; color:#0f172a;">${t.author}</strong>
-              <span style="font-size:13px; color:#64748b;">${t.title} • ${t.company}</span>
+        <div class="testimonial-card-modern">
+          <p class="modern-quote-text">"${t.quote}"</p>
+          <div class="modern-author-bar">
+            <div class="modern-quote-box"><i class="fa-solid fa-quote-left"></i></div>
+            <div class="modern-author-info">
+              <h4>${authorName}</h4>
+              <span>${t.designation || 'Director'} • ${t.company}</span>
             </div>
           </div>
         </div>
       `;
-    }).join('');
+    });
+    renderSectionSlider(testimonialsContainer, testCards, 'testimonials-slider', 'cards-2-col', 'Client Testimonials');
   }
 
-  // 10. Populate Recent News in Footer
-  populateFooterNews(data.news);
+  // 9. Render Recent News & Updates Slider (Modern UI matching screenshot `UPDATES Recent News`)
+  const recentNewsGrid = document.getElementById('recent-news-grid');
+  const newsList = data.recentNews || data.news;
+  if (recentNewsGrid && newsList) {
+    const newsCards = newsList.map(n => `
+      <div class="recent-news-card-modern clean-card-link">
+        <div class="modern-news-img-box">
+          <img src="${n.image}" alt="${n.title}" onerror="this.src='uploads/river-bridge.png'">
+        </div>
+        <div class="modern-news-content">
+          <div class="modern-news-date">${n.date}</div>
+          <h3 class="modern-news-title"><a href="index.html#">${n.title}</a></h3>
+          <p class="modern-news-excerpt" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 3em; margin-bottom: 18px; color: #64748b; font-size: 14px; line-height: 1.6;">${n.excerpt || ''}</p>
+          <div class="modern-news-footer">
+            <div class="modern-news-avatar"><i class="fa-solid fa-user"></i></div>
+            <span class="modern-news-author">by WinSteelAdmin</span>
+          </div>
+        </div>
+      </div>
+    `);
+    renderSectionSlider(recentNewsGrid, newsCards, 'news-slider', '', 'Engineering Insights');
+  }
 
-  // 11. Re-initialize and trigger any updated number counters
+  // 13. Populate Recent News in Footer & Re-initialize animated counters
+  populateFooterNews(newsList);
   initAnimatedCounters();
 }
+
 
 // ==========================================
 // PRODUCTS PAGE INITIALIZATION
@@ -345,8 +918,8 @@ function initProductsPage(data) {
       searchQuery = e.target.value.toLowerCase().trim();
       renderFilteredProducts();
     });
-  }  
-  
+  }
+
   function renderFilteredProducts() {
     if (!container || !data.products) return;
 
@@ -449,30 +1022,30 @@ function initProjectsPage(data) {
 // ==========================================
 function renderProjectCard(p) {
   return `
-    <div class="card" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden;">
-      ${p.category ? `<span class="card-badge">${p.category}</span>` : ''}
-      <a href="project-details.html?id=${p.id}" class="card-img-wrapper" style="height: 240px; display: block; overflow: hidden;">
-        <img src="${p.image}" alt="${p.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='uploads/hero-gantry.png'">
+    <div class="card" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden; transition: all 0.35s cubic-bezier(0.16,1,0.3,1);">
+      ${p.category ? `<span class="card-badge" style="position:absolute; top:10px; left:10px; background:rgba(15,23,42,0.85); color:#ffd200; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:800; z-index:2;">${p.category}</span>` : ''}
+      <a href="project-details.html?id=${p.id}" class="card-img-wrapper" style="height: 155px; display: block; overflow: hidden; background:#f1f5f9;">
+        <img src="${p.image}" alt="${p.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;" onerror="this.src='uploads/hero-gantry.png'">
       </a>
-      <div class="card-content" style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
-        <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em; max-height: 2.7em;"><a href="project-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.title}</a></h3>
-        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 18px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.2em; max-height: 3.2em;">${p.description || ''}</p>
+      <div class="card-content" style="padding: 14px 16px 16px; display: flex; flex-direction: column; flex: 1;">
+        <h3 style="font-size: 16px; font-weight: 700; color: var(--primary-navy); margin-bottom: 6px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 2.6em;"><a href="project-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.title}</a></h3>
+        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 2.9em;">${p.description || ''}</p>
         
         <!-- Specs Bar: Location and Year -->
-        <div style="display: flex; align-items: center; gap: 14px; margin-top: auto; margin-bottom: 16px; font-size: 13.5px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 14px;">
-          <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-navy); font-weight: 600;">
-            <i class="fa-solid fa-location-dot" style="color: var(--accent-gold); font-size: 13px;"></i>
+        <div style="display: flex; align-items: center; gap: 12px; margin-top: auto; margin-bottom: 10px; font-size: 12.5px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 8px;">
+          <div style="display: flex; align-items: center; gap: 5px; color: var(--primary-navy); font-weight: 600;">
+            <i class="fa-solid fa-location-dot" style="color: var(--accent-gold); font-size: 12px;"></i>
             <span>${p.location}</span>
           </div>
-          <span style="width: 1px; height: 12px; background: var(--border-light);"></span>
-          <div style="display: flex; align-items: center; gap: 6px; color: var(--text-muted);">
-            <i class="fa-solid fa-calendar-days" style="color: var(--accent-gold); font-size: 13px;"></i>
+          <span style="width: 1px; height: 10px; background: var(--border-light);"></span>
+          <div style="display: flex; align-items: center; gap: 5px; color: var(--text-muted);">
+            <i class="fa-solid fa-calendar-days" style="color: var(--accent-gold); font-size: 12px;"></i>
             <span>${p.year}</span>
           </div>
         </div>
         
-        <div style="display: flex; justify-content: flex-end; padding-top: 14px; border-top: 1px solid var(--border-light); margin-top: 0;">
-          <a href="project-details.html?id=${p.id}" class="btn-card-link">Explore Case Study <i class="fa-solid fa-arrow-right"></i></a>
+        <div style="display: flex; justify-content: flex-end; padding-top: 8px; border-top: 1px solid var(--border-light); margin-top: 0;">
+          <a href="project-details.html?id=${p.id}" class="btn-card-link" style="font-size:12.5px;">Explore Case Study <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
         </div>
       </div>
     </div>
@@ -484,20 +1057,19 @@ function renderProductCard(p) {
     <div class="card product-showcase-card" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: all 0.3s ease;">
       ${p.category ? `<span class="card-badge" style="background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); color: #f3ad1b; font-weight: 700; font-size: 11.5px; padding: 5px 12px; border-radius: 50px; position: absolute; top: 14px; left: 14px; z-index: 2; border: 1px solid rgba(243, 173, 27, 0.35); box-shadow: 0 2px 10px rgba(0,0,0,0.2);">${p.category}</span>` : ''}
       
-      <a href="product-details.html?id=${p.id}" class="card-img-wrapper" style="position: relative; overflow: hidden; height: 240px; background: #0f172a; display: block;">
+     
+      <a href="product-details.html?id=${p.id}" class="card-img-wrapper" style="position: relative; overflow: hidden; height: 285px; background: #0f172a; display: block;">
         <img src="${p.image}" alt="${p.name}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);" onerror="this.src='Winsteel Trans Logo.png'">
       </a>
       
-      <div class="card-content" style="padding: 26px 24px; display: flex; flex-direction: column; flex: 1;">
-        <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 8px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em; max-height: 2.7em;">
+      <div class="card-content" style="padding: 22px 24px 24px; display: flex; flex-direction: column; flex: 1;">
+        <h3 style="font-size: 19px; font-weight: 700; color: var(--primary-navy); margin-bottom: 12px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 2.7em;">
           <a href="product-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.name}</a>
         </h3>
         
-        <div style="color: #d97706; font-size: 13px; font-weight: 600; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.8em; max-height: 2.8em;">
-          ${p.tagline ? `<i class="fa-solid fa-shield-halved" style="color: #f59e0b; margin-right: 4px;"></i> ${p.tagline}` : '&nbsp;'}
-        </div>
         
-        <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.2em; max-height: 3.2em;">${p.description || ''}</p>
+      
+        <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 3em;">${p.description || ''}</p>
         
         <!-- Specs Bar: Client and Year -->
         <div style="display: flex; align-items: center; gap: 14px; margin-top: auto; margin-bottom: 16px; font-size: 13px; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 16px;">
@@ -1209,18 +1781,18 @@ function showProjectNotFound() {
 function initInfraShowcase() {
   const tabs = document.querySelectorAll('.infra-tab');
   const views = document.querySelectorAll('.infra-view');
-  
+
   if (tabs.length === 0) return;
-  
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       // Deactivate all tabs & views
       tabs.forEach(t => t.classList.remove('active'));
       views.forEach(v => v.classList.remove('active'));
-      
+
       // Activate clicked tab
       tab.classList.add('active');
-      
+
       // Activate matching view
       const targetUnit = tab.getAttribute('data-unit');
       const targetView = document.getElementById(targetUnit);
@@ -1234,7 +1806,7 @@ function initInfraShowcase() {
 // ==========================================
 // INTERACTIVE STICKY VISUAL SWITCHER
 // ==========================================
-window.switchStickyImage = function(imgSrc, btnElem) {
+window.switchStickyImage = function (imgSrc, btnElem) {
   const imgElem = document.getElementById('sticky-showcase-img');
   if (imgElem) {
     imgElem.style.opacity = '0';
