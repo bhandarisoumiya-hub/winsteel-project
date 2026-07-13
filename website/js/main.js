@@ -128,8 +128,23 @@ function initAnimatedCounters() {
 function initHomePage(data) {
   // 1. Render Hero Multi-Slide Full-Screen Cinematic Auto-Slider (8 Slides)
   const heroContainer = document.getElementById('modern-hero-slides-container');
-  if (heroContainer && data.heroSlides && data.heroSlides.length > 0) {
-    const slides = data.heroSlides;
+  if (heroContainer) {
+    const slides = (data.heroSlides && data.heroSlides.length > 0) ? data.heroSlides : [
+      {
+        image: 'uploads/hero-gantry.png',
+        titleFormatted: 'ENGINEERING <span class="gold-highlight">EXCELLENCE</span> SINCE FIVE DECADES',
+        subtitle: 'International quality heavy steel formworks, bridge launching equipment, and custom infrastructure fabrication engineered for precision and durability.',
+        ctaText: 'Explore Equipment',
+        ctaLink: 'products.html'
+      },
+      {
+        image: 'uploads/metro-viaduct.png',
+        titleFormatted: 'PRECISION <span class="gold-highlight">LAUNCHING GANTRIES</span> & BRIDGE SYSTEMS',
+        subtitle: 'Span-by-span construction equipment, self-launching gantries, and specialized movable scaffolding systems built for rapid viaduct erection.',
+        ctaText: 'View Bridge Equipment',
+        ctaLink: 'products.html'
+      }
+    ];
     let currentIdx = 0;
     let slideTimer = null;
 

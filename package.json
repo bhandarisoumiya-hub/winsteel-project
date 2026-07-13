@@ -6,9 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "admin": "node server.js",
-    "generate": "node scripts/generate.js",
-    "build": "node scripts/generate.js",
-    "vercel-build": "node scripts/generate.js"
+    "generate": "node scripts/generate.js"
   },
   "keywords": [
     "winsteel",

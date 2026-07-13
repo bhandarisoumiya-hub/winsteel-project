@@ -389,6 +389,36 @@
     "ctaText": "Explore Products Showcase",
     "ctaLink": "products.html"
   },
+  "heroSlides": [
+    {
+      "image": "uploads/hero-gantry.png",
+      "titleFormatted": "ENGINEERING <span class=\"gold-highlight\">EXCELLENCE</span> SINCE FIVE DECADES",
+      "subtitle": "International quality heavy steel formworks, bridge launching equipment, and custom infrastructure fabrication engineered for precision and durability.",
+      "ctaText": "Explore Equipment",
+      "ctaLink": "products.html"
+    },
+    {
+      "image": "uploads/metro-viaduct.png",
+      "titleFormatted": "PRECISION <span class=\"gold-highlight\">LAUNCHING GANTRIES</span> & BRIDGE SYSTEMS",
+      "subtitle": "Span-by-span construction equipment, self-launching gantries, and specialized movable scaffolding systems built for rapid viaduct erection.",
+      "ctaText": "View Bridge Equipment",
+      "ctaLink": "products.html"
+    },
+    {
+      "image": "uploads/river-bridge.png",
+      "titleFormatted": "CUSTOM <span class=\"gold-highlight\">STEEL MOULDS</span> FOR INFRASTRUCTURE",
+      "subtitle": "U-Girder, I-Girder, and Piercap moulds engineered with robotic CNC welding for sub-millimeter dimensional accuracy and 300+ repetition cycles.",
+      "ctaText": "Explore Mould Catalog",
+      "ctaLink": "products.html"
+    },
+    {
+      "image": "uploads/robotic-welding.png",
+      "titleFormatted": "18,000 MT <span class=\"gold-highlight\">ANNUAL CAPACITY</span> IN MAHARASHTRA",
+      "subtitle": "State-of-the-art manufacturing facilities spread across 324,000 Sft with advanced robotic welding lines and strict quality compliance.",
+      "ctaText": "Discover Our Facilities",
+      "ctaLink": "about.html"
+    }
+  ],
   "about": {
     "title": "Engineering Precision Since 1998",
     "description": "Winsteel Engineering Works Pvt. Ltd. is a premier designer and manufacturer of specialized infrastructure construction equipment. From Narmada bridge viaducts to metro high-speed rail corridors, our equipment builds the nation.",
