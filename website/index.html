@@ -1,175 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Winsteel Engineering Works Pvt. Ltd. | 52 Years of Engineering Excellence</title>
+  <title>Winsteel Engineering Works Pvt. Ltd. | Forming The Future Since 1972</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=1.1">
+  <link rel="stylesheet" href="css/style.css?v=2.0">
 </head>
+
 <body data-page="home">
   <!-- Common Reusable Header (Loaded from js/components.js) -->
   <div id="app-header"></div>
 
-  <!-- Hero Section (Ultra Modern with Floating Visual Cards & Dynamic Binding) -->
-  <section class="hero">
-    <div class="hero-bg-grid"></div>
-    <div class="container hero-grid">
-      <div class="hero-content">
-        <div class="hero-tag" id="hero-badge">
-          <i class="fa-solid fa-award"></i> 52 Years of Indian Bridge Engineering Legacy
-        </div>
-        <h1 id="hero-title">ENGINEERING <span class="gold-highlight">EXCELLENCE</span> SINCE FIVE DECADES</h1>
-        <p id="hero-subtitle">International quality heavy steel formworks, bridge launching equipment, and custom infrastructure fabrication engineered for precision and durability.</p>
-        <div class="hero-actions">
-          <a href="products.html" id="hero-cta1" class="btn-hero-primary"><i class="fa-solid fa-gear"></i> Explore Equipment</a>
-          <a href="#contact" id="hero-cta2" class="btn-hero-outline">Contact Engineering Team</a>
-        </div>
-        <div class="hero-trust-badges">
-          <div class="trust-item">
-            <div class="trust-icon"><i class="fa-solid fa-handshake"></i></div>
-            <div class="trust-text">
-              <span>Technical Collab</span>
-              <strong>Alpi Sea Ltd.</strong>
-            </div>
-          </div>
-          <div class="trust-item">
-            <div class="trust-icon"><i class="fa-solid fa-crane"></i></div>
-            <div class="trust-text">
-              <span>Annual Capacity</span>
-              <strong>18,000 MT / Yr</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="hero-main-img">
-          <img id="hero-bg" src="uploads/hero-gantry.png" alt="Winsteel Launching Gantry Bridge Construction">
-        </div>
-        <div class="hero-floating-card-1">
-          <span class="floating-exp-num">52</span>
-          <span class="floating-exp-text">YEARS OF<br>PROVEN LEGACY</span>
-        </div>
-        <div class="hero-floating-card-2">
-          <div class="floating-icon"><i class="fa-solid fa-shield-halved"></i></div>
-          <div>
-            <span style="display:block; font-size:12px; color:#94a3b8; font-weight:600;">Quality Standard</span>
-            <strong style="font-size:14px; color:#fff;">100% Structural Safety</strong>
-          </div>
-        </div>
-      </div>
+  <!-- 1. Hero Multi-Slide Full-Screen Cinematic Auto-Slider Section (True 2026 Modern Look) -->
+  <section class="modern-hero-section" id="home">
+    <div id="modern-hero-slides-container" class="modern-hero-slides-container">
+      <!-- Full-Width Background Images & Dynamic Slide Overlays injected by js/main.js -->
     </div>
+
+    <!-- Floating 52 Years Gold Experience Card -->
+    <!-- Floating 52 Years Gold Experience Card (`animation in the 52+ likna hai increment animation chaiye mujhe`) -->
+    <div class="modern-hero-badge" id="hero-exp-badge">
+      <div class="modern-exp-num" id="modern-exp-counter" data-target="52" data-suffix="+">52+</div>
+      <div class="modern-exp-lbl">YEARS OF<br>EXPERIENCE</div>
+      <div class="modern-exp-tag">SINCE 1972</div>
+    </div>
+
+    <!-- Hero Auto-Slider Progress Dots -->
+    <div id="hero-dots" class="modern-hero-dots"></div>
   </section>
 
-  <!-- Animated Stats Counter Bar -->
-  <section class="stats-bar">
-    <div class="container stats-grid">
-      <div class="stat-box">
-        <div class="stat-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
-        <h3><span class="count-num" id="stat-years" data-target="52" data-suffix="+">52</span></h3>
-        <p>Years of Mastery</p>
-      </div>
-      <div class="stat-box">
-        <div class="stat-icon"><i class="fa-solid fa-users-gear"></i></div>
-        <h3><span class="count-num" id="stat-workers" data-target="550" data-suffix="+">550</span></h3>
-        <p>Skilled Engineers & Workforce</p>
-      </div>
-      <div class="stat-box">
-        <div class="stat-icon"><i class="fa-solid fa-industry"></i></div>
-        <h3><span class="count-num" id="stat-plot" data-target="324" data-suffix=",000">324,000</span> <span class="unit">Sft</span></h3>
-        <p>Total Manufacturing Area</p>
-      </div>
-      <div class="stat-box">
-        <div class="stat-icon"><i class="fa-solid fa-weight-hanging"></i></div>
-        <h3><span class="count-num" id="stat-capacity" data-target="18" data-suffix=",000">18,000</span> <span class="unit">MT</span></h3>
-        <p>Annual Steel Capacity</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Company Section -->
-  <section id="about" class="section-pad" style="background: #ffffff;">
+  <!-- 2. Complete Products Showcase Auto-Slider Section (All 9 Core Products in Auto-Gliding Studio White Cards) -->
+  <section id="products-showcase" class="products-showcase-section section-pad">
     <div class="container">
-      <div class="section-header" style="margin-bottom: 40px;">
-        <span class="subheading">ABOUT WINSTEEL</span>
-        <h2>Building India's Infrastructure Heritage Since 1972</h2>
-        <p>From inception to commissioning, delivering innovative, safe, and smart bridge construction equipment.</p>
+      <div class="section-header text-center">
+        <span class="subheading"><i class="fa-solid fa-layer-group gold-pulse"></i> COMPLETE ENGINEERING PRODUCT CATALOG</span>
+        <h2>Our Specialized Products & Machinery</h2>
+        <p>Explore Winsteel's entire portfolio of precision bridge construction, precast moulding, and heavy infrastructure machinery — engineered for maximum structural safety and rapid site execution.</p>
       </div>
-
-      <!-- Top Balanced Showcase Grid -->
-      <div class="about-top-showcase" style="margin-bottom: 36px;">
-        <!-- Left Narrative -->
-        <div class="about-top-narrative">
-          <span class="about-pill-tag"><i class="fa-solid fa-award"></i> ESTABLISHED IN NEW DELHI • 52+ YEARS MASTERY</span>
-          <h3 id="about-title" style="font-size: 26px; line-height: 1.35; color: #0f172a; margin: 12px 0 16px 0;">Precision Structural Steel Fabrication & Launching Systems</h3>
-          <div id="about-desc">
-            <p style="font-size: 16px; line-height: 1.7; color: #334155; margin-bottom: 16px;"><strong>WINSTEEL ENGINEERING WORKS PVT. LTD.</strong> established in the Year 1972, has acquired a high reputation and earned vast experience in manufacturing custom-made heavy infrastructure equipment.</p>
-            <p style="font-size: 15px; line-height: 1.7; color: #64748b; margin-bottom: 0;">We provide end-to-end engineering turnkey services right from understanding the complex project and client's requirement, structural 3D CAD design, precision robotic manufacturing, site installation, commissioning of equipment, and staff training.</p>
-          </div>
-
-          <!-- Trust Badges Row -->
-          <div class="hero-trust-badges">
-            <div class="hero-trust-pill">
-              <i class="fa-solid fa-industry"></i>
-              <div>
-                <strong>18,000 MT / Yr</strong>
-                <span>Annual Steel Output</span>
-              </div>
-            </div>
-            <div class="hero-trust-pill">
-              <i class="fa-solid fa-users-gear"></i>
-              <div>
-                <strong>550+ Experts</strong>
-                <span>Certified Workforce</span>
-              </div>
-            </div>
-            <div class="hero-trust-pill">
-              <i class="fa-solid fa-shield-halved"></i>
-              <div>
-                <strong>ISO 9001:2015</strong>
-                <span>Quality Tested</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Visual Showcase -->
-        <div class="about-side-visual-col">
-          <div class="about-side-visual" style="min-height: 440px;">
-            <div class="side-visual-gear"><i class="fa-solid fa-gear"></i></div>
-            <img id="about-img-main" src="uploads/about-factory.png" alt="Winsteel Heavy Manufacturing Facility" class="about-side-img" style="min-height: 440px;">
-
-            <!-- Floating Experience Badge -->
-            <div class="floating-experience-badge">
-              <div class="exp-top">
-                <span class="exp-num count-num" data-target="52" data-suffix="+">52+</span>
-                <span class="exp-title">YEARS</span>
-              </div>
-              <p class="exp-sub">Of Proven Bridge Engineering & Heavy Manufacturing Excellence Since 1972</p>
-            </div>
-          </div>
-        </div>
+      <div id="all-products-slider-container" class="all-products-slider-container">
+        <!-- Injected by js/main.js (All 9 products inside a Studio White Auto-Slider) -->
       </div>
-
-      <!-- Alpi Sea Technical Associate Banner Card -->
-      <div class="partner-modern-card" style="margin-top: 24px; padding: 32px 40px;">
-        <div class="partner-badge-clean"><i class="fa-solid fa-handshake"></i> TECHNICAL COLLABORATOR</div>
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; margin-top: 8px;">
-          <div>
-            <h4 id="about-partner-name" style="font-size: 22px; color: #0f172a; margin: 0 0 8px 0;">Technical Associate: Alpi Sea Ltd. (Italy)</h4>
-            <p id="about-partner-desc" style="font-size: 15px; color: #64748b; margin: 0; max-width: 780px;">With the surge in industry demand for world-class technology, we engaged <strong>Alpi Sea Ltd.</strong> as our long-term technical collaborators for complex Form Travellers, Beam Launchers, and Movable Scaffolding Systems.</p>
-          </div>
-          <a id="about-partner-web" href="http://www.alpisea.com" target="_blank" class="btn-story-collab" style="white-space: nowrap;">Visit Alpi Sea Portal <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        </div>
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="products.html" class="btn-hero-primary"><i class="fa-solid fa-layer-group"></i> View all products <i class="fa-solid fa-arrow-right"></i></a>
       </div>
-
     </div>
   </section>
 
-  <!-- Step-by-Step Workflow Section -->
-  <section class="section-pad" style="background-color: #f1f5f9;">
+  <!-- 3. Forming the Future & 3 Patents Section (About & Alpi Sea Collaboration) -->
+  <section id="about" class="forming-future-section section-pad">
     <div class="container">
-      <div class="section-header">
+      <div id="forming-future-container" class="forming-future-grid">
+        <!-- Injected by js/main.js (Blueprint Factory Image + 3 Patents Gold Card + About Text + Alpi Sea Portal link) -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Worldwide Footprint / Across the World Section -->
+  <section class="world-map-section section-pad">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="subheading">OUR GLOBAL EXPORT FOOTPRINT</span>
+        <h2>Across the World</h2>
+        <p>Winsteel infrastructure equipment operates across multi-continent construction corridors, delivering unmatched structural reliability in diverse geological and climate conditions.</p>
+      </div>
+      <div id="world-map-container" class="world-map-container">
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Manufacturing Powerhouse Facilities Section -->
+  <section id="facilities" class="facilities-section section-pad">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="subheading">MANUFACTURING POWERHOUSE</span>
+        <h2>Sprawling Infrastructure Across 5 Premises</h2>
+        <p>Equipped with 45+ Heavy EOT Cranes and 324,000 Sq. Ft. of dedicated engineering space.</p>
+      </div>
+      <div id="facilities-container" class="facilities-grid">
+        <!-- Injected by js/main.js (5 Sprawling Facilities) -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Exact Animated Odometer Counters Bar -->
+  <section class="odometer-bar-section">
+    <div class="container">
+      <div id="odometer-counters-grid" class="odometer-counters-grid">
+        <!-- Injected by js/main.js (4 Units, 15,641 Sq. M. Area, 1,14,414 Sq. Ft. Covered Area, 52+ Years Legacy) -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Projects Completed Showcase -->
+  <section class="projects-completed-section section-pad">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="subheading">OUR SELECTED PROJECTS</span>
+        <h2>Projects Completed</h2>
+        <p>Discover how our custom launching gantries and precast steel moulds power landmark infrastructure corridors across India and global markets.</p>
+      </div>
+      <div id="projects-completed-grid" class="projects-completed-grid">
+        <!-- Injected by js/main.js (Ahmedabad Motera Viaduct, Narmada Bridge, Mumbai Metro, Kuwait Breakwater, Himalayan Tunnel) -->
+      </div>
+      <div style="text-align: center; margin-top: 48px;">
+        <a href="projects.html" class="btn-hero-outline" style="border-color: var(--primary-blue); color: var(--primary-blue-dark);"><i class="fa-solid fa-bridge-suspension"></i> View All Landmark Projects <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Turnkey Methodology Workflow Section -->
+  <section class="section-pad" style="background-color: #f8fafc;">
+    <div class="container">
+      <div class="section-header text-center">
         <span class="subheading">OUR TURNKEY METHODOLOGY</span>
         <h2>How We Deliver Engineering Excellence</h2>
         <p>A structured 4-step execution workflow designed for high precision and zero site downtime.</p>
@@ -178,10 +122,10 @@
     </div>
   </section>
 
-  <!-- Our Strengths Section (Luxury Dark Slate Grid) -->
+  <!-- Our Strengths Section -->
   <section class="section-pad strengths-section">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header text-center">
         <span class="subheading">WHY CHOOSE US</span>
         <h2>Our Core Strengths & Advantages</h2>
         <p>Five decades of manufacturing mastery backed by modern infrastructure and skilled technicians.</p>
@@ -190,57 +134,27 @@
     </div>
   </section>
 
-  <!-- Facilities Infrastructure Section -->
-  <section id="facilities" class="facilities-banner">
+  <!-- 8. People Say About Us / Testimonials Section (Modern UI `project completed ke niche yeh do section aayega with modern UI`) -->
+  <section class="testimonials-section section-pad" id="testimonials-section">
     <div class="container">
-      <div class="section-header" style="margin-bottom: 50px;">
-        <span class="subheading" style="color: var(--accent-gold); background: rgba(243, 173, 27, 0.18);">MANUFACTURING POWERHOUSE</span>
-        <h2 style="color: #fff;">Sprawling Infrastructure Across 5 Premises</h2>
-        <p style="color: rgba(255,255,255,0.8);">Equipped with 45+ Heavy EOT Cranes and 324,000 Sq. Ft. of dedicated engineering space.</p>
+      <div class="modern-section-header text-center">
+        <span class="modern-subheading">What</span>
+        <h2 class="modern-title">People Say About Us</h2>
+        <p class="modern-subtitle">Read firsthand feedback from engineering directors, bridge project managers, and infrastructure EPC leaders who trust Winsteel.</p>
       </div>
-      <div id="facilities-container" class="facilities-grid"></div>
+      <div id="testimonials-container" class="testimonials-modern-wrapper"></div>
     </div>
   </section>
 
-  <!-- Featured Products Dynamic Showcase -->
-  <section class="section-pad">
+  <!-- 9. Recent News Section (Modern UI `recent news`) -->
+  <section class="recent-news-section section-pad" id="recent-news-section">
     <div class="container">
-      <div class="section-header">
-        <span class="subheading">EQUIPMENT PORTFOLIO</span>
-        <h2>Featured Products & Solutions</h2>
-        <p>Explore our dynamically managed catalog of custom bridge construction equipment.</p>
+      <div class="modern-section-header text-center">
+        <span class="modern-subheading">UPDATES</span>
+        <h2 class="modern-title">Recent News</h2>
+        <p class="modern-subtitle">Latest industry insights, technical achievements, and bridge engineering milestones from Winsteel Engineering Works.</p>
       </div>
-      <div id="featured-products-grid" class="dynamic-grid"></div>
-      <div style="text-align: center; margin-top: 50px;">
-        <a href="products.html" class="btn-inquiry">Explore Complete Equipment Catalog <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Projects Dynamic Showcase -->
-  <section class="section-pad" style="background-color: #f8fafc;">
-    <div class="container">
-      <div class="section-header">
-        <span class="subheading">PROVEN TRACK RECORD</span>
-        <h2>Landmark Infrastructure Projects</h2>
-        <p>Discover how our equipment powers major highways, coastal bridges, and elevated metro viaducts.</p>
-      </div>
-      <div id="featured-projects-grid" class="dynamic-grid"></div>
-      <div style="text-align: center; margin-top: 50px;">
-        <a href="projects.html" class="btn-inquiry">View All Projects Portfolio <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Client Testimonials Section -->
-  <section class="section-pad" style="background-color: #fff;">
-    <div class="container">
-      <div class="section-header">
-        <span class="subheading">CLIENT CONFIDENCE</span>
-        <h2>Trusted by Infrastructure Leaders</h2>
-        <p>What engineering directors and project managers say about Winsteel equipment.</p>
-      </div>
-      <div id="testimonials-container" class="testimonials-grid"></div>
+      <div id="recent-news-grid" class="recent-news-modern-wrapper"></div>
     </div>
   </section>
 
@@ -251,4 +165,5 @@
   <script src="js/components.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>

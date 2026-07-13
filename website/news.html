@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News & Insights | Winsteel Engineering Works Pvt. Ltd.</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css?v=1.2">
+</head>
+<body data-page="news">
+
+  <!-- Common Reusable Header (Loaded from js/components.js) -->
+  <div id="app-header"></div>
+
+  <!-- Page Banner -->
+  <section class="page-header-banner" style="background: linear-gradient(135deg, rgba(9, 14, 26, 0.95), rgba(15, 23, 42, 0.95)), url('https://winsteel.in/wp-content/uploads/2023/05/Segment-Mould-Narmada-Bridge-3-3-400x350-1.jpg') center/cover no-repeat; background-attachment: fixed;">
+    <div class="container">
+      <span class="subheading" style="color: var(--accent-gold); background: rgba(243, 173, 27, 0.18);">WINSTEEL BLOG & INSIGHTS</span>
+      <h1>News & Insights</h1>
+      <p>Explore our asymmetric spotlight grid featuring the latest updates, engineering publications, and bridge building insights.</p>
+    </div>
+  </section>
+
+  <!-- News Bento Grid Section -->
+  <section class="section-pad blog-listing-section" style="background: var(--bg-soft); min-height: 800px; padding-top: 60px;">
+    <div class="container">
+      
+      <!-- Premium Filter Toolbar -->
+      <div class="bento-toolbar" style="margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(0, 70, 128, 0.1);">
+        <!-- Left: Categories dynamic pills list -->
+        <div class="bento-categories-nav">
+          <ul id="news-categories-nav-list" style="list-style: none; display: flex; gap: 10px; padding: 0; margin: 0; flex-wrap: wrap;">
+            <!-- Rendered dynamically as premium pill buttons -->
+          </ul>
+        </div>
+        
+        <!-- Right: Search input -->
+        <div class="bento-search-box" style="position: relative; width: 320px; max-width: 100%;">
+          <input type="text" id="news-search" placeholder="Search articles..." style="width: 100%; padding: 12px 48px 12px 20px; border-radius: 30px; border: 1px solid #cbd5e1; outline: none; background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.02); font-size: 14.5px; transition: all 0.3s;">
+          <button type="button" id="news-search-btn" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); background: var(--primary-blue); color: #ffffff; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+      </div>
+
+      <!-- Active search/filters label -->
+      <div id="news-active-filter-bar" style="margin-bottom: 30px; padding: 12px 20px; background: #ffffff; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 14.5px; font-weight: 600; color: var(--text-muted); display: none; align-items: center; justify-content: space-between;">
+        <div>
+          Active Filter: <span id="news-active-category" style="color: var(--accent-gold); font-weight: 700; background: #0f172a; padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-left: 8px;">All</span>
+        </div>
+        <button onclick="clearNewsFilters()" style="background: none; border: none; color: #ef4444; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">Clear Filter <i class="fa-solid fa-circle-xmark"></i></button>
+      </div>
+
+      <!-- Dynamic Bento Grid Container -->
+      <div id="news-bento-container" class="news-bento-grid">
+        <!-- Rendered dynamically -->
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Common Reusable Footer & Modal (Loaded from js/components.js) -->
+  <div id="app-footer"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

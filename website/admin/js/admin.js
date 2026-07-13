@@ -757,6 +757,7 @@ function saveTestimonial(e) {
 }
 
 // ==========================================
+// ==========================================
 // NEWS HANDLERS
 // ==========================================
 function renderNewsTable() {
@@ -764,10 +765,11 @@ function renderNewsTable() {
   if (!tbody) return;
   tbody.innerHTML = (db.news || []).map(n => `
     <tr>
+      <td><img src="${n.image}" alt="${n.title}" onerror="this.src='https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=100'" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;"></td>
       <td><strong>${n.title}</strong></td>
       <td><span style="background: rgba(167,139,250,0.15); color: #a78bfa; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;">${n.category}</span></td>
       <td>${n.date || ''}</td>
-      <td>${n.excerpt ? n.excerpt.slice(0, 70) + '...' : ''}</td>
+      <td>${n.excerpt ? n.excerpt.slice(0, 60) + '...' : ''}</td>
       <td>
         <div class="action-btns">
           <button class="btn-icon" onclick="editNews('${n.id}')"><i class="fa-solid fa-pen"></i></button>
@@ -780,6 +782,9 @@ function renderNewsTable() {
 
 function openNewsModal(id = null) {
   document.getElementById('form-news').reset();
+  const preview = document.getElementById('news-preview');
+  if (preview) preview.style.display = 'none';
+
   if (id) {
     const n = (db.news || []).find(item => item.id === id);
     if (!n) return;
@@ -788,10 +793,18 @@ function openNewsModal(id = null) {
     document.getElementById('news-title').value = n.title || '';
     document.getElementById('news-category').value = n.category || '';
     document.getElementById('news-date').value = n.date || '';
+    document.getElementById('news-image').value = n.image || '';
     document.getElementById('news-excerpt').value = n.excerpt || '';
+    document.getElementById('news-content').value = n.content || '';
+    if (preview && n.image) {
+      preview.src = n.image;
+      preview.style.display = 'block';
+    }
   } else {
     document.getElementById('modal-news-title').textContent = 'Add News Article';
     document.getElementById('news-id').value = '';
+    document.getElementById('news-image').value = '';
+    document.getElementById('news-content').value = '';
     document.getElementById('news-date').value = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   }
   document.getElementById('modal-news').classList.remove('hidden');
@@ -814,7 +827,9 @@ function saveNews(e) {
     title: document.getElementById('news-title').value,
     category: document.getElementById('news-category').value,
     date: document.getElementById('news-date').value,
-    excerpt: document.getElementById('news-excerpt').value
+    image: document.getElementById('news-image').value,
+    excerpt: document.getElementById('news-excerpt').value,
+    content: document.getElementById('news-content').value
   };
 
   if (!db.news) db.news = [];

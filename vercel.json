@@ -1,0 +1,6 @@
+{
+  "buildCommand": "node scripts/generate.js",
+  "outputDirectory": ".",
+  "cleanUrls": true,
+  "trailingSlash": false
+}

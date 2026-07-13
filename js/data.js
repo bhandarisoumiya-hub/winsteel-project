@@ -1,6 +1,6 @@
 /**
  * AUTO-GENERATED STATIC DATA BUNDLE FOR WINSTEEL WEBSITE
- * Generated on: 2026-07-10T06:06:16.521Z
+ * Generated on: 2026-07-13T08:15:46.674Z
  * This file allows the HTML/CSS/JS frontend to run 100% offline without live API servers.
  */
 window.WINSTEEL_DATA = {
@@ -386,321 +386,35 @@ window.WINSTEEL_DATA = {
     "tagline": "Forming The Future",
     "phone": "+91 (0) 22 2845 / +91 98200 00000",
     "email": "info@winsteel.in",
-    "address": "Manufacturing Unit 5, Heavy Industrial Area, Maharashtra & New Delhi, India"
+    "address": "Manufacturing Unit 5, Heavy Industrial Area, Maharashtra, India"
   },
-  "heroSlides": [
-    {
-      "id": "slide-1",
-      "title": "PRECISION ASSURED SOLUTIONS",
-      "titleFormatted": "<span class=\"hero-txt-filled\">PRECISION</span><br><span class=\"hero-txt-stroked\">ASSURED</span><br><span class=\"hero-txt-filled\">SOLUTIONS</span>",
-      "subtitle": "PRECISION ASSURED",
-      "desc": "Custom engineered bridge launching gantries and formwork systems with 0.1mm structural tolerance and ISO 9001:2015 certification.",
-      "image": "uploads/hero-gantry.png",
-      "ctaText": "Explore Equipment Catalog",
-      "ctaLink": "products.html"
-    },
-    {
-      "id": "slide-2",
-      "title": "ENGINEERING EXCELLENCE SINCE FIVE DECADES",
-      "titleFormatted": "<span class=\"hero-txt-filled\">ENGINEERING</span><br><span class=\"hero-txt-stroked\">EXCELLENCE</span><br><span class=\"hero-txt-stroked\">SINCE</span> <span class=\"hero-txt-filled\">FIVE</span><br><span class=\"hero-txt-filled\">DECADES</span>",
-      "subtitle": "We building ambientic living spaces for families",
-      "desc": "Established in 1972 in New Delhi, delivering over 18,000 MT of custom steel infrastructure fabrication annually across India & global markets.",
-      "image": "uploads/about-factory.png",
-      "ctaText": "Discover Our Legacy",
-      "ctaLink": "about.html"
-    },
-    {
-      "id": "slide-3",
-      "title": "CONCEPTION TO COMPLETION OF PROJECTS",
-      "titleFormatted": "<span class=\"hero-txt-filled\">CONCEPTION</span><br><span class=\"hero-txt-stroked\">TO</span><br><span class=\"hero-txt-stroked\">COMPLETION</span><br><span class=\"hero-txt-filled\">OF PROJECTS</span>",
-      "subtitle": "We building ambientic living spaces for families",
-      "desc": "End-to-end turnkey services: 3D CAD simulation, robotic fabrication, factory load testing, site erection, commissioning, and operator training.",
-      "image": "uploads/river-bridge.png",
-      "ctaText": "Turnkey Methodology",
-      "ctaLink": "projects.html"
-    },
-    {
-      "id": "slide-4",
-      "title": "VALUE ENGINEERING SOLUTIONS",
-      "titleFormatted": "<span class=\"hero-txt-filled\">VALUE</span><br><span class=\"hero-txt-stroked\">ENGINEERING</span><br><span class=\"hero-txt-filled\">SOLUTIONS</span>",
-      "subtitle": "We build with Ultra Modern Technology",
-      "desc": "In technical collaboration with Alpi Sea Ltd. (Italy), providing cutting-edge Form Travellers, Beam Launchers, and Movable Scaffolding Systems.",
-      "image": "uploads/metro-viaduct.png",
-      "ctaText": "View Alpi Sea Collaboration",
-      "ctaLink": "about.html"
-    },
-    {
-      "id": "slide-5",
-      "title": "SHAPING THE FUTURE",
-      "titleFormatted": "<span class=\"hero-txt-filled\">SHAPING</span> <span class=\"hero-txt-stroked\">THE</span><br><span class=\"hero-txt-filled\">FUTURE</span>",
-      "subtitle": "Shaping the Future",
-      "desc": "Powering high-speed rail corridors, Narmada river viaducts, and international breakwater armor projects across 85+ global clients.",
-      "image": "uploads/robotic-welding.png",
-      "ctaText": "Explore Landmark Projects",
-      "ctaLink": "projects.html"
-    },
-    {
-      "id": "slide-6",
-      "title": "MAKING NEW ARCHITECTURE",
-      "titleFormatted": "<span class=\"hero-txt-filled\">MAKING</span><span class=\"hero-txt-stroked\">NEW</span><br><span class=\"hero-txt-filled\">ARCHITECTURE</span>",
-      "subtitle": "Making NEW Architecture",
-      "desc": "Advanced precast box girder moulds, U-girders, and piercap shuttering designed for high repetition cycles and rapid stripping mechanisms.",
-      "image": "uploads/crane-handling.png",
-      "ctaText": "Precast Mould Solutions",
-      "ctaLink": "products.html"
-    },
-    {
-      "id": "slide-7",
-      "title": "SHAPING FUTURE SOLUTIONS",
-      "titleFormatted": "<span class=\"hero-txt-filled\">SHAPING</span> <span class=\"hero-txt-stroked\">FUTURE</span><br><span class=\"hero-txt-filled\">SOLUTIONS</span>",
-      "subtitle": "Shaping the future",
-      "desc": "324,000 Sq. Ft. manufacturing plot equipped with 45+ heavy EOT cranes and precision CNC boring & cutting complexes.",
-      "image": "uploads/hydraulic-forming.png",
-      "ctaText": "Manufacturing Units",
-      "ctaLink": "index.html#facilities"
-    },
-    {
-      "id": "slide-8",
-      "title": "HIGH DURABILITY GUARANTEED",
-      "titleFormatted": "<span class=\"hero-txt-filled\">HIGH</span> <span class=\"hero-txt-stroked\">DURABILITY</span><br><span class=\"hero-txt-filled\">GUARANTEED</span>",
-      "subtitle": "High Durability Guranteed",
-      "desc": "Heavy-gauge alloy steel fabrication tested via continuous NDT, radiographic inspection, and full-span factory load trials.",
-      "image": "uploads/cnc-cutting.png",
-      "ctaText": "Quality Assurance",
-      "ctaLink": "core-values.html"
-    }
-  ],
-  "topPillars": [
-    {
-      "id": "pillar-1",
-      "title": "Formworks and Moulds",
-      "tagline": "Rigid & Cost-Effective Precast & Cast-in-Situ Moulds",
-      "desc": "Specialized Pilecap, Piercap, I-Girder, U-Girder, Box Girder, and Parapet moulds engineered for rapid stripping and 300+ repetition cycles.",
-      "icon": "fa-shapes",
-      "link": "products.html"
-    },
-    {
-      "id": "pillar-2",
-      "title": "Launching Gantries",
-      "tagline": "Full-Span & Segmental Box Girder Erection Systems",
-      "desc": "Custom-designed heavy bridge launchers with paramount safety criteria, precision hydraulic controls, and multi-project adaptability.",
-      "icon": "fa-crane",
-      "link": "products.html"
-    },
-    {
-      "id": "pillar-3",
-      "title": "Special Purpose Equipments",
-      "tagline": "Custom Engineered Heavy Infrastructure Machinery",
-      "desc": "High-impact Rock Grapples, Alloy Steel Chisels, Seismic Cement/Flyash Silos, and 360° Motorized Swiveling Conveyor Systems.",
-      "icon": "fa-gears",
-      "link": "products.html",
-      "isHighlighted": true,
-      "btnText": "Explore Products"
-    }
-  ],
-  "formingFuture": {
-    "heading": "Forming the Future",
-    "subheading": "CORPORATE PROFILE & GLOBAL LEGACY",
-    "patentsCount": "3",
-    "patentsLabel": "PATENTS AWARDED",
-    "patentsSub": "Segmental Launching & Mould Stripping Systems",
-    "aboutCompanyTitle": "ABOUT WINSTEEL ENGINEERING WORKS PVT. LTD.",
-    "mainTitle": "Precision Structural Steel Fabrication & Launching Systems Since 1972",
-    "description1": "Established in 1972, Winsteel Engineering Works Pvt. Ltd. stands among India's most recognized manufacturers of specialized heavy infrastructure equipment, formwork, and mechanized launching systems.",
-    "description2": "We deliver comprehensive turnkey engineering excellence — spanning from finite element analysis and structural 3D CAD modeling to high-precision robotic manufacturing, site commissioning, and operational staff training for mega-corridors worldwide.",
-    "image": "uploads/about-factory.png",
-    "partnerName": "Alpi Sea Ltd. (Italy)",
-    "partnerTitle": "Technical Associate: Alpi Sea Ltd. (Italy)",
-    "partnerDesc": "To meet stringent international safety and speed standards on mega-infrastructure projects, Winsteel operates in close technical synergy with Alpi Sea Ltd., pioneering next-generation Form Travellers, Movable Scaffolding Systems (MSS), and bridge launching equipment.",
-    "partnerUrl": "http://www.alpisea.com"
+  "hero": {
+    "title": "Heavy Bridge Launching Gantries & Formwork Engineering",
+    "subtitle": "Over 25+ years designing and manufacturing mission-critical bridge erection equipment, tunnel shutters, and custom steel moulds.",
+    "ctaText": "Explore Products Showcase",
+    "ctaLink": "products.html"
   },
-  "worldMap": {
-    "heading": "Across the World",
-    "subheading": "OUR GLOBAL PRESENCE & EXPORT REACH",
-    "description": "Winsteel infrastructure equipment operates across multi-continent construction corridors, delivering unmatched structural reliability in diverse geological and climate conditions.",
-    "locations": [
-      { "name": "India (Headquarters & 5 Units)", "coords": "20.5937° N, 78.9629° E", "desc": "324,000 Sft Manufacturing Powerhouse across Maharashtra & New Delhi" },
-      { "name": "Kuwait & Middle East", "coords": "29.3759° N, 47.9774° E", "desc": "Accropode & Tetrapod Breakwater Armour Unit Moulds" },
-      { "name": "Southeast Asia Rail Corridors", "coords": "13.7563° N, 100.5018° E", "desc": "Movable Scaffolding & Segmental Launching Systems" },
-      { "name": "Europe & Africa Infrastructure", "coords": "48.8566° N, 2.3522° E", "desc": "Custom Tunnel Formworks & Specialized Heavy Steel Moulds" }
-    ]
+  "about": {
+    "title": "Engineering Precision Since 1998",
+    "description": "Winsteel Engineering Works Pvt. Ltd. is a premier designer and manufacturer of specialized infrastructure construction equipment. From Narmada bridge viaducts to metro high-speed rail corridors, our equipment builds the nation.",
+    "experienceYears": "25+"
   },
-  "weServe": [
-    {
-      "id": "serve-1",
-      "title": "Formworks and Moulds",
-      "category": "Formworks and Moulds",
-      "image": "uploads/river-bridge.png",
-      "link": "products.html"
-    },
-    {
-      "id": "serve-2",
-      "title": "Launching Gantries",
-      "category": "Launching Gantries",
-      "image": "uploads/hero-gantry.png",
-      "link": "products.html"
-    },
-    {
-      "id": "serve-3",
-      "title": "Movable Scaffolding System",
-      "category": "Movable Scaffolding Systems",
-      "image": "uploads/metro-viaduct.png",
-      "link": "products.html"
-    },
-    {
-      "id": "serve-4",
-      "title": "Balance Cantilever Systems for Segmental & In-Situ",
-      "category": "Balance Cantilever Systems",
-      "image": "uploads/robotic-welding.png",
-      "link": "products.html"
-    },
-    {
-      "id": "serve-5",
-      "title": "Ports and Jetties (Tetrapod & Accropode Moulds)",
-      "category": "Ports and Jetties",
-      "image": "uploads/hydraulic-forming.png",
-      "link": "products.html"
-    },
-    {
-      "id": "serve-6",
-      "title": "Tunnel formworks",
-      "category": "Tunnel Formworks",
-      "image": "uploads/cnc-cutting.png",
-      "link": "products.html"
-    }
-  ],
-  "odometerCounters": [
-    {
-      "id": "odo-units",
-      "number": 4,
-      "suffix": "+",
-      "label": "Manufacturing Units",
-      "sublabel": "Across Maharashtra & Delhi"
-    },
-    {
-      "id": "odo-area-sqm",
-      "number": 15641,
-      "format": "comma",
-      "unit": "SQ. M.",
-      "label": "Total Manufacturing Area",
-      "sublabel": "Dedicated Heavy Bay"
-    },
-    {
-      "id": "odo-area-sqft",
-      "number": 114414,
-      "format": "comma",
-      "unit": "SQ. FT.",
-      "label": "Total Covered Area",
-      "sublabel": "45+ Heavy EOT Cranes"
-    },
-    {
-      "id": "odo-years",
-      "number": 52,
-      "suffix": "+",
-      "unit": "Years",
-      "label": "Engineering Legacy",
-      "sublabel": "Excellence Since 1972"
-    }
-  ],
-  "projectsCompleted": [
-    {
-      "id": "proj-motera",
-      "title": "Motera Grid Viaduct - Ahmedabad",
-      "category": "Metro Rail",
-      "location": "Ahmedabad, Gujarat",
-      "client": "Gujarat Metro Rail Corporation (GMRC)",
-      "year": "2023",
-      "image": "uploads/metro-viaduct.png",
-      "description": "High-precision U-Girder moulds and launching falsework deployed for the Motera Grid elevated metro corridor, achieving rapid erection cycles with superior finish."
-    },
-    {
-      "id": "proj-narmada",
-      "title": "Narmada Bridge Viaduct Project",
-      "category": "Highway Bridges",
-      "location": "Bharuch, Gujarat",
-      "client": "National Highway Authority of India (NHAI)",
-      "year": "2023",
-      "image": "uploads/river-bridge.png",
-      "description": "Supply of full span segment moulds and launching falsework for the prestigious Narmada River bridge crossing with zero dimensional deviation."
-    },
-    {
-      "id": "proj-mumbai-metro",
-      "title": "Mumbai Metro Line 4 & 5 U-Girder Launching",
-      "category": "Metro Rail",
-      "location": "Mumbai, Maharashtra",
-      "client": "MMRDA & Lead Contractors",
-      "year": "2023",
-      "image": "uploads/hero-gantry.png",
-      "description": "Custom engineered launching gantries and heavy U-girder precast moulds supplied across high-density urban corridors."
-    },
-    {
-      "id": "proj-kuwait",
-      "title": "Kuwait Port Expansion Breakwater Works",
-      "category": "Marine & Ports",
-      "location": "Kuwait City, Middle East",
-      "client": "International Marine Port Authority",
-      "year": "2022",
-      "image": "uploads/hydraulic-forming.png",
-      "description": "Precision Accropode and Tetrapod steel moulds designed and delivered for casting heavy marine armor units protecting deep-water berths."
-    },
-    {
-      "id": "proj-himalayan",
-      "title": "Himalayan Expressway Tunnel Formwork",
-      "category": "Special Structures",
-      "location": "Jammu & Kashmir / Himachal",
-      "client": "Border Roads & Highway Infrastructure",
-      "year": "2023",
-      "image": "uploads/robotic-welding.png",
-      "description": "Self-propelled hydraulic tunnel lining gantry shuttering systems deployed for continuous concrete lining under challenging geological conditions."
-    }
-  ],
-  "peopleSayAboutUs": [
+  "stats": {
+    "completedProjects": "500+",
+    "steelFabricated": "150,000 MT",
+    "globalClients": "85+",
+    "manufacturingUnits": "5 Units"
+  },
+  "testimonials": [
     {
       "name": "Chief Project Director",
-      "designation": "National High Speed Rail Corridor",
-      "company": "NHSRCL & Consortium Partners",
-      "quote": "Winsteel delivered our 1200 MT full-span launching gantry ahead of schedule. The precision hydraulic controls and structural safety systems are top tier across the entire viaduct alignment.",
-      "rating": 5
+      "company": "National High Speed Rail Corridor",
+      "quote": "Winsteel delivered our 1200 MT full-span launching gantry ahead of schedule. The precision hydraulic controls and safety systems are top tier."
     },
     {
       "name": "Vice President - Bridge Division",
-      "designation": "Major Infrastructure EPC Contractor",
-      "company": "L&T / Afcons Consortium",
-      "quote": "Their custom segmental moulds achieved 300+ repetition cycles with zero distortion or grout leakage. Exceptional structural reliability and rapid stripping mechanism.",
-      "rating": 5
-    },
-    {
-      "name": "Senior Marine Project Manager",
-      "designation": "Breakwater & Port Construction",
-      "company": "International Marine Works (Kuwait)",
-      "quote": "The Accropode and Tetrapod steel moulds supplied by Winsteel withstood harsh saline conditions and continuous 24/7 casting cycles with flawless joint tolerances.",
-      "rating": 5
-    }
-  ],
-  "recentNews": [
-    {
-      "id": "news-1",
-      "title": "How to choose a leading construction & formwork company in India?",
-      "date": "June 24, 2023",
-      "category": "Industry Insights",
-      "image": "uploads/river-bridge.png",
-      "excerpt": "Key engineering criteria when evaluating formwork and launching gantry manufacturers: structural CAD design capabilities, CNC precision, and site commissioning support."
-    },
-    {
-      "id": "news-2",
-      "title": "Winsteel commissions India's longest U-Girder Mould for high-speed rail",
-      "date": "May 18, 2023",
-      "category": "Milestones",
-      "image": "uploads/metro-viaduct.png",
-      "excerpt": "A landmark achievement in precast bridge technology: deploying customized hydraulic U-Girder moulds engineered for ultra-fast repetition cycles."
-    },
-    {
-      "id": "news-3",
-      "title": "Precast Box Girder Launching Systems for Mumbai-Ahmedabad High Speed Rail",
-      "date": "October 12, 2023",
-      "category": "Innovation",
-      "image": "uploads/hero-gantry.png",
-      "excerpt": "Exploring the technical load simulations and 3D FEA safety checks required for handling 1,200 MT full-span box girder erection in high-seismic zones."
+      "company": "Major Infrastructure EPC Contractor",
+      "quote": "Their custom segmental moulds achieved 300+ repetition cycles with zero distortion or grout leakage. Exceptional structural reliability."
     }
   ]
 };

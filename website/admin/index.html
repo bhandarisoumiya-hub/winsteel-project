@@ -427,6 +427,7 @@
             <table class="data-table">
               <thead>
                 <tr>
+                  <th>Image</th>
                   <th>Title</th>
                   <th>Category</th>
                   <th>Date</th>
@@ -703,8 +704,27 @@
           <input type="text" id="news-date" placeholder="July 8, 2026" required>
         </div>
         <div class="form-group">
+          <label>Image URL / Database Path</label>
+          <input type="text" id="news-image" placeholder="https://... or /uploads/..." required>
+        </div>
+        <div class="form-group">
+          <label>Upload Article Cover Image to Database</label>
+          <div class="upload-dropzone" onclick="document.getElementById('news-file').click()">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <p>Click to select image file from computer</p>
+          </div>
+          <input type="file" id="news-file" accept="image/*" style="opacity: 0; width: 0; height: 0; position: absolute; z-index: -1;" onchange="handleImageUpload(this, 'news-image', 'news-preview')">
+          <div class="img-preview-box">
+            <img id="news-preview" src="" alt="News Preview" style="max-height: 100px; display: none; margin-top: 10px; border-radius: 6px;">
+          </div>
+        </div>
+        <div class="form-group">
           <label>Excerpt / Summary</label>
-          <textarea id="news-excerpt" rows="3" required></textarea>
+          <textarea id="news-excerpt" rows="2" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Full Article Content (HTML Allowed)</label>
+          <textarea id="news-content" rows="6" required placeholder="Type the full blog/article paragraphs here. You can use <h3> headings, <p> paragraphs, and other HTML elements."></textarea>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary" onclick="closeModal('news')">Cancel</button>
