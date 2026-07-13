@@ -171,8 +171,8 @@ function initHomePage(data) {
 
     // Function to animate the floating 52+ experience counter (`animation in the 52+ likna hai increment animation chaiye mujhe`)
     const animateExperienceBadge = () => {
-      const badgeEl = document.getElementById('hero-exp-badge') || document.querySelector('.modern-hero-badge');
-      const numEl = document.getElementById('modern-exp-counter') || document.querySelector('.modern-exp-num');
+      const badgeEl = document.getElementById('hero-exp-badge') || document.getElementById('about-exp-badge') || document.querySelector('.modern-hero-badge') || document.querySelector('.floating-experience-badge');
+      const numEl = document.getElementById('modern-exp-counter') || document.getElementById('about-exp-num') || document.querySelector('.modern-exp-num');
       if (!numEl) return;
 
       if (badgeEl) {
@@ -369,18 +369,7 @@ function initHomePage(data) {
   // 2. Render All Products Showcase Auto-Slider (All 9 Products in Studio White Auto-Gliding Cards)
   const allProductsContainer = document.getElementById('all-products-slider-container');
   if (allProductsContainer && data.products && data.products.length > 0) {
-    const productCards = data.products.map(p => `
-      <a href="products.html" class="product-showcase-card clean-card-link">
-        <div class="product-showcase-img-box">
-          <img src="${p.image}" alt="${p.name}" onerror="this.src='uploads/river-bridge.png'">
-          <div class="product-cat-badge"><i class="fa-solid fa-tag"></i> ${p.category}</div>
-        </div>
-        <div class="product-showcase-content">
-          <h3>${p.name}</h3>
-          <p class="product-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 3em; margin-bottom: 0;">${p.description || ''}</p>
-        </div>
-      </a>
-    `);
+    const productCards = data.products.map(p => renderProductCard(p));
     renderSectionSlider(allProductsContainer, productCards, 'all-products-showcase', '', 'Complete Products Catalog');
   }
 
@@ -677,33 +666,46 @@ function initHomePage(data) {
       let scrollLeft;
       let isDragging = false;
 
-      track.addEventListener('mousedown', (e) => {
-        isDown = true;
-        isDragging = false;
-        track.classList.add('active');
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
-        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+      track.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG' || e.target.tagName === 'A') {
           e.preventDefault();
         }
       });
-      track.addEventListener('mouseleave', () => {
-        isDown = false;
-        track.classList.remove('active');
+      track.addEventListener('mousedown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        isDown = true;
+        isDragging = false;
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
       });
-      track.addEventListener('mouseup', () => {
+      const stopDragging = () => {
         isDown = false;
-        track.classList.remove('active');
-      });
+        if (isDragging) {
+          setTimeout(() => {
+            isDragging = false;
+            window._isSliderDragging = false;
+            track.classList.remove('active');
+          }, 60);
+        } else {
+          window._isSliderDragging = false;
+          track.classList.remove('active');
+        }
+      };
+      track.addEventListener('mouseleave', stopDragging);
+      track.addEventListener('mouseup', stopDragging);
       track.addEventListener('mousemove', (e) => {
         if (!isDown) return;
-        e.preventDefault();
         const x = e.pageX - track.offsetLeft;
         const walk = (x - startX) * 1.8;
         if (Math.abs(x - startX) > 5) {
-          isDragging = true;
+          if (!isDragging) {
+            isDragging = true;
+            window._isSliderDragging = true;
+            track.classList.add('active');
+          }
+          e.preventDefault();
+          track.scrollLeft = scrollLeft - walk;
         }
-        track.scrollLeft = scrollLeft - walk;
       });
 
       // Enable smooth horizontal scrolling when user scrolls mouse wheel over the slider
@@ -721,7 +723,7 @@ function initHomePage(data) {
 
       // Prevent accidental card link navigation when user dragged with mouse
       track.addEventListener('click', (e) => {
-        if (isDragging) {
+        if (isDragging || window._isSliderDragging) {
           e.preventDefault();
           e.stopPropagation();
         }
@@ -1021,17 +1023,19 @@ function initProjectsPage(data) {
 // RENDER HELPERS
 // ==========================================
 function renderProjectCard(p) {
+  const hasProjectSpecs = p.location || p.year;
   return `
-    <div class="card" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden; transition: all 0.35s cubic-bezier(0.16,1,0.3,1);">
+    <div class="card" onclick="if(!window._isSliderDragging && (!event || !event.target.closest('a'))) window.location.href='project-details.html?id=${p.id}'" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden; transition: all 0.35s cubic-bezier(0.16,1,0.3,1); cursor: pointer;">
       ${p.category ? `<span class="card-badge" style="position:absolute; top:10px; left:10px; background:rgba(15,23,42,0.85); color:#ffd200; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:800; z-index:2;">${p.category}</span>` : ''}
       <a href="project-details.html?id=${p.id}" class="card-img-wrapper" style="height: 155px; display: block; overflow: hidden; background:#f1f5f9;">
         <img src="${p.image}" alt="${p.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;" onerror="this.src='uploads/hero-gantry.png'">
       </a>
       <div class="card-content" style="padding: 14px 16px 16px; display: flex; flex-direction: column; flex: 1;">
         <h3 style="font-size: 16px; font-weight: 700; color: var(--primary-navy); margin-bottom: 6px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 2.6em;"><a href="project-details.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.title}</a></h3>
-        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 2.9em;">${p.description || ''}</p>
+        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.45; margin-bottom: ${hasProjectSpecs ? '10px' : '16px'}; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 2.9em;">${p.description || ''}</p>
         
         <!-- Specs Bar: Location and Year -->
+        ${hasProjectSpecs ? `
         <div style="display: flex; align-items: center; gap: 12px; margin-top: auto; margin-bottom: 10px; font-size: 12.5px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 8px;">
           <div style="display: flex; align-items: center; gap: 5px; color: var(--primary-navy); font-weight: 600;">
             <i class="fa-solid fa-location-dot" style="color: var(--accent-gold); font-size: 12px;"></i>
@@ -1043,8 +1047,9 @@ function renderProjectCard(p) {
             <span>${p.year}</span>
           </div>
         </div>
+        ` : ''}
         
-        <div style="display: flex; justify-content: flex-end; padding-top: 8px; border-top: 1px solid var(--border-light); margin-top: 0;">
+        <div style="display: flex; justify-content: flex-end; padding-top: 8px; border-top: 1px solid var(--border-light); margin-top: ${hasProjectSpecs ? '0' : 'auto'};">
           <a href="project-details.html?id=${p.id}" class="btn-card-link" style="font-size:12.5px;">Explore Case Study <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
         </div>
       </div>
@@ -1053,8 +1058,9 @@ function renderProjectCard(p) {
 }
 
 function renderProductCard(p) {
+  const hasSpecs = p.client || p.year;
   return `
-    <div class="card product-showcase-card" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+    <div class="card product-showcase-card" onclick="if(!window._isSliderDragging && (!event || !event.target.closest('a'))) window.location.href='product-details.html?id=${p.id}'" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: all 0.3s ease; cursor: pointer;">
       ${p.category ? `<span class="card-badge" style="background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); color: #f3ad1b; font-weight: 700; font-size: 11.5px; padding: 5px 12px; border-radius: 50px; position: absolute; top: 14px; left: 14px; z-index: 2; border: 1px solid rgba(243, 173, 27, 0.35); box-shadow: 0 2px 10px rgba(0,0,0,0.2);">${p.category}</span>` : ''}
       
      
@@ -1069,9 +1075,10 @@ function renderProductCard(p) {
         
         
       
-        <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 3em;">${p.description || ''}</p>
+        <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: ${hasSpecs ? '18px' : '20px'}; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 3em;">${p.description || ''}</p>
         
         <!-- Specs Bar: Client and Year -->
+        ${hasSpecs ? `
         <div style="display: flex; align-items: center; gap: 14px; margin-top: auto; margin-bottom: 16px; font-size: 13px; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 16px;">
           ${p.client ? `
             <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-navy); font-weight: 600;">
@@ -1087,8 +1094,9 @@ function renderProductCard(p) {
             </div>
           ` : ''}
         </div>
+        ` : ''}
         
-        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border-light); margin-top: 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border-light); margin-top: ${hasSpecs ? '0' : 'auto'};">
           <span style="font-size: 12.5px; font-weight: 700; color: #059669; background: #ecfdf5; padding: 4px 10px; border-radius: 50px;"><i class="fa-solid fa-circle-check"></i> Factory Certified</span>
           <a href="product-details.html?id=${p.id}" class="btn-card-link" style="font-weight: 700;">Full Specs <i class="fa-solid fa-arrow-right"></i></a>
         </div>

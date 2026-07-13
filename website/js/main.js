@@ -449,7 +449,7 @@ function initProjectsPage(data) {
 // ==========================================
 function renderProjectCard(p) {
   return `
-    <div class="card" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden;">
+    <div class="card" onclick="if(!window._isSliderDragging && (!event || !event.target.closest('a'))) window.location.href='project-details.html?id=${p.id}'" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden; cursor: pointer;">
       ${p.category ? `<span class="card-badge">${p.category}</span>` : ''}
       <a href="project-details.html?id=${p.id}" class="card-img-wrapper" style="height: 240px; display: block; overflow: hidden;">
         <img src="${p.image}" alt="${p.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='uploads/hero-gantry.png'">
@@ -480,8 +480,9 @@ function renderProjectCard(p) {
 }
 
 function renderProductCard(p) {
+  const hasSpecs = p.client || p.year;
   return `
-    <div class="card product-showcase-card" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+    <div class="card product-showcase-card" onclick="if(!window._isSliderDragging && (!event || !event.target.closest('a'))) window.location.href='product-details.html?id=${p.id}'" style="border: 1px solid var(--border-light); background: #ffffff; position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: all 0.3s ease; cursor: pointer;">
       ${p.category ? `<span class="card-badge" style="background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); color: #f3ad1b; font-weight: 700; font-size: 11.5px; padding: 5px 12px; border-radius: 50px; position: absolute; top: 14px; left: 14px; z-index: 2; border: 1px solid rgba(243, 173, 27, 0.35); box-shadow: 0 2px 10px rgba(0,0,0,0.2);">${p.category}</span>` : ''}
       
       <a href="product-details.html?id=${p.id}" class="card-img-wrapper" style="position: relative; overflow: hidden; height: 240px; background: #0f172a; display: block;">
@@ -497,9 +498,10 @@ function renderProductCard(p) {
           ${p.tagline ? `<i class="fa-solid fa-shield-halved" style="color: #f59e0b; margin-right: 4px;"></i> ${p.tagline}` : '&nbsp;'}
         </div>
         
-        <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.2em; max-height: 3.2em;">${p.description || ''}</p>
+        <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: ${hasSpecs ? '24px' : '20px'}; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.2em; max-height: 3.2em;">${p.description || ''}</p>
         
         <!-- Specs Bar: Client and Year -->
+        ${hasSpecs ? `
         <div style="display: flex; align-items: center; gap: 14px; margin-top: auto; margin-bottom: 16px; font-size: 13px; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 16px;">
           ${p.client ? `
             <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-navy); font-weight: 600;">
@@ -515,8 +517,9 @@ function renderProductCard(p) {
             </div>
           ` : ''}
         </div>
+        ` : ''}
         
-        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border-light); margin-top: 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border-light); margin-top: ${hasSpecs ? '0' : 'auto'};">
           <span style="font-size: 12.5px; font-weight: 700; color: #059669; background: #ecfdf5; padding: 4px 10px; border-radius: 50px;"><i class="fa-solid fa-circle-check"></i> Factory Certified</span>
           <a href="product-details.html?id=${p.id}" class="btn-card-link" style="font-weight: 700;">Full Specs <i class="fa-solid fa-arrow-right"></i></a>
         </div>
