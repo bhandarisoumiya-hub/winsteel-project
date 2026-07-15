@@ -10,7 +10,7 @@ const WINSTEEL_COMPONENTS = {
   getNavbar: (activePage) => {
     const isHome = activePage === 'home' ? 'active' : '';
     const isProducts = (activePage === 'products' || activePage === 'product-details') ? 'active' : '';
-    const isProjects = activePage === 'projects' ? 'active' : '';
+    const isProjects = (activePage === 'projects' || activePage === 'project-details') ? 'active' : '';
     const isWinsteel = ['about', 'core-values', 'our-history'].includes(activePage) ? 'active' : '';
     const isNews = (activePage === 'news' || activePage === 'news-details') ? 'active' : '';
     const isContact = activePage === 'contact' ? 'active' : '';

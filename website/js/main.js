@@ -1229,7 +1229,20 @@ function initProductDetailsPage(data) {
   if (categoryElem) categoryElem.textContent = product.category;
   if (titleElem) titleElem.textContent = product.name;
   if (taglineElem) taglineElem.textContent = product.tagline || 'Heavy-Duty Engineering Equipment';
-  if (descElem) descElem.textContent = product.description;
+  if (descElem) descElem.textContent = product.description || '';
+
+  const bannerCategoryElem = document.getElementById('details-banner-category');
+  const bannerTitleElem = document.getElementById('details-banner-title');
+  const bannerTaglineElem = document.getElementById('details-banner-tagline');
+  const bannerSection = document.getElementById('details-banner-section');
+
+  if (bannerCategoryElem) bannerCategoryElem.textContent = product.category;
+  if (bannerTitleElem) bannerTitleElem.textContent = product.name;
+  if (bannerTaglineElem) bannerTaglineElem.textContent = product.tagline || 'Heavy-Duty Engineering Equipment';
+  if (bannerSection && product.image) {
+    bannerSection.style.background = `linear-gradient(135deg, rgba(9, 14, 26, 0.7), rgba(15, 23, 42, 0.8)), url('${product.image}') center/cover no-repeat`;
+    bannerSection.style.backgroundAttachment = 'fixed';
+  }
   // Handle gallery images
   const galleryThumbs = document.getElementById('details-gallery-thumbnails');
   const productImages = product.images || (product.image ? [product.image] : []);
@@ -1588,6 +1601,19 @@ function initProjectDetailsPage(data) {
   if (locationElem) locationElem.textContent = project.location || 'India';
   if (yearElem) yearElem.textContent = project.year || '2024';
   if (categoryMetaElem) categoryMetaElem.textContent = project.category;
+
+  const bannerCategoryElem = document.getElementById('details-banner-category');
+  const bannerTitleElem = document.getElementById('details-banner-title');
+  const bannerTaglineElem = document.getElementById('details-banner-tagline');
+  const bannerSection = document.getElementById('details-banner-section');
+
+  if (bannerCategoryElem) bannerCategoryElem.textContent = project.category;
+  if (bannerTitleElem) bannerTitleElem.textContent = project.title;
+  if (bannerTaglineElem) bannerTaglineElem.textContent = `${project.client || 'National Authority'} • Completed ${project.year || '2024'}`;
+  if (bannerSection && project.image) {
+    bannerSection.style.background = `linear-gradient(135deg, rgba(9, 14, 26, 0.7), rgba(15, 23, 42, 0.8)), url('${project.image}') center/cover no-repeat`;
+    bannerSection.style.backgroundAttachment = 'fixed';
+  }
 
   // Handle gallery images
   const galleryThumbs = document.getElementById('details-gallery-thumbnails');
