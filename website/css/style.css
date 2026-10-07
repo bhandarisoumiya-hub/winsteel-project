@@ -6342,6 +6342,18 @@ ul {
   margin-bottom: 24px;
 }
 
+.blog-content-body a {
+  color: var(--primary-blue);
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.blog-content-body a:hover {
+  color: var(--primary-blue-dark);
+  text-decoration: underline;
+}
+
 .blog-content-body h3 {
   font-size: 24px;
   color: var(--primary-navy);
