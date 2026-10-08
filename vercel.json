@@ -3,7 +3,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "buildCommand": "node scripts/generate.js",
-  "outputDirectory": ".",
+  "outputDirectory": "public",
   "headers": [
     {
       "source": "/(.*)",

@@ -1,6 +1,6 @@
 /**
  * AUTO-GENERATED STATIC DATA BUNDLE FOR WINSTEEL WEBSITE
- * Generated on: 2026-10-08T10:17:04.955Z
+ * Generated on: 2026-10-08T10:48:00.621Z
  * This file allows the HTML/CSS/JS frontend to run 100% offline without live API servers.
  */
 window.WINSTEEL_DATA = {

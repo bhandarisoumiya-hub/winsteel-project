@@ -87,6 +87,18 @@ window.WINSTEEL_DATA = ${JSON.stringify(db, null, 2)};
           fs.cpSync(srcDir, destDir, { recursive: true, force: true });
         }
       }
+
+      // Also sync to public folder for standard Vercel static deployment
+      const publicDir = path.join(__dirname, '../public');
+      try {
+        fs.mkdirSync(publicDir, { recursive: true });
+        const webDir = path.join(__dirname, '../website');
+        if (fs.existsSync(webDir)) {
+          fs.cpSync(webDir, publicDir, { recursive: true, force: true });
+        }
+      } catch (e) {
+        console.log('⚠️ Notice: Could not sync public files:', e.message);
+      }
     } catch (e) {
       console.log('⚠️ Notice: Could not sync website files:', e.message);
     }
